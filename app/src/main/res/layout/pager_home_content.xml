@@ -1,0 +1,13 @@
+<com.gwm.sweethouse.view.RefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_container"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.gwm.sweethouse.view.GridViewWithHeaderAndFooter
+        android:id="@+id/lv_recommend"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="2" />
+</com.gwm.sweethouse.view.RefreshLayout>

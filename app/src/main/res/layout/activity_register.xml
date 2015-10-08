@@ -1,0 +1,89 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gwm.sweethouse.RegisterActivity">
+
+    <RelativeLayout
+        android:id="@+id/top"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:background="#ff0000"
+        >
+        <ImageButton
+            android:layout_width="12dp"
+            android:layout_height="20dp"
+            android:background="@drawable/arrow_return"
+            android:layout_marginLeft="14dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:onClick="return"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="注册"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/line1"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/top"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="57dp">
+
+        <EditText
+            android:id="@+id/et_phonenumber"
+            android:layout_height="50dp"
+            android:layout_width="0dp"
+            android:hint="请输入手机号码"
+            android:layout_weight="3"
+            />
+        <Button
+            android:id="@+id/btn_getpass"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="#ff0000"
+            android:text="获取初始密码"
+            android:textColor="#ffffff"
+            />
+    </LinearLayout>
+
+    <EditText
+            android:id="@+id/et_beginpass"
+            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:hint="请输入初始密码"
+            android:layout_marginTop="25dp"
+            android:layout_below="@+id/line1"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_below="@id/et_beginpass"
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="我已阅读并同意SweetHouse的用户协议"
+        android:textColor="#ff1013"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_red"
+        android:text="注册"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/checkBox"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>
