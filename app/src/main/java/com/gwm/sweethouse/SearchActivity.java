@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ public class SearchActivity extends Activity implements View.OnClickListener {
     private ImageView ivBack;
     private TextView tvSearch;
     private EditText etSearch;
+    private Button btnClear;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
