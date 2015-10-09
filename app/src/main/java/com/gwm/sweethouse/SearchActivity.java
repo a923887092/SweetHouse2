@@ -25,6 +25,7 @@ public class SearchActivity extends Activity implements View.OnClickListener {
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvSearch = (TextView) findViewById(R.id.tv_search);
         etSearch = (EditText) findViewById(R.id.et_search);
+        btnClear = (Button) findViewById(R.id.btn_clear);
         tvSearch.setOnClickListener(this);
         ivBack.setOnClickListener(this);
     }
@@ -42,6 +43,9 @@ public class SearchActivity extends Activity implements View.OnClickListener {
                 } else {
                     Toast.makeText(SearchActivity.this, content, Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case R.id.btn_clear:
+
                 break;
         }
     }
