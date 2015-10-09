@@ -17,7 +17,7 @@ public class SearchActivity extends Activity implements View.OnClickListener {
     private ImageView ivBack;
     private TextView tvSearch;
     private EditText etSearch;
-    private Button btnClear;
+    private Button btnClear, btn1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
