@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,6 +57,8 @@ public class HomeFragment extends Fragment {
     private RelativeLayout rlSearch;
     private GridViewWithHeaderAndFooter lvRecommend;
     private RefreshLayout mRefreshLayout;
+    private TextView textMore;
+    private ProgressBar mProgressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -162,9 +165,16 @@ public class HomeFragment extends Fragment {
 //        view.setText("成功了");
         View headerView = View.inflate(getActivity(), R.layout.pager_home_content_header, null);
         View view = View.inflate(getActivity(), R.layout.pager_home_content, null);
+        View footerView = View.inflate(getActivity(), R.layout.listview_footer, null);
+        textMore = (TextView) footerView.findViewById(R.id.text_more);
+        mProgressBar = (ProgressBar) footerView.findViewById(R.id.load_progress_bar);
+
+
+
         mRefreshLayout = (RefreshLayout) view.findViewById(R.id.swipe_container);
         lvRecommend = (GridViewWithHeaderAndFooter) view.findViewById(R.id.lv_recommend);
         lvRecommend.addHeaderView(headerView);
+        lvRecommend.addFooterView(footerView);
         mRefreshLayout.setChildView(lvRecommend);
         lvRecommend.setAdapter(new GridViewAdapter());
         mRefreshLayout.setColorSchemeResources(R.color.google_blue,
@@ -172,15 +182,47 @@ public class HomeFragment extends Fragment {
                 R.color.google_red,
                 R.color.google_yellow);
 
-
         //使用SwipeRefreshLayout的下拉刷新监听
         //use SwipeRefreshLayout OnRefreshListener
         mRefreshLayout.setOnRefreshListener(new RefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                System.out.println("-------------------");
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRefreshLayout.setRefreshing(false);
+//                        mAdapter.notifyDataSetChanged();
+                        textMore.setVisibility(View.VISIBLE);
+                        mProgressBar.setVisibility(View.GONE);
+                        Toast.makeText(getActivity(), "Refresh Finished!", Toast.LENGTH_SHORT).show();
+                    }
+                }, 2000);
             }
         });
+
+
+        //使用自定义的RefreshLayout加载更多监听
+        //use customed RefreshLayout OnLoadListener
+        mRefreshLayout.setOnLoadListener(new RefreshLayout.OnLoadListener() {
+            @Override
+            public void onLoad() {
+                textMore.setVisibility(View.GONE);
+                mProgressBar.setVisibility(View.VISIBLE);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+//                        getNewBottomData();
+                        mRefreshLayout.setLoading(false);
+//                        mAdapter.notifyDataSetChanged();
+                        textMore.setVisibility(View.VISIBLE);
+                        mProgressBar.setVisibility(View.GONE);
+                        Toast.makeText(getActivity(), "Load Finished!", Toast.LENGTH_SHORT).show();
+                    }
+                }, 2000);
+            }
+        });
+
+
         vpTop = (ViewPager) headerView.findViewById(R.id.vp_top);
         vpTop.setAdapter(new HomePagerContentAdapter(images, getActivity()));
         mIndicator = (CirclePageIndicator)headerView.findViewById(R.id.indicator);

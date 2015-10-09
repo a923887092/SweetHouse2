@@ -56,7 +56,7 @@ public class LoginActivity extends Activity {
 
 
 
-    // 验证方法
+    // 输入框空值验证方法
     private boolean validate(){
         String username = userEditText.getText().toString();
         String password = passEditText.getText().toString();
@@ -73,11 +73,11 @@ public class LoginActivity extends Activity {
 
     // 登录方法,获取输入框中的用户名与数据库中密码数据对比,正确返回true
     private boolean login(){
-        return true;
+      return true;
 
     }
 
-    // 将用户信息保存到配置文件
+    // 将用户名和密码保存到配置文件，
     private void saveUserMsg(String msg){
         // 用户编号
         String id = "";
