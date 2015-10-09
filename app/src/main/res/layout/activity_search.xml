@@ -209,7 +209,7 @@
         android:id="@+id/lv_ago"
         android:layout_below="@id/tv_ago"
         android:layout_width="match_parent"
-        android:layout_height="100dp"/>
+        android:layout_height="200dp"/>
     <Button
         android:background="@drawable/shape_btn_bg"
         android:id="@+id/btn_clear"
