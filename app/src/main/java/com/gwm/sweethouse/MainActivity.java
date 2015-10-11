@@ -1,12 +1,12 @@
 package com.gwm.sweethouse;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 import android.view.Window;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -18,16 +18,20 @@ import com.gwm.sweethouse.fragment.ZhxFragment;
 
 public class MainActivity extends FragmentActivity {
 
+
     private RadioButton rbHome, rbZhx, rbCart, rbMy;
     private ViewPager vpContent;
     private RadioGroup rgTab;
+//    private ArrayList<BasePager> viewPagerList;
     private FragmentManager fm;
+//  private int[] images = new int[]{R.mipmap.guide_3, R.mipmap.guide_2, R.mipmap.guide_1, R.mipmap.guide_3};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+        //
         fm = getSupportFragmentManager();
         rgTab = (RadioGroup) findViewById(R.id.rg_tab);
         vpContent = (ViewPager) findViewById(R.id.vp_content);
@@ -35,11 +39,13 @@ public class MainActivity extends FragmentActivity {
         rbZhx = (RadioButton) findViewById(R.id.rb_zhx);
         rbCart = (RadioButton) findViewById(R.id.rb_cart);
         rbMy = (RadioButton) findViewById(R.id.rb_my);
+        initTabDrawable();
+//        initViewPager();
         rbHome.setChecked(true);
         vpContent.setAdapter(new ViewPagerAdapter1(fm));
 
-
-        vpContent.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        //viewpager的滑动监听
+        vpContent.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -48,6 +54,23 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onPageSelected(int position) {
 
+              /*  switch (position) {
+                    case PAGE_HOME:
+                        vpContent.setCurrentItem(0, false);
+                        break;
+                    case PAGE_ZHUANGX:
+                        vpContent.setCurrentItem(1, false);
+                        break;
+                    case TAB_CART:
+                        vpContent.setCurrentItem(2, false);
+                        break;
+                    case TAB_MY:
+                        vpContent.setCurrentItem(3, false);
+                        break;
+
+                    default:
+                        break;
+                }*/
             }
 
             @Override
@@ -60,7 +83,7 @@ public class MainActivity extends FragmentActivity {
         rgTab.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
+                switch (checkedId) {
                     case R.id.rb_home:
                         vpContent.setCurrentItem(0, false);
                         break;
@@ -69,7 +92,6 @@ public class MainActivity extends FragmentActivity {
                         break;
                     case R.id.rb_cart:
                         vpContent.setCurrentItem(2, false);
-                        rgTab.setVisibility(View.GONE);
                         break;
                     case R.id.rb_my:
                         vpContent.setCurrentItem(3, false);
@@ -81,6 +103,32 @@ public class MainActivity extends FragmentActivity {
 
     }
 
+    private void initTabDrawable(){
+        Drawable drawableHome = getResources().getDrawable(R.drawable.selector_tab_home);
+        drawableHome.setBounds(0, 0, 60, 60);
+        rbHome.setCompoundDrawables(null, drawableHome, null, null);
+
+        Drawable drawableZhx = getResources().getDrawable(R.drawable.selector_tab_zhx);
+        drawableZhx.setBounds(0, 0, 60, 60);
+        rbZhx.setCompoundDrawables(null, drawableZhx, null, null);
+
+        Drawable drawableCart = getResources().getDrawable(R.drawable.selector_tab_cart);
+        drawableCart.setBounds(0, 0, 60, 60);
+        rbCart.setCompoundDrawables(null, drawableCart, null, null);
+
+        Drawable drawableMy = getResources().getDrawable(R.drawable.selector_tab_my);
+        drawableMy.setBounds(0, 0, 60, 60);
+        rbMy.setCompoundDrawables(null, drawableMy, null, null);
+    }
+
+    /*private void initViewPager(){
+        viewPagerList = new ArrayList<>();
+        viewPagerList.add(new HomePager(MainActivity.this));
+        viewPagerList.add(new ZhxPager(MainActivity.this));
+        viewPagerList.add(new CartPager(MainActivity.this));
+        viewPagerList.add(new MyPager(MainActivity.this));
+
+    }*/
 
     class ViewPagerAdapter1 extends FragmentStatePagerAdapter{
 
@@ -91,12 +139,16 @@ public class MainActivity extends FragmentActivity {
         @Override
         public Fragment getItem(int position) {
             if(position == 0){
-                return new  HomeFragment();
-            } else if (position == 1){
+                //把界面绑定为HomeFragment
+                return new HomeFragment();
+            } else if(position == 1){
+                //把界面绑定为zhuangxFragment
                 return new ZhxFragment();
-            } else if (position == 2){
+            }else if(position == 2){
+                //把界面绑定为CartFragment
                 return new CartFragment();
-            } else {
+            }else {
+                //把界面绑定为MyFragment
                 return new MyFragment();
             }
         }
@@ -106,4 +158,32 @@ public class MainActivity extends FragmentActivity {
             return 4;
         }
     }
+
+    /*class ViewPagerAdapter extends PagerAdapter{
+
+        @Override
+        public int getCount() {
+            return viewPagerList.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+//            ImageView image = new ImageView(MainActivity.this);
+//            image.setImageResource(images[position]);
+//            container.addView(image);
+            BasePager view = viewPagerList.get(position);
+            container.addView(view.mView);
+            return view.mView;
+        }
+    }*/
 }

@@ -2,80 +2,122 @@ package com.gwm.sweethouse;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SyncStatusObserver;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
 
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends Activity implements View.OnClickListener {
     CheckBox checkBox;
-    EditText phoneNumber, identCode;
-    private String code;
-    private String numberString;
-
+    EditText phonEditText, verEditText;
+    Button sensmsButton,verificationButton;
+    ImageButton returnLogin;
+    private String phString;
+    // 填写从短信SDK应用后台注册得到的APPKEY
+    private static String APPKEY = "b00d2dc3c57f";
+    // 填写从短信SDK应用后台注册得到的APPSECRET
+    private static String APPSECRET = "35935d9347caacbe6b7e2bfa21021358";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initViews();
+        //启动SDK
+        SMSSDK.initSDK(RegisterActivity.this, APPKEY, APPSECRET);
+        EventHandler eh=new EventHandler(){
+
+            @Override
+            public void afterEvent(int event, int result, Object data) {
+
+                if (result == SMSSDK.RESULT_COMPLETE) {
+                    //回调完成
+                    if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+                        //提交验证码成功
+                        Log.e("event","提交验证码成功");
+                    }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
+                        //获取验证码成功
+                        Log.e("event","获取验证码成功");
+                    }else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){
+                        //返回支持发送验证码的国家列表
+                    }
+                }else{
+                    ((Throwable)data).printStackTrace();
+                }
+            }
+        };
+        SMSSDK.registerEventHandler(eh); //注册短信回调
     }
 
     private void initViews() {
         checkBox = (CheckBox) findViewById(R.id.cb_agree);
         checkBox.setChecked(true);
-        phoneNumber = (EditText) findViewById(R.id.et_phonenumber);
-        identCode = (EditText) findViewById(R.id.et_identCode);
+        phonEditText = (EditText) findViewById(R.id.et_phonenumber);
+        verEditText = (EditText) findViewById(R.id.et_identCode);
+        sensmsButton = (Button) findViewById(R.id.btn_getCode);
+        verificationButton = (Button) findViewById(R.id.btn_next);
+        returnLogin = (ImageButton) findViewById(R.id.ibtn_return);
 
+        sensmsButton.setOnClickListener(this);
+        verificationButton.setOnClickListener(this);
+        returnLogin.setOnClickListener(this);
     }
 
 
-    public void returnLogin(View view) {
-        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-        startActivity(intent);
 
-    }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ibtn_return:
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.btn_getCode://获取验证码
 
-    //获取验证码按钮的点击事件
-    public void getCode(View view) {
-        Toast.makeText(RegisterActivity.this, "已向该手机发送验证码", Toast.LENGTH_SHORT).show();
+                if(!TextUtils.isEmpty(phonEditText.getText().toString())){
+                    //getVerificationCode用于向服务器请求发送验证码的服务，需要传递国家代号和接收验证码的手机号码，
+                    //请求getVerificationCode的时间间隔不应该小于60秒，否则服务端会返回“操作过于频繁”的错误
+                    SMSSDK.getVerificationCode("86",phonEditText.getText().toString());
+                    Toast.makeText(this, "验证码已发送", Toast.LENGTH_SHORT).show();
+                    /*phString=phonEditText.getText().toString();
+                    Log.e("获取验证码",phString);*/
+                }else {
+                    Toast.makeText(this, "电话不能为空", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.btn_next://校验验证码
+                if(!TextUtils.isEmpty(verEditText.getText().toString())) {
+                    SMSSDK.submitVerificationCode("86", phString, verEditText.getText().toString());
+                    //需要判断验证码是否正确，若正确携带验证码跳转到设置密码界面，否者不进行跳转，重新获取
 
-    }
-
-    public void nextStep(View view) {
-        validate();
-        if (validate()) {
-            Intent intent = new Intent(RegisterActivity.this, RegisterActivity2.class);
-            intent.putExtra("phoneNumber",numberString);
-            startActivity(intent);
+                    Intent intent1 = new Intent(RegisterActivity.this, RegisterActivity2.class);
+                    phString=phonEditText.getText().toString();
+                    //将手机号码携带到密码设置界面，结合密码，添加到数据库
+                    intent1.putExtra("phoneNum",phString);
+                  //  Log.e("校验验证码", phString);
+                    startActivity(intent1);
+                }else {
+                    Toast.makeText(this, "请进行验证",  Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+                break;
         }
     }
 
-    // 输入框空值验证方法
-    public boolean validate() {
-        code = identCode.getText().toString();
-        numberString = phoneNumber.getText().toString();
-        if (numberString.equals("")) {
-            Toast.makeText(RegisterActivity.this, "请输入手机号验证", Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (code.equals("")) {
-            Toast.makeText(RegisterActivity.this, "请输入验证码！", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
-    }
 
-    //向手机发送短信验证码
-    private void sendCode(String number) {
-
-    }
-
-    //获取手机的短信验证码
-    private String getIdentCode() {
-        return " ";
+    @Override
+    protected void onDestroy() {
+        // TODO Auto-generated method stub
+        super.onDestroy();
+        SMSSDK.unregisterAllEventHandler();
     }
 }
