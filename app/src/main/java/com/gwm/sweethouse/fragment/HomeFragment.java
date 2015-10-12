@@ -66,11 +66,12 @@ public class HomeFragment extends Fragment {
     private RefreshLayout mRefreshLayout;
     private TextView textMore;
     private ProgressBar mProgressBar;
-    private ArrayList<Recommend> recommends = new ArrayList<>();
+    private static ArrayList<Recommend> recommends;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = View.inflate(getActivity(), R.layout.pager_home, null);
+
         rlSearch = (RelativeLayout) view.findViewById(R.id.rl_search);
         rlSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,22 +90,7 @@ public class HomeFragment extends Fragment {
             }
         }
         show();
-        if (handler == null){
-            handler = new Handler(){
-                @Override
-                public void handleMessage(Message msg) {
-                    int currentItem = vpTop.getCurrentItem();
-                    if (currentItem < images.length - 1){
-                        currentItem++;
-                    } else {
-                        currentItem = 0;
-                    }
-                    vpTop.setCurrentItem(currentItem);
-                    handler.sendEmptyMessageDelayed(0, 3000);
-                }
-            };
-            handler.sendEmptyMessageDelayed(0, 3000);
-        }
+
 
         return view;
     }
@@ -152,6 +138,7 @@ public class HomeFragment extends Fragment {
     }
     private LoadResult load() {
         HomeProtocol protocol = new HomeProtocol(GlobalContacts.RECOMMEND_URL);
+        recommends = new ArrayList<>();
         recommends = protocol.loadData();
         if (recommends == null){
             return LoadResult.error;
@@ -177,15 +164,16 @@ public class HomeFragment extends Fragment {
         if (emptyView != null) {
             emptyView.setVisibility(state == STATE_EMPTY ? View.VISIBLE : View.INVISIBLE);
         }
-
-        if (successView == null) {
-            successView = createSuccessView();
-            frameLayout.addView(successView,
-                    new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.MATCH_PARENT));
-            successView.setVisibility(state == STATE_SUCCESS ? View.VISIBLE:View.INVISIBLE);
-        } else {
-            successView.setVisibility(state == STATE_SUCCESS ? View.VISIBLE : View.INVISIBLE);
+        if (state == STATE_SUCCESS){
+            if (successView == null) {
+                successView = createSuccessView();
+                frameLayout.addView(successView,
+                        new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.MATCH_PARENT));
+                successView.setVisibility(state == STATE_SUCCESS ? View.VISIBLE:View.INVISIBLE);
+            } else {
+                successView.setVisibility(state == STATE_SUCCESS ? View.VISIBLE : View.INVISIBLE);
+            }
         }
     }
 
@@ -221,7 +209,22 @@ public class HomeFragment extends Fragment {
         textMore = (TextView) footerView.findViewById(R.id.text_more);
         mProgressBar = (ProgressBar) footerView.findViewById(R.id.load_progress_bar);
 
-
+        if (handler == null){
+            handler = new Handler(){
+                @Override
+                public void handleMessage(Message msg) {
+                    int currentItem = vpTop.getCurrentItem();
+                    if (currentItem < images.length - 1){
+                        currentItem++;
+                    } else {
+                        currentItem = 0;
+                    }
+                    vpTop.setCurrentItem(currentItem);
+                    handler.sendEmptyMessageDelayed(0, 3000);
+                }
+            };
+            handler.sendEmptyMessageDelayed(0, 3000);
+        }
 
         mRefreshLayout = (RefreshLayout) view.findViewById(R.id.swipe_container);
         lvRecommend = (GridViewWithHeaderAndFooter) view.findViewById(R.id.lv_recommend);
@@ -312,7 +315,7 @@ public class HomeFragment extends Fragment {
 
         @Override
         public Object getItem(int position) {
-            return null;
+            return recommends.get(position);
         }
 
         @Override
@@ -333,15 +336,15 @@ public class HomeFragment extends Fragment {
             } else {
                 holder = (RecommendViewHolder) convertView.getTag();
             }
-            /*Recommend recommend = recommends.get(position);
+            Recommend recommend = recommends.get(position);
             holder.ivRecommend.setImageResource(R.drawable.image1);
             holder.tvRecommendTitle.setText(recommend.getProduct_name() + "[" +
                     recommend.getProduct_desc() + "]");
 //            holder.tvRecommendTitle.setText("AAAAAAAAAA");
-            holder.tvRecommendPrice.setText("￥ " + recommend.getProduct_price());*/
-            holder.ivRecommend.setImageResource(R.drawable.image1);
+            holder.tvRecommendPrice.setText("￥ " + recommend.getProduct_price());
+            /*holder.ivRecommend.setImageResource(R.drawable.image1);
             holder.tvRecommendTitle.setText("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            holder.tvRecommendPrice.setText("￥ 123");
+            holder.tvRecommendPrice.setText("￥ 123");*/
             return convertView;
         }
     }

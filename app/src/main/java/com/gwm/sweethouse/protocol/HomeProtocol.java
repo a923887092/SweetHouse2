@@ -1,17 +1,11 @@
 package com.gwm.sweethouse.protocol;
 
-import android.util.Log;
+import android.os.Environment;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.gwm.sweethouse.bean.Recommend;
 import com.gwm.sweethouse.utils.FilesUtils;
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
-
-import org.apache.http.HttpException;
-import org.apache.http.HttpRequest;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -23,11 +17,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
-import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 
 /**
@@ -39,6 +30,8 @@ public class HomeProtocol {
 
 
     public HomeProtocol(String url) {
+        String ab = Environment.getExternalStorageDirectory().toString();
+        System.out.println("============" + ab);
         this.MURL = url;
     }
 
@@ -49,6 +42,7 @@ public class HomeProtocol {
     public ArrayList<Recommend> loadData(){
         String json = loadLocal();
         if (json == null){
+            System.out.println("json == null");
             json = loadServer();
             if (json != null){
                 saveLocal(json);
@@ -77,7 +71,8 @@ public class HomeProtocol {
     private void saveLocal(String json) {
         BufferedWriter bw = null;
         try {
-            File file = new File("cache", "home_recommend");
+            File dir = FilesUtils.getCacheDri();
+            File file = new File(dir, "home_recommend");
             FileWriter fw = new FileWriter(file);
             bw = new BufferedWriter(fw);
             bw.write(System.currentTimeMillis() + 1000* 60 + "");
@@ -100,25 +95,6 @@ public class HomeProtocol {
     从服务器得到数据
      */
     private String loadServer() {
-        /*HttpUtils httpUtils = new HttpUtils();
-        final String[] mResult = new String[1];
-        httpUtils.send(com.lidroid.xutils.http.client.HttpRequest.HttpMethod.GET, MURL,
-                new RequestCallBack<String>() {
-                    @Override
-                    public void onSuccess(ResponseInfo<String> responseInfo) {
-                        String string = responseInfo.toString();
-                        String result = responseInfo.result;
-                        if (result != null){
-                            mResult[0] =responseInfo.result;
-                        }
-                        System.out.println("HomeProtocol:" + string + "---" + mResult[0]);
-                    }
-
-                    @Override
-                    public void onFailure(com.lidroid.xutils.exception.HttpException e, String s) {
-                        System.out.println("---------------!!!!!!!");
-                    }
-                });*/
         InputStream inputStream = null;
 
         try {
@@ -176,7 +152,7 @@ public class HomeProtocol {
                 while((str = br.readLine()) != null){
                     sw.write(str);
                 }
-
+                System.out.println("++++" + sw.toString());
                 return sw.toString();
             }
         } catch (IOException e) {
