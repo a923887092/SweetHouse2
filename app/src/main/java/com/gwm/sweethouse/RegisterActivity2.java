@@ -14,7 +14,7 @@ public class RegisterActivity2 extends Activity {
 
     EditText editText1,editText2;
     String firstPass,secondPass;
-    Intent intent;
+    Intent intent1;
     String phoneNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +22,8 @@ public class RegisterActivity2 extends Activity {
         setContentView(R.layout.activity_register2);
         editText1 = (EditText) findViewById(R.id.et_remind1);
         editText2 = (EditText) findViewById(R.id.et_remind2);
-        intent = getIntent();
-        phoneNumber = intent.getStringExtra("phoneNumber");
+        intent1 = getIntent();
+
     }
 
     public void toRegister(View view){
@@ -38,9 +38,13 @@ public class RegisterActivity2 extends Activity {
         }else if (secondPass == ""){
             Toast.makeText(RegisterActivity2.this,"请再次输入初始密码",Toast.LENGTH_SHORT).show();
         }else{
+            phoneNumber = intent1.getStringExtra("phoneNum");
+            firstPass = editText1.getText().toString();
+            //已经能够Toast显示用户名和密码，
+            Toast.makeText(this,phoneNumber+firstPass,Toast.LENGTH_SHORT).show();
             //将用户名和密码添加到数据库
-            addToDatabase();
 
+           // addToDatabase();
             //然后跳转到首页
             Intent intent = new Intent(RegisterActivity2.this, MainActivity.class);
             startActivity(intent);

@@ -6,10 +6,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsoluteLayout;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,13 +45,13 @@ public class SearchActivity extends Activity implements View.OnClickListener {
         sp = getSharedPreferences("config", MODE_PRIVATE);
         String history_search = sp.getString("history_search", "");
         gson = new Gson();
+        adapter = new AgoListAdapter();
         if (!TextUtils.isEmpty(history_search)) {
             historySearchList = gson.fromJson(history_search, ArrayList.class);
-            adapter = new AgoListAdapter();
-            lvAgo.setAdapter(adapter);
         } else {
             System.out.println("-----");
         }
+        lvAgo.setAdapter(adapter);
         tvSearch.setOnClickListener(this);
         ivBack.setOnClickListener(this);
         btnClear.setOnClickListener(this);
@@ -74,6 +78,7 @@ public class SearchActivity extends Activity implements View.OnClickListener {
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView view = new TextView(SearchActivity.this);
             view.setText(getItem(position));
+            view.setPadding(10, 10, 10, 10);
             return view;
         }
     }
@@ -91,9 +96,11 @@ public class SearchActivity extends Activity implements View.OnClickListener {
                     Toast.makeText(SearchActivity.this, "不能为空", Toast.LENGTH_SHORT).show();
                 } else {
                     int count = 0;
-                    for (String content1 :historySearchList){
-                        if (content.equals(content1)){
-                            count++;
+                    if (!historySearchList.isEmpty()){
+                        for (String content1 :historySearchList){
+                            if (content.equals(content1)){
+                                count++;
+                            }
                         }
                     }
                     if (count == 0) {
