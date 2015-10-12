@@ -25,13 +25,17 @@ import android.widget.Toast;
 import com.gwm.sweethouse.R;
 import com.gwm.sweethouse.SearchActivity;
 import com.gwm.sweethouse.adapter.HomePagerContentAdapter;
+import com.gwm.sweethouse.bean.Recommend;
+import com.gwm.sweethouse.global.GlobalContacts;
 import com.gwm.sweethouse.manager.ThreadManager;
+import com.gwm.sweethouse.protocol.HomeProtocol;
 import com.gwm.sweethouse.utils.UiUtils;
 import com.gwm.sweethouse.view.GridViewWithHeaderAndFooter;
 import com.gwm.sweethouse.view.HeaderGridView;
 import com.gwm.sweethouse.view.RefreshLayout;
 import com.viewpagerindicator.CirclePageIndicator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,6 +66,7 @@ public class HomeFragment extends Fragment {
     private RefreshLayout mRefreshLayout;
     private TextView textMore;
     private ProgressBar mProgressBar;
+    private ArrayList<Recommend> recommends = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -83,7 +88,6 @@ public class HomeFragment extends Fragment {
                 group.removeView(frameLayout);
             }
         }
-        showPage();
         show();
         if (handler == null){
             handler = new Handler(){
@@ -106,7 +110,7 @@ public class HomeFragment extends Fragment {
     }
 
     public enum LoadResult {
-        error(2),empty(3),seccuss(4);
+        error(2),empty(3),success(4);
         int value;
 
         public int getValue() {
@@ -131,6 +135,7 @@ public class HomeFragment extends Fragment {
             public void run() {
                 SystemClock.sleep(2000);
                 final LoadResult result = load();
+                System.out.println(result);
                 UiUtils.runOnUiThread(new Runnable() {
 
                     @Override
@@ -143,14 +148,20 @@ public class HomeFragment extends Fragment {
                 });
             }
         });
-
-        state = STATE_SUCCESS;
         showPage();
     }
-
     private LoadResult load() {
-
-        return null;
+        HomeProtocol protocol = new HomeProtocol(GlobalContacts.RECOMMEND_URL);
+        recommends = protocol.loadData();
+        if (recommends == null){
+            return LoadResult.error;
+        } else {
+            if (recommends.size() == 0){
+                return LoadResult.empty;
+            } else {
+                return LoadResult.success;
+            }
+        }
     }
 
     private void showPage() {
@@ -217,7 +228,9 @@ public class HomeFragment extends Fragment {
         lvRecommend.addHeaderView(headerView);
         lvRecommend.addFooterView(footerView);
         mRefreshLayout.setChildView(lvRecommend);
-        lvRecommend.setAdapter(new GridViewAdapter());
+//        if (recommends.size() != 0){
+            lvRecommend.setAdapter(new GridViewAdapter());
+//        }
         mRefreshLayout.setColorSchemeResources(R.color.google_blue,
                 R.color.google_green,
                 R.color.google_red,
@@ -294,7 +307,7 @@ public class HomeFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return 10;
+            return recommends.size();
         }
 
         @Override
@@ -320,11 +333,15 @@ public class HomeFragment extends Fragment {
             } else {
                 holder = (RecommendViewHolder) convertView.getTag();
             }
-
-            holder.tvRecommendTitle.setText("哈哈哈哈哈哈哈哈哈哈");
-            holder.tvRecommendPrice.setText("￥ 3456");
+            /*Recommend recommend = recommends.get(position);
             holder.ivRecommend.setImageResource(R.drawable.image1);
-
+            holder.tvRecommendTitle.setText(recommend.getProduct_name() + "[" +
+                    recommend.getProduct_desc() + "]");
+//            holder.tvRecommendTitle.setText("AAAAAAAAAA");
+            holder.tvRecommendPrice.setText("￥ " + recommend.getProduct_price());*/
+            holder.ivRecommend.setImageResource(R.drawable.image1);
+            holder.tvRecommendTitle.setText("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            holder.tvRecommendPrice.setText("￥ 123");
             return convertView;
         }
     }
