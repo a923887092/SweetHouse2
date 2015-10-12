@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -24,6 +25,8 @@ import android.widget.Toast;
 import com.gwm.sweethouse.R;
 import com.gwm.sweethouse.SearchActivity;
 import com.gwm.sweethouse.adapter.HomePagerContentAdapter;
+import com.gwm.sweethouse.manager.ThreadManager;
+import com.gwm.sweethouse.utils.UiUtils;
 import com.gwm.sweethouse.view.GridViewWithHeaderAndFooter;
 import com.gwm.sweethouse.view.HeaderGridView;
 import com.gwm.sweethouse.view.RefreshLayout;
@@ -102,14 +105,52 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    public enum LoadResult {
+        error(2),empty(3),seccuss(4);
+        int value;
+
+        public int getValue() {
+            return value;
+        }
+
+        LoadResult(int value) {
+            this.value = value;
+        }
+    }
+
     private void show() {
         if (state == STATE_UNKNOW || state == STATE_ERROR) {
             state = STATE_LOADING;
         }
 
+        // 请求服务器 获取服务器上数据 进行判断
+        // 请求服务器 返回一个结果
+        ThreadManager.getInstance().createLongPool().execute(new Runnable() {
+
+            @Override
+            public void run() {
+                SystemClock.sleep(2000);
+                final LoadResult result = load();
+                UiUtils.runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        if (result != null) {
+                            state = result.getValue();
+                            showPage(); // 状态改变了,重新判断当前应该显示哪个界面
+                        }
+                    }
+                });
+            }
+        });
 
         state = STATE_SUCCESS;
         showPage();
+    }
+
+    private LoadResult load() {
+
+        return null;
     }
 
     private void showPage() {
