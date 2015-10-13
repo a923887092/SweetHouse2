@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -24,11 +25,17 @@ import android.widget.Toast;
 import com.gwm.sweethouse.R;
 import com.gwm.sweethouse.SearchActivity;
 import com.gwm.sweethouse.adapter.HomePagerContentAdapter;
+import com.gwm.sweethouse.bean.Recommend;
+import com.gwm.sweethouse.global.GlobalContacts;
+import com.gwm.sweethouse.manager.ThreadManager;
+import com.gwm.sweethouse.protocol.HomeProtocol;
+import com.gwm.sweethouse.utils.UiUtils;
 import com.gwm.sweethouse.view.GridViewWithHeaderAndFooter;
 import com.gwm.sweethouse.view.HeaderGridView;
 import com.gwm.sweethouse.view.RefreshLayout;
 import com.viewpagerindicator.CirclePageIndicator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,10 +66,12 @@ public class HomeFragment extends Fragment {
     private RefreshLayout mRefreshLayout;
     private TextView textMore;
     private ProgressBar mProgressBar;
+    private static ArrayList<Recommend> recommends;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = View.inflate(getActivity(), R.layout.pager_home, null);
+
         rlSearch = (RelativeLayout) view.findViewById(R.id.rl_search);
         rlSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,26 +89,23 @@ public class HomeFragment extends Fragment {
                 group.removeView(frameLayout);
             }
         }
-        showPage();
         show();
-        if (handler == null){
-            handler = new Handler(){
-                @Override
-                public void handleMessage(Message msg) {
-                    int currentItem = vpTop.getCurrentItem();
-                    if (currentItem < images.length - 1){
-                        currentItem++;
-                    } else {
-                        currentItem = 0;
-                    }
-                    vpTop.setCurrentItem(currentItem);
-                    handler.sendEmptyMessageDelayed(0, 3000);
-                }
-            };
-            handler.sendEmptyMessageDelayed(0, 3000);
-        }
+
 
         return view;
+    }
+
+    public enum LoadResult {
+        error(2),empty(3),success(4);
+        int value;
+
+        public int getValue() {
+            return value;
+        }
+
+        LoadResult(int value) {
+            this.value = value;
+        }
     }
 
     private void show() {
@@ -107,9 +113,42 @@ public class HomeFragment extends Fragment {
             state = STATE_LOADING;
         }
 
+        // 请求服务器 获取服务器上数据 进行判断
+        // 请求服务器 返回一个结果
+        ThreadManager.getInstance().createLongPool().execute(new Runnable() {
 
-        state = STATE_SUCCESS;
+            @Override
+            public void run() {
+                SystemClock.sleep(2000);
+                final LoadResult result = load();
+                System.out.println(result);
+                UiUtils.runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        if (result != null) {
+                            state = result.getValue();
+                            showPage(); // 状态改变了,重新判断当前应该显示哪个界面
+                        }
+                    }
+                });
+            }
+        });
         showPage();
+    }
+    private LoadResult load() {
+        HomeProtocol protocol = new HomeProtocol(GlobalContacts.RECOMMEND_URL);
+        recommends = new ArrayList<>();
+        recommends = protocol.loadData();
+        if (recommends == null){
+            return LoadResult.error;
+        } else {
+            if (recommends.size() == 0){
+                return LoadResult.empty;
+            } else {
+                return LoadResult.success;
+            }
+        }
     }
 
     private void showPage() {
@@ -125,15 +164,16 @@ public class HomeFragment extends Fragment {
         if (emptyView != null) {
             emptyView.setVisibility(state == STATE_EMPTY ? View.VISIBLE : View.INVISIBLE);
         }
-
-        if (successView == null) {
-            successView = createSuccessView();
-            frameLayout.addView(successView,
-                    new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.MATCH_PARENT));
-            successView.setVisibility(state == STATE_SUCCESS ? View.VISIBLE:View.INVISIBLE);
-        } else {
-            successView.setVisibility(state == STATE_SUCCESS ? View.VISIBLE : View.INVISIBLE);
+        if (state == STATE_SUCCESS){
+            if (successView == null) {
+                successView = createSuccessView();
+                frameLayout.addView(successView,
+                        new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.MATCH_PARENT));
+                successView.setVisibility(state == STATE_SUCCESS ? View.VISIBLE:View.INVISIBLE);
+            } else {
+                successView.setVisibility(state == STATE_SUCCESS ? View.VISIBLE : View.INVISIBLE);
+            }
         }
     }
 
@@ -169,14 +209,31 @@ public class HomeFragment extends Fragment {
         textMore = (TextView) footerView.findViewById(R.id.text_more);
         mProgressBar = (ProgressBar) footerView.findViewById(R.id.load_progress_bar);
 
-
+        if (handler == null){
+            handler = new Handler(){
+                @Override
+                public void handleMessage(Message msg) {
+                    int currentItem = vpTop.getCurrentItem();
+                    if (currentItem < images.length - 1){
+                        currentItem++;
+                    } else {
+                        currentItem = 0;
+                    }
+                    vpTop.setCurrentItem(currentItem);
+                    handler.sendEmptyMessageDelayed(0, 3000);
+                }
+            };
+            handler.sendEmptyMessageDelayed(0, 3000);
+        }
 
         mRefreshLayout = (RefreshLayout) view.findViewById(R.id.swipe_container);
         lvRecommend = (GridViewWithHeaderAndFooter) view.findViewById(R.id.lv_recommend);
         lvRecommend.addHeaderView(headerView);
         lvRecommend.addFooterView(footerView);
         mRefreshLayout.setChildView(lvRecommend);
-        lvRecommend.setAdapter(new GridViewAdapter());
+//        if (recommends.size() != 0){
+            lvRecommend.setAdapter(new GridViewAdapter());
+//        }
         mRefreshLayout.setColorSchemeResources(R.color.google_blue,
                 R.color.google_green,
                 R.color.google_red,
@@ -253,12 +310,12 @@ public class HomeFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return 10;
+            return recommends.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return null;
+            return recommends.get(position);
         }
 
         @Override
@@ -279,11 +336,15 @@ public class HomeFragment extends Fragment {
             } else {
                 holder = (RecommendViewHolder) convertView.getTag();
             }
-
-            holder.tvRecommendTitle.setText("哈哈哈哈哈哈哈哈哈哈");
-            holder.tvRecommendPrice.setText("￥ 3456");
+            Recommend recommend = recommends.get(position);
             holder.ivRecommend.setImageResource(R.drawable.image1);
-
+            holder.tvRecommendTitle.setText(recommend.getProduct_name() + "[" +
+                    recommend.getProduct_desc() + "]");
+//            holder.tvRecommendTitle.setText("AAAAAAAAAA");
+            holder.tvRecommendPrice.setText("￥ " + recommend.getProduct_price());
+            /*holder.ivRecommend.setImageResource(R.drawable.image1);
+            holder.tvRecommendTitle.setText("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            holder.tvRecommendPrice.setText("￥ 123");*/
             return convertView;
         }
     }
