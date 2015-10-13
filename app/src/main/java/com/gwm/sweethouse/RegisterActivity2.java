@@ -33,7 +33,6 @@ public class RegisterActivity2 extends Activity {
 
     public void commitRegister(View view){
         if (firstPass==""){
-
             Toast.makeText(RegisterActivity2.this,"初始密码不能为空",Toast.LENGTH_SHORT).show();
         }else if (secondPass == ""){
             Toast.makeText(RegisterActivity2.this,"请再次输入初始密码",Toast.LENGTH_SHORT).show();
@@ -42,9 +41,8 @@ public class RegisterActivity2 extends Activity {
             firstPass = editText1.getText().toString();
             //已经能够Toast显示用户名和密码，
             Toast.makeText(this,phoneNumber+firstPass,Toast.LENGTH_SHORT).show();
-            //将用户名和密码添加到数据库
 
-           // addToDatabase();
+
             //然后跳转到首页
             Intent intent = new Intent(RegisterActivity2.this, MainActivity.class);
             startActivity(intent);
