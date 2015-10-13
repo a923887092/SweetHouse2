@@ -1,1 +1,2 @@
-include ':ViewPagerIndicatorLibrary', ':app'
+include ':app'
+include ':ViewPagerIndicatorLibrary'
