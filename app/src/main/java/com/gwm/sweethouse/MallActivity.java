@@ -1,11 +1,16 @@
 package com.gwm.sweethouse;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 
 import com.gwm.sweethouse.fragment.mall.WyFragment;
 import com.gwm.sweethouse.fragment.mall.ZmFragment;
@@ -16,15 +21,31 @@ public class MallActivity extends FragmentActivity {
     private NoFullScreenViewPager vpSubClass;
     private FragmentManager fm;
     private RadioGroup rgClass;
+    private ImageView ivBack;
+    private RelativeLayout rlSearch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mall);
         vpSubClass = (NoFullScreenViewPager) findViewById(R.id.vp_subclass);
         rgClass = (RadioGroup) findViewById(R.id.rg_class);
+        ivBack = (ImageView) findViewById(R.id.iv_sort_back);
+        rlSearch = (RelativeLayout) findViewById(R.id.rl_mall_search);
         fm = getSupportFragmentManager();
         vpSubClass.setAdapter(new VpSubClassAdapter(fm));
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
+        rlSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MallActivity.this, SearchActivity.class));
+            }
+        });
         rgClass.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

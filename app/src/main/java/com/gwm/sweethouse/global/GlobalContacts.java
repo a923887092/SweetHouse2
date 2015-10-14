@@ -5,6 +5,6 @@ package com.gwm.sweethouse.global;
  */
 public class GlobalContacts {
 //    public static final String SERVER_URL = "http://192.168.56.1:8080/SweetHouse";
-    public static final String SERVER_URL = "http://10.40.8.44:8080/SweetHouse";
+    public static final String SERVER_URL = "http://10.0.3.2:8080/SweetHouse";
     public static final String RECOMMEND_URL = SERVER_URL + "/recommendServlet?method=getJson";
 }
