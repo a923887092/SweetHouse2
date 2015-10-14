@@ -3,40 +3,20 @@ package com.gwm.sweethouse.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.gwm.sweethouse.MallActivity;
 import com.gwm.sweethouse.R;
 import com.gwm.sweethouse.SearchActivity;
-import com.gwm.sweethouse.adapter.HomePagerContentAdapter;
-import com.gwm.sweethouse.bean.Recommend;
-import com.gwm.sweethouse.global.GlobalContacts;
 import com.gwm.sweethouse.manager.ThreadManager;
-import com.gwm.sweethouse.protocol.HomeProtocol;
 import com.gwm.sweethouse.utils.UiUtils;
-import com.gwm.sweethouse.view.GridViewWithHeaderAndFooter;
-import com.gwm.sweethouse.view.RefreshLayout;
-import com.lidroid.xutils.BitmapUtils;
-import com.viewpagerindicator.CirclePageIndicator;
-
-import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2015/9/28.

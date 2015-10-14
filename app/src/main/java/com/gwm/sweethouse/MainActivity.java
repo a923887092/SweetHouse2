@@ -1,6 +1,5 @@
 package com.gwm.sweethouse;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -39,7 +38,7 @@ public class MainActivity extends FragmentActivity {
         rbZhx = (RadioButton) findViewById(R.id.rb_zhx);
         rbCart = (RadioButton) findViewById(R.id.rb_cart);
         rbMy = (RadioButton) findViewById(R.id.rb_my);
-        initTabDrawable();
+//        initTabDrawable();
 //        initViewPager();
         rbHome.setChecked(true);
         vpContent.setAdapter(new ViewPagerAdapter1(fm));
@@ -102,34 +101,6 @@ public class MainActivity extends FragmentActivity {
         });
 
     }
-
-    private void initTabDrawable(){
-        Drawable drawableHome = getResources().getDrawable(R.drawable.selector_tab_home);
-        drawableHome.setBounds(0, 0, 60, 60);
-        rbHome.setCompoundDrawables(null, drawableHome, null, null);
-
-        Drawable drawableZhx = getResources().getDrawable(R.drawable.selector_tab_zhx);
-        drawableZhx.setBounds(0, 0, 60, 60);
-        rbZhx.setCompoundDrawables(null, drawableZhx, null, null);
-
-        Drawable drawableCart = getResources().getDrawable(R.drawable.selector_tab_cart);
-        drawableCart.setBounds(0, 0, 60, 60);
-        rbCart.setCompoundDrawables(null, drawableCart, null, null);
-
-        Drawable drawableMy = getResources().getDrawable(R.drawable.selector_tab_my);
-        drawableMy.setBounds(0, 0, 60, 60);
-        rbMy.setCompoundDrawables(null, drawableMy, null, null);
-    }
-
-    /*private void initViewPager(){
-        viewPagerList = new ArrayList<>();
-        viewPagerList.add(new HomePager(MainActivity.this));
-        viewPagerList.add(new ZhxPager(MainActivity.this));
-        viewPagerList.add(new CartPager(MainActivity.this));
-        viewPagerList.add(new MyPager(MainActivity.this));
-
-    }*/
-
     class ViewPagerAdapter1 extends FragmentStatePagerAdapter{
 
         public ViewPagerAdapter1(FragmentManager fm) {

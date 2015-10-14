@@ -10,41 +10,46 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@mipmap/bg_bar">
+
         <ImageView
-            android:src="@drawable/back"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="14dp"
-            android:layout_marginStart="14dp" />
+            android:layout_marginStart="14dp"
+            android:src="@drawable/back" />
+
         <TextView
-            android:textColor="#fff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="网上商城"
+            android:textColor="#fff"
             android:textSize="20dp" />
 
     </RelativeLayout>
+
     <LinearLayout
-        android:layout_below="@id/rl_title"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_title"
+        android:orientation="vertical">
 
         <RelativeLayout
-            android:layout_marginTop="5dp"
-            android:layout_gravity="center_horizontal"
             android:id="@+id/rl_search"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/shape_search_area"
             android:clickable="true">
+
             <TextView
                 android:id="@+id/tv_search"
                 android:layout_width="wrap_content"
@@ -58,136 +63,122 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
             <ScrollView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:scrollbars="none">
+
                 <RadioGroup
-                    android:id="@+id/rg_tab"
+                    android:id="@+id/rg_class"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="#fff"
                     android:orientation="vertical">
-                    <LinearLayout
-                        android:background="@drawable/shape_cate_bg"
+
+                    <RadioButton
+                        android:id="@+id/rb_zm"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/selector_sort_bg"
+                        android:button="@null"
+                        android:checked="true"
+                        android:drawablePadding="15dp"
+                        android:drawableTop="@drawable/selector_zm_drawable"
+                        android:padding="12dp"
+                        android:text="开关照明"
+                        android:textColor="@drawable/selector_tab_text"
+                        android:textSize="12dp" />
 
-                        <RadioButton
-                            android:layout_margin="12dp"
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
-                            android:button="@null"
-                            android:textSize="12dp"
-                            android:id="@+id/rb_zm"
-                            android:drawablePadding="15dp"
-                            android:drawableTop="@drawable/zm_normal"
-                            android:text="开关照明" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:background="@drawable/shape_cate_bg"
+                    <RadioButton
+                        android:id="@+id/rb_wy"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/selector_sort_bg"
+                        android:button="@null"
+                        android:drawablePadding="15dp"
+                        android:drawableTop="@drawable/selector_wy_drawable"
+                        android:padding="12dp"
+                        android:text="卫浴洁具"
+                        android:textColor="@drawable/selector_tab_text"
+                        android:textSize="12dp" />
 
-                        <RadioButton
-                            android:layout_margin="12dp"
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
-                            android:button="@null"
-                            android:textSize="12dp"
-                            android:id="@+id/rb_wy"
-                            android:drawablePadding="15dp"
-                            android:drawableTop="@drawable/wy_normal"
-                            android:text="卫浴洁具" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:background="@drawable/shape_cate_bg"
+                    <RadioButton
+                        android:id="@+id/rb_chw"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/selector_sort_bg"
+                        android:button="@null"
+                        android:drawablePadding="15dp"
+                        android:drawableTop="@drawable/selector_chw_drawable"
+                        android:padding="12dp"
+                        android:text="厨卫电器"
+                        android:textColor="@drawable/selector_tab_text"
+                        android:textSize="12dp" />
 
-                        <RadioButton
-                            android:layout_margin="12dp"
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
-                            android:button="@null"
-                            android:textSize="12dp"
-                            android:id="@+id/rb_chw"
-                            android:drawablePadding="15dp"
-                            android:drawableTop="@drawable/chw_normal"
-                            android:text="厨卫电器" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:background="@drawable/shape_cate_bg"
+                    <RadioButton
+                        android:id="@+id/rb_kw"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/selector_sort_bg"
+                        android:button="@null"
+                        android:drawablePadding="15dp"
+                        android:drawableTop="@drawable/selector_kw_drawable"
+                        android:padding="12dp"
+                        android:text="客卧主材"
+                        android:textColor="@drawable/selector_tab_text"
+                        android:textSize="12dp" />
 
-                        <RadioButton
-                            android:layout_margin="12dp"
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
-                            android:button="@null"
-                            android:textSize="12dp"
-                            android:id="@+id/rb_kw"
-                            android:drawablePadding="15dp"
-                            android:drawableTop="@drawable/kw_normal"
-                            android:text="客卧主材" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:background="@drawable/shape_cate_bg"
+                    <RadioButton
+                        android:id="@+id/rb_wj"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/selector_sort_bg"
+                        android:button="@null"
+                        android:drawablePadding="15dp"
+                        android:drawableTop="@drawable/selector_wj_drawable"
+                        android:padding="12dp"
+                        android:text="五金配件"
+                        android:textColor="@drawable/selector_tab_text"
+                        android:textSize="12dp" />
 
-                        <RadioButton
-                            android:layout_margin="12dp"
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
-                            android:button="@null"
-                            android:textSize="12dp"
-                            android:id="@+id/rb_wj"
-                            android:drawablePadding="15dp"
-                            android:drawableTop="@drawable/wj_normal"
-                            android:text="五金配件" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:background="@drawable/shape_cate_bg"
+                    <RadioButton
+                        android:id="@+id/rb_jjrzh"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/selector_sort_bg"
+                        android:button="@null"
+                        android:drawablePadding="15dp"
+                        android:drawableTop="@drawable/selector_jjrzh_drawable"
+                        android:padding="12dp"
+                        android:text="家具软装"
+                        android:textColor="@drawable/selector_tab_text"
+                        android:textSize="12dp" />
 
-                        <RadioButton
-                            android:layout_margin="12dp"
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
-                            android:button="@null"
-                            android:textSize="12dp"
-                            android:id="@+id/rb_jjrzh"
-                            android:drawablePadding="15dp"
-                            android:drawableTop="@drawable/jjrzh_normal"
-                            android:text="家具软装" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:background="@drawable/shape_cate_bg"
+                    <RadioButton
+                        android:id="@+id/rb_jjyp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <RadioButton
-                            android:layout_margin="12dp"
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
-                            android:button="@null"
-                            android:textSize="12dp"
-                            android:id="@+id/rb_jjyp"
-                            android:drawablePadding="15dp"
-                            android:drawableTop="@drawable/jjyp_normal"
-                            android:text="家居用品" />
-                    </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/selector_sort_bg"
+                        android:button="@null"
+                        android:drawablePadding="15dp"
+                        android:drawableTop="@drawable/selector_jjyp_drawable"
+                        android:padding="12dp"
+                        android:text="家居用品"
+                        android:textColor="@drawable/selector_tab_text"
+                        android:textSize="12dp" />
                 </RadioGroup>
             </ScrollView>
+            <com.gwm.sweethouse.view.NoFullScreenViewPager
+                android:layout_marginLeft="5dp"
+                android:id="@+id/vp_subclass"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </com.gwm.sweethouse.view.NoFullScreenViewPager>
         </LinearLayout>
     </LinearLayout>
 

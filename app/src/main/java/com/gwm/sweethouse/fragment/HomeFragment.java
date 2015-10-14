@@ -2,46 +2,30 @@ package com.gwm.sweethouse.fragment;
 
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gwm.sweethouse.MallActivity;
 import com.gwm.sweethouse.R;
-import com.gwm.sweethouse.SearchActivity;
 import com.gwm.sweethouse.adapter.HomePagerContentAdapter;
+import com.gwm.sweethouse.adapter.MyBaseAdapter;
 import com.gwm.sweethouse.bean.Recommend;
 import com.gwm.sweethouse.global.GlobalContacts;
-import com.gwm.sweethouse.manager.ThreadManager;
 import com.gwm.sweethouse.protocol.HomeProtocol;
-import com.gwm.sweethouse.utils.UiUtils;
 import com.gwm.sweethouse.view.GridViewWithHeaderAndFooter;
-import com.gwm.sweethouse.view.HeaderGridView;
 import com.gwm.sweethouse.view.RefreshLayout;
 import com.lidroid.xutils.BitmapUtils;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2015/9/28.
@@ -61,14 +45,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private RadioButton btnMall;
     private static ArrayList<Recommend> recommends;
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.shangcheng:
-                startActivity(new Intent(getActivity(), MallActivity.class));
-                break;
-        }
-    }
     public LoadResult load() {
         HomeProtocol protocol = new HomeProtocol(GlobalContacts.RECOMMEND_URL);
         recommends = new ArrayList<>();
@@ -165,30 +141,15 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         System.out.println("成功界面创建了");
         return view;
     }
-    class GridViewAdapter extends BaseAdapter {
+    class GridViewAdapter extends MyBaseAdapter<Recommend> {
         BitmapUtils utils;
         public GridViewAdapter() {
+            super(recommends);
             utils = new BitmapUtils(getActivity());
             utils.configDefaultLoadingImage(R.drawable.image1);
         }
-
         @Override
-        public int getCount() {
-            return recommends.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return recommends.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        protected View getViews(int position, View convertView, ViewGroup parent) {
             RecommendViewHolder holder;
             if (convertView == null){
                 convertView = View.inflate(getActivity(), R.layout.item_list_reconmmend, null);
@@ -201,21 +162,23 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 holder = (RecommendViewHolder) convertView.getTag();
             }
             Recommend recommend = recommends.get(position);
-//            holder.ivRecommend.setImageResource(R.drawable.image1);
             utils.display(holder.ivRecommend, GlobalContacts.SERVER_URL + recommend.getProduct_photo());
             holder.tvRecommendTitle.setText(recommend.getProduct_name() + "[" +
                     recommend.getProduct_desc() + "]");
-//            holder.tvRecommendTitle.setText("AAAAAAAAAA");
             holder.tvRecommendPrice.setText("￥ " + recommend.getProduct_price());
-            /*holder.ivRecommend.setImageResource(R.drawable.image1);
-            holder.tvRecommendTitle.setText("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            holder.tvRecommendPrice.setText("￥ 123");*/
             return convertView;
         }
     }
-
     class RecommendViewHolder{
         TextView tvRecommendTitle, tvRecommendPrice;
         ImageView ivRecommend;
+    }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.shangcheng:
+                startActivity(new Intent(getActivity(), MallActivity.class));
+                break;
+        }
     }
 }
