@@ -39,17 +39,17 @@ public class HomeProtocol {
          * 加载并解析数据
          * @param index
          */
-    public ArrayList<Recommend> loadData(){
+    public ArrayList<Recommend> loadData() {
         String json = loadLocal();
-        if (json == null){
-            System.out.println("json == null");
+        if (json == null) {
             json = loadServer();
-            if (json != null){
+            if (json != null) {
                 saveLocal(json);
             }
         }
+        System.out.println("json == null");
 
-        if (json != null){
+        if (json != null) {
             return paserJson(json);
         } else {
             return null;
@@ -61,7 +61,8 @@ public class HomeProtocol {
      */
     private ArrayList<Recommend> paserJson(String json) {
         Gson gson = new Gson();
-        ArrayList<Recommend> arrayList = gson.fromJson(json, new TypeToken<ArrayList<Recommend>>(){}.getType());
+        ArrayList<Recommend> arrayList = gson.fromJson(json, new TypeToken<ArrayList<Recommend>>() {
+        }.getType());
         return arrayList;
     }
 
@@ -75,13 +76,13 @@ public class HomeProtocol {
             File file = new File(dir, "home_recommend");
             FileWriter fw = new FileWriter(file);
             bw = new BufferedWriter(fw);
-            bw.write(System.currentTimeMillis() + 1000* 60 + "");
+            bw.write(System.currentTimeMillis() + 1000 * 60 + "");
             bw.newLine();
             bw.write(json);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (bw != null){
+            if (bw != null) {
                 try {
                     bw.close();
                 } catch (IOException e) {
@@ -104,12 +105,13 @@ public class HomeProtocol {
             System.out.println(MURL);
             URL url = new URL(MURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(5000);
             inputStream = conn.getInputStream();
-            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream,  "UTF-8"));
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
             StringBuffer sb = new StringBuffer();
             String data1 = "";
             while ((data1 = br.readLine()) != null) {
-                sb.append(data1+"\n");
+                sb.append(data1 + "\n");
             }
             System.out.println(sb.toString());
             return sb.toString();
@@ -123,7 +125,7 @@ public class HomeProtocol {
             e.printStackTrace();
             return null;
         } finally {
-            if (inputStream != null){
+            if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
@@ -139,17 +141,17 @@ public class HomeProtocol {
      */
     private String loadLocal() {
         File dri = FilesUtils.getCacheDri();
-        File file = new File(dri, "home_recommend");
+        File file = new File(dri, "home1_recommend");
         try {
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
             Long outOfData = Long.parseLong(br.readLine());
-            if (System.currentTimeMillis() > outOfData){
+            if (System.currentTimeMillis() > outOfData) {
                 return null;
             } else {
                 String str;
                 StringWriter sw = new StringWriter();
-                while((str = br.readLine()) != null){
+                while ((str = br.readLine()) != null) {
                     sw.write(str);
                 }
                 System.out.println("++++" + sw.toString());

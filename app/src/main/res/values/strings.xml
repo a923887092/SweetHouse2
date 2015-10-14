@@ -9,4 +9,5 @@
     <string name="title_activity_search">SearchActivity</string>
     <string name="title_activity_my_purse">MyPurseActivity</string>
     <string name="title_activity_my_card">MyCardActivity</string>
+    <string name="title_activity_mall">MallActivity</string>
 </resources>

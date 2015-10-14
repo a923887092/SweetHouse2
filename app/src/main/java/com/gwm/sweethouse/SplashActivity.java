@@ -53,7 +53,7 @@ public class SplashActivity extends Activity {
             //动画执行结束
             @Override
             public void onAnimationEnd(Animation animation) {
-           jumpNextPage();
+                jumpNextPage();
             }
 
             @Override
@@ -69,7 +69,8 @@ public class SplashActivity extends Activity {
         //判断是否第一次进入过新手引导页
 
         //默认不是第一次进入
-        boolean userGuide= PrefUtils.getBoolean(this, "is_user_guide_show", false);
+        boolean userGuide= PrefUtils.getBoolean(this, "is_user_guide_showed", false);
+        System.out.println("userGuide" + userGuide);
         if(!userGuide){
             startActivity(new Intent(SplashActivity.this,GuideActivity.class));
         }else{

@@ -13,15 +13,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gwm.sweethouse.MallActivity;
 import com.gwm.sweethouse.R;
 import com.gwm.sweethouse.SearchActivity;
 import com.gwm.sweethouse.adapter.HomePagerContentAdapter;
@@ -33,6 +36,7 @@ import com.gwm.sweethouse.utils.UiUtils;
 import com.gwm.sweethouse.view.GridViewWithHeaderAndFooter;
 import com.gwm.sweethouse.view.HeaderGridView;
 import com.gwm.sweethouse.view.RefreshLayout;
+import com.lidroid.xutils.BitmapUtils;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
@@ -42,101 +46,30 @@ import java.util.Map;
 /**
  * Created by Administrator on 2015/9/28.
  */
-public class HomeFragment extends Fragment {
-    private FrameLayout frameLayout;
-    private View loadingView;
-    private View errorView;
-    private View emptyView;
-    private CirclePageIndicator mIndicator;
+public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     private static final int[] images = new int[]{R.mipmap.top1, R.mipmap.top2, R.mipmap.top1};
-
-    private static final int STATE_UNKNOW = 0;
-    private static final int STATE_LOADING = 1;
-    private static final int STATE_ERROR = 2;
-    private static final int STATE_EMPTY = 3;
-    private static final int STATE_SUCCESS = 4;
-    private int state = STATE_UNKNOW;
-    private View successView;
-
     private Handler handler;
+
+
+    private CirclePageIndicator mIndicator;
     private ViewPager vpTop;
-    private RelativeLayout rlSearch;
     private GridViewWithHeaderAndFooter lvRecommend;
     private RefreshLayout mRefreshLayout;
     private TextView textMore;
     private ProgressBar mProgressBar;
+    private RadioButton btnMall;
     private static ArrayList<Recommend> recommends;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = View.inflate(getActivity(), R.layout.pager_home, null);
-
-        rlSearch = (RelativeLayout) view.findViewById(R.id.rl_search);
-        rlSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), SearchActivity.class));
-            }
-        });
-        if (frameLayout == null) {
-            frameLayout = (FrameLayout) view.findViewById(R.id.fl_content);
-            init();
-        } else {
-            ViewParent parent = frameLayout.getParent();
-            if (parent instanceof ViewGroup) {
-                ViewGroup group = (ViewGroup) parent;
-                group.removeView(frameLayout);
-            }
-        }
-        show();
-
-
-        return view;
-    }
-
-    public enum LoadResult {
-        error(2),empty(3),success(4);
-        int value;
-
-        public int getValue() {
-            return value;
-        }
-
-        LoadResult(int value) {
-            this.value = value;
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.shangcheng:
+                startActivity(new Intent(getActivity(), MallActivity.class));
+                break;
         }
     }
-
-    private void show() {
-        if (state == STATE_UNKNOW || state == STATE_ERROR) {
-            state = STATE_LOADING;
-        }
-
-        // 请求服务器 获取服务器上数据 进行判断
-        // 请求服务器 返回一个结果
-        ThreadManager.getInstance().createLongPool().execute(new Runnable() {
-
-            @Override
-            public void run() {
-                SystemClock.sleep(2000);
-                final LoadResult result = load();
-                System.out.println(result);
-                UiUtils.runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        if (result != null) {
-                            state = result.getValue();
-                            showPage(); // 状态改变了,重新判断当前应该显示哪个界面
-                        }
-                    }
-                });
-            }
-        });
-        showPage();
-    }
-    private LoadResult load() {
+    public LoadResult load() {
         HomeProtocol protocol = new HomeProtocol(GlobalContacts.RECOMMEND_URL);
         recommends = new ArrayList<>();
         recommends = protocol.loadData();
@@ -150,65 +83,14 @@ public class HomeFragment extends Fragment {
             }
         }
     }
-
-    private void showPage() {
-        if (loadingView != null) {
-            loadingView.setVisibility(state == STATE_UNKNOW || state == STATE_LOADING ? View.VISIBLE :
-                    View.INVISIBLE);
-        }
-
-        if (errorView != null) {
-            errorView.setVisibility(state == STATE_ERROR ? View.VISIBLE : View.INVISIBLE);
-        }
-
-        if (emptyView != null) {
-            emptyView.setVisibility(state == STATE_EMPTY ? View.VISIBLE : View.INVISIBLE);
-        }
-        if (state == STATE_SUCCESS){
-            if (successView == null) {
-                successView = createSuccessView();
-                frameLayout.addView(successView,
-                        new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.MATCH_PARENT));
-                successView.setVisibility(state == STATE_SUCCESS ? View.VISIBLE:View.INVISIBLE);
-            } else {
-                successView.setVisibility(state == STATE_SUCCESS ? View.VISIBLE : View.INVISIBLE);
-            }
-        }
-    }
-
-    private void init() {
-        if (loadingView == null) {
-            loadingView = createLoadingView();
-            frameLayout.addView(loadingView,
-                    new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.MATCH_PARENT));
-        }
-
-        if (errorView == null) {
-            errorView = createErrorView();
-            frameLayout.addView(errorView,
-                    new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.MATCH_PARENT));
-        }
-
-        if (emptyView == null) {
-            emptyView = createEmptyView();
-            frameLayout.addView(emptyView,
-                    new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.MATCH_PARENT));
-        }
-    }
-
-    private View createSuccessView() {
-//        TextView view = new TextView(getActivity());
-//        view.setText("成功了");
+    public View createSuccessView() {
         View headerView = View.inflate(getActivity(), R.layout.pager_home_content_header, null);
         View view = View.inflate(getActivity(), R.layout.pager_home_content, null);
         View footerView = View.inflate(getActivity(), R.layout.listview_footer, null);
         textMore = (TextView) footerView.findViewById(R.id.text_more);
         mProgressBar = (ProgressBar) footerView.findViewById(R.id.load_progress_bar);
-
+        btnMall = (RadioButton) headerView.findViewById(R.id.shangcheng);
+        btnMall.setOnClickListener(this);
         if (handler == null){
             handler = new Handler(){
                 @Override
@@ -256,8 +138,6 @@ public class HomeFragment extends Fragment {
                 }, 2000);
             }
         });
-
-
         //使用自定义的RefreshLayout加载更多监听
         //use customed RefreshLayout OnLoadListener
         mRefreshLayout.setOnLoadListener(new RefreshLayout.OnLoadListener() {
@@ -278,8 +158,6 @@ public class HomeFragment extends Fragment {
                 }, 2000);
             }
         });
-
-
         vpTop = (ViewPager) headerView.findViewById(R.id.vp_top);
         vpTop.setAdapter(new HomePagerContentAdapter(images, getActivity()));
         mIndicator = (CirclePageIndicator)headerView.findViewById(R.id.indicator);
@@ -287,26 +165,12 @@ public class HomeFragment extends Fragment {
         System.out.println("成功界面创建了");
         return view;
     }
-
-
-
-    private View createEmptyView() {
-        View view = View.inflate(getActivity(), R.layout.empty_page, null);
-        return view;
-    }
-
-    private View createErrorView() {
-        View view = View.inflate(getActivity(), R.layout.error_page, null);
-        return view;
-    }
-
-    private View createLoadingView() {
-        View view = View.inflate(getActivity(), R.layout.loading_page, null);
-        return view;
-    }
-
-
     class GridViewAdapter extends BaseAdapter {
+        BitmapUtils utils;
+        public GridViewAdapter() {
+            utils = new BitmapUtils(getActivity());
+            utils.configDefaultLoadingImage(R.drawable.image1);
+        }
 
         @Override
         public int getCount() {
@@ -337,7 +201,8 @@ public class HomeFragment extends Fragment {
                 holder = (RecommendViewHolder) convertView.getTag();
             }
             Recommend recommend = recommends.get(position);
-            holder.ivRecommend.setImageResource(R.drawable.image1);
+//            holder.ivRecommend.setImageResource(R.drawable.image1);
+            utils.display(holder.ivRecommend, GlobalContacts.SERVER_URL + recommend.getProduct_photo());
             holder.tvRecommendTitle.setText(recommend.getProduct_name() + "[" +
                     recommend.getProduct_desc() + "]");
 //            holder.tvRecommendTitle.setText("AAAAAAAAAA");
