@@ -36,8 +36,6 @@ public class MyFragment extends Fragment {
         rbCard = (RadioButton) view.findViewById(R.id.rb_card);
         rbPurse = (RadioButton) view.findViewById(R.id.rb_purse);
 
-
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,8 +54,5 @@ public class MyFragment extends Fragment {
             }
         });
         return view;
-
     }
-
-
 }
