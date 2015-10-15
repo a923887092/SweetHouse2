@@ -12,6 +12,8 @@
         android:background="@mipmap/bg_bar">
 
         <ImageView
+            android:clickable="true"
+            android:id="@+id/iv_sort_back"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_alignParentLeft="true"
@@ -39,7 +41,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/rl_search"
+            android:id="@+id/rl_mall_search"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
