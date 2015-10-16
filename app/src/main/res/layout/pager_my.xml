@@ -113,6 +113,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="#FFFAFA">
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"

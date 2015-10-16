@@ -8,5 +8,6 @@
         android:width="1dp"
         android:color="#910F0E10" />
 	<!-- 虚线的高度 -->
+
     <size android:height="1dp" />
 </shape><!-- From: file:/F:/AndroidStudioWorkspace/SweetHouse2/app/src/main/res/drawable/dotted_line.xml -->

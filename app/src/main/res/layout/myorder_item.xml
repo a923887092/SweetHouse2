@@ -81,7 +81,6 @@
             android:layout_gravity="right"
             android:id="@+id/orderDeleteButton"/>
 
-
     </LinearLayout>
 
 </LinearLayout><!-- From: file:/F:/AndroidStudioWorkspace/SweetHouse2/app/src/main/res/layout/myorder_item.xml -->

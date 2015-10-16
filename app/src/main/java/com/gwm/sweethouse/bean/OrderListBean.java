@@ -50,6 +50,8 @@ public class OrderListBean implements Serializable{
         this.price = price;
     }
 
+
+
     public OrderListBean(String goodsname, String goodsDescribe, int imagesrc, int price) {
         this.goodsname = goodsname;
         this.goodsDescribe = goodsDescribe;

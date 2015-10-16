@@ -46,13 +46,6 @@ public class MyOrderActivity extends Activity {
                         .show();
             }
         });
-
-
-
-
-
-
-
     }
 
     @Override

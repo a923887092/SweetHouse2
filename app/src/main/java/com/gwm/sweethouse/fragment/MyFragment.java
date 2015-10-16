@@ -52,8 +52,6 @@ public class MyFragment extends Fragment implements View.OnClickListener {
 
 
 
-
-
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
