@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-   <RelativeLayout
-       android:id="@+id/top_my"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content">
-       <ImageView
-           android:layout_width="match_parent"
-           android:layout_height="50dp"
-           android:background="#ff0000"/>
-       <ImageView
-           android:layout_width="30dp"
-           android:layout_height="wrap_content"
-           android:src="@drawable/my_message"
-           android:layout_marginLeft="6dp"
-           android:layout_centerVertical="true"
-           />
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="我的"
-           android:textSize="20sp"
-           android:textColor="#ffffff"
-           android:layout_centerVertical="true"
-           android:layout_centerHorizontal="true" />
-   </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/top_my"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#ff0000"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/my_message"
+            android:layout_marginLeft="6dp"
+            android:layout_centerVertical="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/welcome"
         android:layout_below="@id/top_my"
@@ -36,10 +36,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_my_bg"
-        android:scaleType="fitStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_my_bg"
+            android:scaleType="fitStart"
             android:id="@+id/imageView3"
             android:layout_alignBottom="@+id/rg_money" />
         <TextView
@@ -114,7 +114,7 @@
         android:layout_alignParentStart="true"
         android:background="#FFFAFA">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
@@ -132,7 +132,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1"
@@ -151,7 +151,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1"
@@ -165,12 +165,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="待收货"/>
+                android:text="待收货" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1"
@@ -189,7 +189,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1"
@@ -205,6 +205,47 @@
                 android:layout_gravity="center"
                 android:text="退款/售后"/>
         </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/dotted_line"
+        android:orientation="horizontal"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:onClick="dianji"
+        android:id="@+id/allorder">
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@drawable/order_icon"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="13dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全部订单"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="查看全部已购商品"
+            android:layout_marginRight="10dp"
+            android:textSize="12dp"
+            android:gravity="right" />
+
+
     </LinearLayout>
 
-</RelativeLayout>
+
+</LinearLayout>
+    <!-- From: file:/F:/AndroidStudioWorkspace/SweetHouse2/app/src/main/res/layout/pager_my.xml -->

@@ -61,6 +61,10 @@
             android:name=".MallActivity"
             android:label="@string/title_activity_mall" >
         </activity>
+        <activity
+            android:name=".MyOrderActivity"
+            android:label="@string/title_activity_my_order" >
+        </activity>
     </application>
 
 </manifest>

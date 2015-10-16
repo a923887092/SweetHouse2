@@ -9,6 +9,8 @@ import android.view.View;
 public abstract class BasePager {
     public View mView;
     public Activity mActivity;
+    private int s;
+
 
     public BasePager(Activity mActivity) {
         this.mActivity = mActivity;
