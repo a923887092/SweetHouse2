@@ -7,4 +7,5 @@ public class GlobalContacts {
 //    public static final String SERVER_URL = "http://192.168.56.1:8080/SweetHouse";
     public static final String SERVER_URL = "http://10.0.3.2:8080/SweetHouse";
     public static final String RECOMMEND_URL = SERVER_URL + "/recommendServlet?method=getJson";
+    public static final String VISON_URL = "http://10.40.8.13:8080/SweetHouse";
 }

@@ -61,4 +61,7 @@
         android:layout_below="@+id/et_remind2"
         android:layout_centerHorizontal="true" />
 
+
+
+
 </RelativeLayout>

@@ -126,7 +126,7 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public int getCount() {
-            return 4;
+            return rgTab.getChildCount();
         }
     }
 
