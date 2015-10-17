@@ -5,16 +5,30 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.gwm.sweethouse.R;
+import com.gwm.sweethouse.adapter.MyBaseAdapter;
+import com.gwm.sweethouse.bean.SubClass;
+import com.gwm.sweethouse.global.GlobalContacts;
+
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2015/10/14.
  */
-public class WyFragment extends Fragment {
+public class WyFragment extends BaseMallFragment {
+    private TextView tvSortTitle;
+
+    public WyFragment(ArrayList<SubClass> subClasses) {
+        super(subClasses);
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        TextView view = new TextView(getActivity());
-        view.setText("-----------------");
-        return view;
+    protected void initView(View view) {
+        tvSortTitle = (TextView) view.findViewById(R.id.tv_sort_title);
+        tvSortTitle.setText("卫浴洁具");
     }
 }

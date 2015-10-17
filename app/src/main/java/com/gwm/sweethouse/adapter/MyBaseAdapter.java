@@ -1,8 +1,11 @@
 package com.gwm.sweethouse.adapter;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
+import com.lidroid.xutils.BitmapUtils;
 
 import java.util.ArrayList;
 
@@ -11,9 +14,10 @@ import java.util.ArrayList;
  */
 public abstract class MyBaseAdapter<T> extends BaseAdapter {
     protected ArrayList<T> datas;
-
-    public MyBaseAdapter(ArrayList<T> datas) {
+    protected BitmapUtils utils;
+    public MyBaseAdapter(ArrayList<T> datas, Context context) {
         this.datas = datas;
+        utils = new BitmapUtils(context);
     }
 
     @Override

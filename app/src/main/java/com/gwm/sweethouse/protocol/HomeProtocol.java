@@ -1,6 +1,7 @@
 package com.gwm.sweethouse.protocol;
 
 import android.os.Environment;
+import android.widget.BaseAdapter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -24,142 +25,23 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2015/10/12.
  */
-public class HomeProtocol {
+public class HomeProtocol extends BaseProtocol<ArrayList<Recommend>> {
     private static final String TAG = "HomeProtocol";
-    private String MURL;
-
 
     public HomeProtocol(String url) {
-        String ab = Environment.getExternalStorageDirectory().toString();
-        System.out.println("============" + ab);
-        this.MURL = url;
+        super(url);
     }
 
-    /*
-         * 加载并解析数据
-         * @param index
-         */
-    public ArrayList<Recommend> loadData() {
-        String json = loadLocal();
-        if (json == null) {
-            json = loadServer();
-            if (json != null) {
-                saveLocal(json);
-            }
-        }
-        System.out.println("json == null");
-
-        if (json != null) {
-            return paserJson(json);
-        } else {
-            return null;
-        }
-    }
-
-    /*
-    解析json数据
-     */
-    private ArrayList<Recommend> paserJson(String json) {
+    @Override
+    public ArrayList<Recommend> paserJson(String json) {
         Gson gson = new Gson();
         ArrayList<Recommend> arrayList = gson.fromJson(json, new TypeToken<ArrayList<Recommend>>() {
         }.getType());
         return arrayList;
     }
 
-    /*
-    缓存数据到本地
-     */
-    private void saveLocal(String json) {
-        BufferedWriter bw = null;
-        try {
-            File dir = FilesUtils.getCacheDri();
-            File file = new File(dir, "home_recommend");
-            FileWriter fw = new FileWriter(file);
-            bw = new BufferedWriter(fw);
-            bw.write(System.currentTimeMillis() + 1000 * 60 + "");
-            bw.newLine();
-            bw.write(json);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (bw != null) {
-                try {
-                    bw.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    /*
-    从服务器得到数据
-     */
-    private String loadServer() {
-        InputStream inputStream = null;
-
-        try {
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            byte[] data = new byte[1024];
-            int len = 0;
-            System.out.println(MURL);
-            URL url = new URL(MURL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setConnectTimeout(5000);
-            inputStream = conn.getInputStream();
-            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-            StringBuffer sb = new StringBuffer();
-            String data1 = "";
-            while ((data1 = br.readLine()) != null) {
-                sb.append(data1 + "\n");
-            }
-            System.out.println(sb.toString());
-            return sb.toString();
-//            while ((len = inputStream.read(data)) != -1){
-//                outputStream.write(data, 0, len);
-//            }
-//            System.out.println("++++++" + new String(outputStream.toByteArray()));
-//            String content = new String(outputStream.toByteArray());
-//            return URLDecoder.decode(content, "UTF-8");
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-//        Log.d(TAG + ":loadServer", mResult[0]);
-    }
-
-    /*
-    从本地缓存得到数据
-     */
-    private String loadLocal() {
-        File dri = FilesUtils.getCacheDri();
-        File file = new File(dri, "home1_recommend");
-        try {
-            FileReader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
-            Long outOfData = Long.parseLong(br.readLine());
-            if (System.currentTimeMillis() > outOfData) {
-                return null;
-            } else {
-                String str;
-                StringWriter sw = new StringWriter();
-                while ((str = br.readLine()) != null) {
-                    sw.write(str);
-                }
-                System.out.println("++++" + sw.toString());
-                return sw.toString();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+    @Override
+    protected String getTypes() {
+        return "home_recommend";
     }
 }

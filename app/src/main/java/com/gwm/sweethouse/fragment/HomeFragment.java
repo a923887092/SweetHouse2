@@ -10,11 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gwm.sweethouse.MallActivity;
 import com.gwm.sweethouse.R;
+import com.gwm.sweethouse.SearchActivity;
 import com.gwm.sweethouse.adapter.HomePagerContentAdapter;
 import com.gwm.sweethouse.adapter.MyBaseAdapter;
 import com.gwm.sweethouse.bean.Recommend;
@@ -23,6 +25,11 @@ import com.gwm.sweethouse.protocol.HomeProtocol;
 import com.gwm.sweethouse.view.GridViewWithHeaderAndFooter;
 import com.gwm.sweethouse.view.RefreshLayout;
 import com.lidroid.xutils.BitmapUtils;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
@@ -44,8 +51,24 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private ProgressBar mProgressBar;
     private RadioButton btnMall;
     private static ArrayList<Recommend> recommends;
+    private RelativeLayout rlSearch;
+    public HomeFragment() {
+        super(R.layout.pager_home);
+    }
+
+    @Override
+    protected void initFragment(View view) {
+        rlSearch = (RelativeLayout) view.findViewById(R.id.rl_search);
+        rlSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SearchActivity.class));
+            }
+        });
+    }
 
     public LoadResult load() {
+
         HomeProtocol protocol = new HomeProtocol(GlobalContacts.RECOMMEND_URL);
         recommends = new ArrayList<>();
         recommends = protocol.loadData();
@@ -59,6 +82,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             }
         }
     }
+
     public View createSuccessView() {
         View headerView = View.inflate(getActivity(), R.layout.pager_home_content_header, null);
         View view = View.inflate(getActivity(), R.layout.pager_home_content, null);
@@ -142,10 +166,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         return view;
     }
     class GridViewAdapter extends MyBaseAdapter<Recommend> {
-        BitmapUtils utils;
         public GridViewAdapter() {
-            super(recommends);
-            utils = new BitmapUtils(getActivity());
+            super(recommends, getActivity());
             utils.configDefaultLoadingImage(R.drawable.image1);
         }
         @Override

@@ -37,23 +37,23 @@ public abstract class BaseFragment extends Fragment {
     private static final int STATE_SUCCESS = 4;
     //初始状态
     private int state = STATE_UNKNOW;
+    private int mLayoutId;
+    public BaseFragment(int layoutId) {
+        this.mLayoutId = layoutId;
+    }
 
-    private RelativeLayout rlSearch;
+
     private Button btnFailed;
+
+
+
     /*
     Fragment创建时调用此方法
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = View.inflate(getActivity(), R.layout.pager_home, null);
-
-        rlSearch = (RelativeLayout) view.findViewById(R.id.rl_search);
-        rlSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), SearchActivity.class));
-            }
-        });
+        View view = View.inflate(getActivity(), mLayoutId, null);
+        initFragment(view);
         if (frameLayout == null) {
             frameLayout = (FrameLayout) view.findViewById(R.id.fl_content);
             init();
@@ -67,6 +67,9 @@ public abstract class BaseFragment extends Fragment {
         show();
         return view;
     }
+
+    protected abstract void initFragment(View view);
+
     /*
     一个表示加载数据后界面状态的枚举
      */
@@ -83,7 +86,7 @@ public abstract class BaseFragment extends Fragment {
     /*
        根据加载后界面的状态显示不同状态下该显示的界面
      */
-    private void show() {
+    protected void show() {
         if (state == STATE_UNKNOW || state == STATE_ERROR) {
             state = STATE_LOADING;
         }
