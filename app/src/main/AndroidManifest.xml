@@ -37,9 +37,12 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main" >
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".RegisterActivity2" />
+        <activity
+            android:name=".LoginActivity" />
+        <activity
+            android:name=".RegisterActivity" />
+        <activity
+            android:name=".RegisterActivity2" />
         <activity
             android:name=".SearchActivity"
             android:label="@string/title_activity_search" >
@@ -50,20 +53,24 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".MyPurseActivity"
-            android:label="@string/title_activity_my_purse" >
-        </activity>
-        <activity
-            android:name=".MyCardActivity"
-            android:label="@string/title_activity_my_card" >
-        </activity>
-        <activity
             android:name=".MallActivity"
             android:label="@string/title_activity_mall" >
         </activity>
         <activity
             android:name=".MyOrderActivity"
-            android:label="@string/title_activity_my_order" >
+            android:label="@string/title_activity_myorder" >
+        </activity>
+        <activity
+            android:name=".MyAddressActivity"
+            android:label="@string/title_activity_my_address" >
+        </activity>
+        <activity
+            android:name=".MyAdviceActivity"
+            android:label="@string/title_activity_advice" >
+        </activity>
+        <activity
+            android:name=".MyWalletActivity"
+            android:label="@string/title_activity_my_wallet" >
         </activity>
     </application>
 

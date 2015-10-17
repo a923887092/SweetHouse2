@@ -1,8 +1,6 @@
 package com.gwm.sweethouse;
 
 import android.app.Activity;
-import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -31,7 +29,7 @@ public class MyOrderActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_my_order);
+        setContentView(R.layout.activity_myorder);
         Log.e("111111111111", "oncreat");
         listView = (ListView) findViewById(R.id.listorders);
         getData();

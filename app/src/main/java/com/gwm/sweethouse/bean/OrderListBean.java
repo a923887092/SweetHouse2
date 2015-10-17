@@ -5,9 +5,9 @@ import android.util.Log;
 import java.io.Serializable;
 
 /**
- * Created by Administrator on 2015/10/13.
+ * Created by Administrator on 2015/10/16.
  */
-public class OrderListBean implements Serializable{
+public class OrderListBean implements Serializable {
     private String goodsname;
     private String goodsDescribe;
     private int imagesrc;
@@ -42,7 +42,7 @@ public class OrderListBean implements Serializable{
     }
 
     public OrderListBean() {
-        Log.e("3.5","bean");
+        Log.e("3.5", "bean");
     }
 
     public void setPrice(int price) {

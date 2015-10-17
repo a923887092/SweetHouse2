@@ -1,23 +1,26 @@
+
+
+
 package com.gwm.sweethouse.adapter;
 
-import android.content.Context;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+        import android.content.Context;
+        import android.util.Log;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.BaseAdapter;
+        import android.widget.Button;
+        import android.widget.ImageView;
+        import android.widget.TextView;
 
-import com.gwm.sweethouse.R;
-import com.gwm.sweethouse.bean.OrderListBean;
+        import com.gwm.sweethouse.R;
+        import com.gwm.sweethouse.bean.OrderListBean;
 
-import java.util.ArrayList;
-import java.util.List;
+        import java.util.ArrayList;
+        import java.util.List;
 
 /**
- * Created by Administrator on 2015/10/13.
+ * Created by Administrator on 2015/10/16.
  */
 public class OrderListAdapter extends BaseAdapter{
     List<OrderListBean> list=new ArrayList<OrderListBean>();
@@ -81,5 +84,4 @@ public class OrderListAdapter extends BaseAdapter{
 
     }
 }
-
 
