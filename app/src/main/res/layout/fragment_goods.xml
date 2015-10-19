@@ -1,13 +1,15 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.gwm.sweethouse.view.RefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:id="@+id/swipe_container"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:background="#EFEFEF"
-    tools:context="com.gwm.sweethouse.MallActivity">
-    <TextView
-        android:text="商品列表"
-        android:textColor="#f00"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    tools:context=".MainActivity">
 
-</RelativeLayout>
+    <com.gwm.sweethouse.view.GridViewWithHeaderAndFooter
+        android:id="@+id/lv_recommend"
+        android:verticalSpacing="5dp"
+        android:horizontalSpacing="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="1" />
+</com.gwm.sweethouse.view.RefreshLayout>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="#fff"
+    android:orientation="vertical">
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/iv_good"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/image1" />
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_margin="12dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_good_title"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="2" />
+
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/tv_good_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#f63" />
+
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/good_sale_num"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#f63" />
+    </LinearLayout>
+</LinearLayout>
+
+</LinearLayout>
