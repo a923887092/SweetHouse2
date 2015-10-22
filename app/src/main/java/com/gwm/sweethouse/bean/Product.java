@@ -1,6 +1,8 @@
 package com.gwm.sweethouse.bean;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable{
 	private int product_id;
 	private String product_name;
 	private int xl_id;

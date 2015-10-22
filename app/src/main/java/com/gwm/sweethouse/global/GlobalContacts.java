@@ -16,4 +16,6 @@ public class GlobalContacts {
     public static final String MALL_ZM_URL = SERVER_URL + "/productXlServlet?method=getJson&dlName=" + Uri.encode("开关照明");
     public static final String MALL_WY_URL = SERVER_URL + "/productXlServlet?method=getJson&dlName=" + Uri.encode("卫浴洁具");
     public static final String GOODS_ZM_URL = SERVER_URL + "/ProductServlet?method=getJson&xlId=";
+    public static final String GOOD_URL = SERVER_URL + "/ProductServlet?method=getProductJson&id=";
+    public static final String GOOD_IMG_URL = SERVER_URL + "/ProductServlet?method=getProductImgJson&id=";
 }

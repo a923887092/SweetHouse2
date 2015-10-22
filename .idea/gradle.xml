@@ -10,8 +10,15 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/RatingBarLibrary" />
+            <option value="$PROJECT_DIR$/SlidingMenu" />
+            <option value="$PROJECT_DIR$/SmartTabLayout-master" />
             <option value="$PROJECT_DIR$/ViewPagerIndicatorLibrary" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/convenientbanner" />
+            <option value="$PROJECT_DIR$/library" />
+            <option value="$PROJECT_DIR$/utils-v13" />
+            <option value="$PROJECT_DIR$/utils-v4" />
           </set>
         </option>
       </GradleProjectSettings>

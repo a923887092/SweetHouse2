@@ -1,2 +1,2 @@
-include ':app'
+include ':app', 'RatingBarLibrary', ':convenientbanner', 'SmartTabLayout-master', ':library', ':utils-v13', ':utils-v4', 'SlidingMenu'
 include ':ViewPagerIndicatorLibrary'

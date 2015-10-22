@@ -131,6 +131,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     public void run() {
                         mRefreshLayout.setRefreshing(false);
 //                        mAdapter.notifyDataSetChanged();
+
                         textMore.setVisibility(View.VISIBLE);
                         mProgressBar.setVisibility(View.GONE);
                         Toast.makeText(getActivity(), "Refresh Finished!", Toast.LENGTH_SHORT).show();

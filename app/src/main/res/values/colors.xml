@@ -10,5 +10,6 @@
     <item name="green" type="color">#FF3BBD79</item>
     <color name="font_black_content">#222222</color>
     <color name="font_black_6">#ff666666</color>
+    <color name="choose_eara_item_press_color">#f4f4f4</color>
     <color name="white_pressed">#ffd5d5d5</color>
 </resources>

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -17,12 +16,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gwm.sweethouse.DetailsActivity;
 import com.gwm.sweethouse.GoodsActivity;
 import com.gwm.sweethouse.R;
 import com.gwm.sweethouse.SearchActivity;
 import com.gwm.sweethouse.adapter.MyBaseAdapter;
 import com.gwm.sweethouse.bean.Product;
-import com.gwm.sweethouse.bean.Recommend;
 import com.gwm.sweethouse.bean.TopicLabelObject;
 import com.gwm.sweethouse.fragment.BaseFragment;
 import com.gwm.sweethouse.global.GlobalContacts;
@@ -81,7 +80,7 @@ public class GoodsFragment extends BaseFragment {
     protected LoadResult load() {
         int sortId = mFragmentCallBack.callbackFun(null);
 //        System.out.println("++++++++++++++_______-" + a);
-        GoodsProtocol protocol = new GoodsProtocol(GlobalContacts.GOODS_ZM_URL + sortId, "goods_zm");
+        GoodsProtocol protocol = new GoodsProtocol(GlobalContacts.GOODS_ZM_URL + sortId, "goods_zm" + sortId);
         LogUtils.i("mUrl:" + GlobalContacts.GOODS_ZM_URL);
         goods = protocol.loadData();
         LogUtils.i("goods:" + goods);
@@ -195,6 +194,9 @@ public class GoodsFragment extends BaseFragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     LogUtils.i("跳转到商品详情页面：" + position);
+                    Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                    intent.putExtra("goodsId", goods.get(position).getProduct_id());
+                    startActivity(intent);
                 }
             });
         }

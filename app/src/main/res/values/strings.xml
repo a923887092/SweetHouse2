@@ -15,4 +15,5 @@
     <string name="title_activity_my_address">MyAddressActivity</string>
     <string name="title_activity_advice">AdviceActivity</string>
     <string name="title_activity_my_wallet">MyWalletActivity</string>
+    <string name="title_activity_detail">DetailActivity</string>
 </resources>

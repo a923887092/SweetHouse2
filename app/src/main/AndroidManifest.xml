@@ -37,12 +37,9 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main" >
         </activity>
-        <activity
-            android:name=".LoginActivity" />
-        <activity
-            android:name=".RegisterActivity" />
-        <activity
-            android:name=".RegisterActivity2" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".RegisterActivity2" />
         <activity
             android:name=".SearchActivity"
             android:label="@string/title_activity_search" >
@@ -75,6 +72,10 @@
         <activity
             android:name=".GoodsActivity"
             android:label="@string/title_activity_goods" >
+        </activity>
+        <activity
+            android:name=".DetailsActivity"
+            android:label="@string/title_activity_detail" >
         </activity>
     </application>
 
