@@ -27,9 +27,10 @@ import java.util.ArrayList;
  */
 public class HomeProtocol extends BaseProtocol<ArrayList<Recommend>> {
     private static final String TAG = "HomeProtocol";
-
-    public HomeProtocol(String url) {
+    private String dir;
+    public HomeProtocol(String url, String dir) {
         super(url);
+        this.dir = dir;
     }
 
     @Override
@@ -42,6 +43,6 @@ public class HomeProtocol extends BaseProtocol<ArrayList<Recommend>> {
 
     @Override
     protected String getTypes() {
-        return "home_recommend";
+        return dir;
     }
 }

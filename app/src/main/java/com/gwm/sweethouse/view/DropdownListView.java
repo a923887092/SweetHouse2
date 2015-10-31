@@ -1,15 +1,25 @@
 package com.gwm.sweethouse.view;
 
 import android.content.Context;
+import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.gwm.sweethouse.R;
+import com.gwm.sweethouse.bean.Product;
+import com.gwm.sweethouse.manager.ThreadManager;
+import com.gwm.sweethouse.protocol.GoodsProtocol;
+import com.gwm.sweethouse.utils.FilesUtils;
+import com.gwm.sweethouse.utils.LogUtils;
+import com.gwm.sweethouse.utils.UiUtils;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,7 +30,7 @@ public class DropdownListView extends ScrollView {
     public LinearLayout linearLayout;
 
     public DropdownItemObject current;
-
+    private Context context;
     List<? extends DropdownItemObject> list;
 
     public DropdownButton button;
@@ -35,7 +45,9 @@ public class DropdownListView extends ScrollView {
 
     public DropdownListView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.context = context;
         init();
+
     }
 
     private void init() {
@@ -111,6 +123,37 @@ public class DropdownListView extends ScrollView {
                     if (oldOne != current) {
                         container.onSelectionChanged(DropdownListView.this);
                     }
+
+                    /*ThreadManager.getInstance().createLongPool().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            SystemClock.sleep(2000);
+                            pageNo = 1;
+                            final String dirTime1 = System.currentTimeMillis() + "";
+                            GoodsProtocol protocol = new GoodsProtocol(getUrl(), dirTime1);
+                            final ArrayList<Product> recommends_refresh = protocol.loadData();
+                            UiUtils.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    if (recommends_refresh != null) {
+                                        File dir = FilesUtils.getCacheDri();
+                                        if (dirTime != null) {
+                                            File file = new File(dir, dirTime);
+                                            if (file.isFile() && file.exists()) {
+                                                file.delete();
+                                            }
+                                            dirTime = dirTime1;
+                                        }
+                                        goods.clear();
+                                        goods.addAll(recommends_refresh);
+                                        LogUtils.d("aaaaa" + goods);
+                                        mAdapter.notifyDataSetChanged();
+                                    }
+                                }
+                            });
+                        }
+                    });*/
                 }
             });
             linearLayout.addView(view);

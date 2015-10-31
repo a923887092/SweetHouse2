@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.bigkoo.convenientbanner.CBPageAdapter;
 import com.bigkoo.convenientbanner.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.dk.view.drop.WaterDrop;
 import com.gwm.sweethouse.DetailsActivity;
 import com.gwm.sweethouse.R;
 import com.gwm.sweethouse.bean.MenuItem;
@@ -31,6 +33,7 @@ import com.gwm.sweethouse.interfaces.FragmentCallBack;
 import com.gwm.sweethouse.protocol.DetailsProtocol;
 import com.gwm.sweethouse.protocol.GoodsImgProtocol;
 import com.gwm.sweethouse.utils.LogUtils;
+import com.gwm.sweethouse.utils.PrefUtils;
 import com.gwm.sweethouse.view.CascadingMenuPopWindow;
 import com.gwm.sweethouse.view.SelectNumPopupWindow;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -59,6 +62,10 @@ public class DetailsFragment extends BaseFragment implements View.OnClickListene
     private Handler mHandler;
     private int mContent = 1;
     private View view;
+    private WaterDrop drop;
+    private Button btnAdd, btnBuy;
+    private RelativeLayout rlNoBuy;
+    private LinearLayout llShop;
 
     public DetailsFragment() {
         super(R.layout.pager_details);
@@ -87,6 +94,14 @@ public class DetailsFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     protected void initFragment(View view) {
+        rlNoBuy = (RelativeLayout) view.findViewById(R.id.rl_no_buy);
+        llShop = (LinearLayout) view.findViewById(R.id.ll_shop);
+        llShop.setVisibility(View.VISIBLE);
+        rlNoBuy.setVisibility(View.GONE);
+        btnAdd = (Button) view.findViewById(R.id.btn_add);
+        btnBuy = (Button) view.findViewById(R.id.btn_buy);
+        btnAdd.setOnClickListener(this);
+        btnBuy.setOnClickListener(this);
         ivBack = (ImageView) view.findViewById(R.id.iv_goods_back);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +109,14 @@ public class DetailsFragment extends BaseFragment implements View.OnClickListene
                 getActivity().finish();
             }
         });
+        drop = (WaterDrop) view.findViewById(R.id.drop);
+        int cart_num = PrefUtils.getInt(getActivity(), "cart_num", 0);
+        if (cart_num != 0){
+            drop.setVisibility(View.VISIBLE);
+            drop.setText(String.valueOf(cart_num));
+        } else {
+            drop.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -245,6 +268,13 @@ public class DetailsFragment extends BaseFragment implements View.OnClickListene
             case R.id.ll_comment:
                 Toast.makeText(getActivity(), "进入所有评价", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.btn_add:
+                Toast.makeText(getActivity(), "成功加入购物车", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_buy:
+                Toast.makeText(getActivity(), "立即购买", Toast.LENGTH_SHORT).show();
+                break;
+
         }
     }
 

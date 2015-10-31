@@ -4,27 +4,38 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/rl_goods_search"
+        android:id="@+id/rl_shousuo"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/shape_search_area"
-        android:clickable="true">
+        android:layout_height="wrap_content"
+        android:background="#E7E5E8"
+        >
 
-        <TextView
-            android:id="@+id/tv_search"
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/shape_goods_bg"
+            android:hint="搜索本页商品"
+            android:paddingLeft="10dp"
+            android:textSize="15dp"
+            />
+
+        <ImageButton
+            android:id="@+id/btn_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_alignEnd="@+id/et_search"
+            android:layout_alignRight="@+id/et_search"
             android:layout_centerVertical="true"
-            android:drawableLeft="@mipmap/ic_city_click"
-            android:drawablePadding="5dp"
-            android:text="搜索本站商品"
-            android:textSize="18dp" />
+            android:layout_marginRight="3dp"
+            android:background="@null"
+            android:src="@drawable/flight_search_input_bar" />
+
     </RelativeLayout>
 
     <LinearLayout

@@ -16,4 +16,8 @@
     <string name="title_activity_advice">AdviceActivity</string>
     <string name="title_activity_my_wallet">MyWalletActivity</string>
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_activity_sale">SaleActivity</string>
+    <string name="title_activity_group_buy">GroupBuyActivity</string>
+    <string name="title_activity_act_details">ActDetailsActivity</string>
+    <string name="title_activity_result">ResultActivity</string>
 </resources>

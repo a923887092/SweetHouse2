@@ -97,12 +97,16 @@
     <orderEntry type="library" exported="" name="universal-image-loader-1.9.4" level="project" />
     <orderEntry type="library" exported="" name="MobLogCollector" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.1" level="project" />
+    <orderEntry type="library" exported="" name="BaiduLBS_Android" level="project" />
     <orderEntry type="library" exported="" name="support-v4-23.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.0.1" level="project" />
     <orderEntry type="module" module-name="SlidingMenu" exported="" />
     <orderEntry type="module" module-name="library" exported="" />
     <orderEntry type="module" module-name="convenientbanner" exported="" />
     <orderEntry type="module" module-name="ViewPagerIndicatorLibrary" exported="" />
+    <orderEntry type="module" module-name="waterDropLibrary" exported="" />
+    <orderEntry type="module" module-name="AndroidBootstrap" exported="" />
+    <orderEntry type="module" module-name="AndroidStaggeredGrid" exported="" />
     <orderEntry type="module" module-name="utils-v4" exported="" />
   </component>
 </module>

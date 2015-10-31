@@ -7,6 +7,7 @@ import android.view.Window;
 
 import com.gwm.sweethouse.fragment.details.DetailsFragment;
 import com.gwm.sweethouse.fragment.details.RightFragment;
+import com.gwm.sweethouse.fragment.saled.SaledDetailsFragment;
 import com.gwm.sweethouse.interfaces.FragmentCallBack;
 import com.gwm.sweethouse.utils.LogUtils;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -15,6 +16,7 @@ import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 public class DetailsActivity extends SlidingFragmentActivity implements FragmentCallBack{
 
     private int goodsId;
+    private int state;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,11 +26,16 @@ public class DetailsActivity extends SlidingFragmentActivity implements Fragment
         setBehindContentView(R.layout.right_menu);
         Intent intent = getIntent();
         goodsId = (int) intent.getSerializableExtra("goodsId");
-
-        LogUtils.i("从上一个页面传来的数据为 ：" + goodsId);
+        state = intent.getIntExtra("state", 0);
+        LogUtils.d("state:" + state);
+        LogUtils.d("从上一个页面传来的数据为 ：" + goodsId + "++" + state);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         DetailsFragment fragment = new DetailsFragment();
-        transaction.replace(R.id.fl_fragment, fragment);
+        if (state == 1){
+            transaction.replace(R.id.fl_fragment, new SaledDetailsFragment());
+        } else {
+            transaction.replace(R.id.fl_fragment, fragment);
+        }
         transaction.replace(R.id.fl_right_menu, new RightFragment());
         transaction.commit();
         SlidingMenu sm = getSlidingMenu();
@@ -42,6 +49,6 @@ public class DetailsActivity extends SlidingFragmentActivity implements Fragment
 
     @Override
     public int callbackFun(Bundle arg) {
-        return goodsId;
+            return goodsId;
     }
 }

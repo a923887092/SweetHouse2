@@ -13,12 +13,28 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <!-- 这个权限用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+
+    <!-- SD卡读取权限，用户写入离线定位数据-->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <application
         android:name=".base.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+        <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
+        </service>
+        <!-- meta-data需要写在application中 -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="qGxyzYUzwa2AoqVBW4PUOKxy" />
+
         <activity
             android:name=".SplashActivity"
             android:label="@string/app_name"
@@ -76,6 +92,22 @@
         <activity
             android:name=".DetailsActivity"
             android:label="@string/title_activity_detail" >
+        </activity>
+        <activity
+            android:name=".SaleActivity"
+            android:label="@string/title_activity_sale" >
+        </activity>
+        <activity
+            android:name=".GroupBuyActivity"
+            android:label="@string/title_activity_group_buy" >
+        </activity>
+        <activity
+            android:name=".ActDetailsActivity"
+            android:label="@string/title_activity_act_details" >
+        </activity>
+        <activity
+            android:name=".ResultActivity"
+            android:label="@string/title_activity_result" >
         </activity>
     </application>
 

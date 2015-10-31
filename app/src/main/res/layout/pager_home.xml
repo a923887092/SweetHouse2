@@ -11,6 +11,7 @@
 
 
         <TextView
+            android:clickable="true"
             android:id="@+id/tv_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,7 +21,7 @@
             android:layout_marginLeft="13dp"
             android:layout_marginStart="13dp"
             android:drawableRight="@mipmap/arrow_down"
-            android:text="苏州"
+            android:text="芜湖"
             android:textColor="#fff"
             android:textSize="20dp" />
 

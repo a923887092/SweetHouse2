@@ -2,6 +2,7 @@ package com.gwm.sweethouse.protocol;
 
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -37,7 +38,7 @@ import java.util.ArrayList;
  */
 public abstract class BaseProtocol<T> {
     private String MURL;
-
+//    private T list = ;
 
     public BaseProtocol(String url) {
         this.MURL = url;
@@ -55,9 +56,12 @@ public abstract class BaseProtocol<T> {
                 saveLocal(json);
             }
         }
-        System.out.println("json == null");
-
+        /*if (json.equals("")){
+            LogUtils.d("isEmpty");
+            return null;
+        }*/
         if (json != null) {
+            System.out.println("json:" + json);
             return paserJson(json);
         } else {
             return null;
@@ -98,70 +102,16 @@ public abstract class BaseProtocol<T> {
 
     protected abstract String getTypes();
 
-    private String json;
-    private static class LoadTask extends AsyncTask<String, String, String>{
-        DataFinishListener dataFinishListener;
-
-        public void setFinishListener(DataFinishListener dataFinishListener) {
-            this.dataFinishListener = dataFinishListener;
-        }
-        @Override
-        protected String doInBackground(String[] params) {
-            HttpHelper.HttpResult httpResult = HttpHelper.get(params[0]);
-//            json = httpResult.getString();
-            LogUtils.d("LoadTask:" + httpResult.getString());
-            return httpResult.getString();
-        }
-//
-        @Override
-        protected void onPostExecute(String s) {
-            if (s != null){
-                dataFinishListener.dataFinishSuccessfully(s);
-            }
-        }
-
-        public interface DataFinishListener {
-            void dataFinishSuccessfully(String data);
-        }
-    }
-
-
     /*
     从服务器得到数据
      */
     private String loadServer() {
-//        HttpUtils httpUtils = new HttpUtils();
-//        httpUtils.send(HttpRequest.HttpMethod.GET, MURL, new RequestCallBack<String>() {
-//            @Override
-//            public void onSuccess(ResponseInfo<String> responseInfo) {
-//                paserJson(responseInfo.result);
-//            }
-//
-//            @Override
-//            public void onFailure(HttpException e, String s) {
-//
-//            }
-//        });
-        /*final LoadTask loadTask = new LoadTask();
-        loadTask.setFinishListener(new LoadTask.DataFinishListener() {
-            @Override
-            public void dataFinishSuccessfully(String data) {
-                json = data;
-            }
-        });
-        loadTask.execute(MURL);
-        LogUtils.d("loadServer" + json);
-        return json;*/
-
         InputStream inputStream = null;
         LogUtils.i("out_loadServer");
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             byte[] data = new byte[1024];
             int len = 0;
-//            String myUrl = new String(MURL.getBytes("ISO-8859-1"), "UTF-8");
-
-//            LogUtils.i("myUrl" + myUrl);
             System.out.println(MURL);
             URL url = new URL(MURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -177,13 +127,13 @@ public abstract class BaseProtocol<T> {
             }
             LogUtils.i("in_loadServer");
             System.out.println("sb:"+ sb.toString());
-            return sb.toString();
-//            while ((len = inputStream.read(data)) != -1){
-//                outputStream.write(data, 0, len);
-//            }
-//            System.out.println("++++++" + new String(outputStream.toByteArray()));
-//            String content = new String(outputStream.toByteArray());
-//            return URLDecoder.decode(content, "UTF-8");
+            if (TextUtils.isEmpty(sb.toString())){
+                LogUtils.d("TextUtils");
+                LogUtils.d("eq:" + ("" == null));
+                return "";
+            } else {
+                return sb.toString();
+            }
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -196,7 +146,6 @@ public abstract class BaseProtocol<T> {
                 }
             }
         }
-//        Log.d(TAG + ":loadServer", mResult[0]);
     }
 
     /*

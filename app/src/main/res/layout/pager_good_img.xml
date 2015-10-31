@@ -3,11 +3,11 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.gwm.sweethouse.view.InnerScrollView
+    <com.gwm.sweethouse.view.ListViewForScrollView
         android:scrollbars="none"
-        android:id="@+id/sv_content"
+        android:id="@+id/lv_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-    </com.gwm.sweethouse.view.InnerScrollView>
+    </com.gwm.sweethouse.view.ListViewForScrollView>
 </LinearLayout>

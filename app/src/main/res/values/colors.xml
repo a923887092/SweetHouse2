@@ -12,4 +12,11 @@
     <color name="font_black_6">#ff666666</color>
     <color name="choose_eara_item_press_color">#f4f4f4</color>
     <color name="white_pressed">#ffd5d5d5</color>
+    <color name="province_line_border">#C7C7C7</color>
+    <color name="orange">#ffffdc7e</color>
+    <color name="grey">#ffd3d3d3</color>
+    <color name="blue">#ff82e0ff</color>
+    <color name="yellow">#fffffbae</color>
+    <color name="red">#fff10800</color>
+    <color name="list_item_pressed">#1A000000</color>
 </resources>

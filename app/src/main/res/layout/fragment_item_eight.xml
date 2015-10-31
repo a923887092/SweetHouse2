@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.gwm.sweethouse.view.RefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/swipe_container"
+    android:layout_height="match_parent">
+    <com.gwm.sweethouse.view.GridViewWithHeaderAndFooter
+        android:id="@+id/gv_saled"
+        android:verticalSpacing="5dp"
+        android:horizontalSpacing="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="2">
+    </com.gwm.sweethouse.view.GridViewWithHeaderAndFooter>
+</com.gwm.sweethouse.view.RefreshLayout>

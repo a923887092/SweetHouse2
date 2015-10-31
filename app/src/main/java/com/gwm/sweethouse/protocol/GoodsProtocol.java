@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class GoodsProtocol extends BaseProtocol<ArrayList<Product>> {
     private static final String TAG = "GoodsProtocol";
     private String mCacheDir;
+    private ArrayList<Product> arrayList = new ArrayList<>();
     public GoodsProtocol(String url, String cacheDir) {
         super(url);
         this.mCacheDir = cacheDir;
@@ -21,7 +22,7 @@ public class GoodsProtocol extends BaseProtocol<ArrayList<Product>> {
     @Override
     public ArrayList<Product> paserJson(String json) {
         Gson gson = new Gson();
-        ArrayList<Product> arrayList = gson.fromJson(json, new TypeToken<ArrayList<Product>>() {
+        arrayList = gson.fromJson(json, new TypeToken<ArrayList<Product>>() {
         }.getType());
         return arrayList;
     }

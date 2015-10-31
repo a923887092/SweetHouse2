@@ -12,10 +12,15 @@ public class GlobalContacts {
     //    public static final String SERVER_URL = "http://192.168.56.1:8080/SweetHouse";
     public static final String VISON_URL = "http://10.40.8.13:8080/SweetHouse";
     public static final String SERVER_URL = "http://10.0.3.2:8080/SweetHouse";
-    public static final String RECOMMEND_URL = SERVER_URL + "/recommendServlet?method=getJson";
+//    public static final String SERVER_URL = "http://10.203.1.78:8080/SweetHouse";
+    public static final String RECOMMEND_URL = SERVER_URL + "/recommendServlet?method=getJson&pageNo=";
     public static final String MALL_ZM_URL = SERVER_URL + "/productXlServlet?method=getJson&dlName=" + Uri.encode("开关照明");
     public static final String MALL_WY_URL = SERVER_URL + "/productXlServlet?method=getJson&dlName=" + Uri.encode("卫浴洁具");
     public static final String GOODS_ZM_URL = SERVER_URL + "/ProductServlet?method=getJson&xlId=";
+    public static final String HOME_SEARCH_GOODS_URL = SERVER_URL + "/ProductServlet?method=getJsonForSearch&productName=";
     public static final String GOOD_URL = SERVER_URL + "/ProductServlet?method=getProductJson&id=";
     public static final String GOOD_IMG_URL = SERVER_URL + "/ProductServlet?method=getProductImgJson&id=";
+    public static final String ACTIVITY_URL = SERVER_URL + "/activityServlet?method=getActivities&addr=";
+    public static final String SALEDS_URL = SERVER_URL + "/saledServlet?method=getJson";
+    public static final int PAGE_SIZE = 6;
 }

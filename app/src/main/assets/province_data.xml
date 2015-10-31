@@ -1,0 +1,39 @@
+<root>
+  <province name="安徽省">
+    <city name="合肥"/>
+    <city name="安庆"/>
+    <city name="蚌埠"/>
+    <city name="亳州"/>
+    <city name="巢湖"/>
+    <city name="池州"/>
+    <city name="滁州"/>
+    <city name="阜阳"/>
+    <city name="淮北"/>
+    <city name="淮南"/>
+    <city name="黄山"/>
+    <city name="六安"/>
+    <city name="马鞍山"/>
+    <city name="宿州"/>
+    <city name="铜陵"/>
+    <city name="芜湖"/>
+    <city name="宣城"/>
+  </province>
+  <province name="江苏省">
+    <city name="常州"/>
+    <city name="淮安"/>
+    <city name="连云港"/>
+    <city name="南京"/>
+    <city name="南通"/>
+    <city name="苏州"/>
+    <city name="宿迁"/>
+    <city name="泰州"/>
+    <city name="无锡"/>
+    <city name="徐州"/>
+    <city name="盐城"/>
+    <city name="扬州"/>
+    <city name="镇江"/>
+  </province>
+
+
+
+</root>
