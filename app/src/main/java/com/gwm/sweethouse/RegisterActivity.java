@@ -38,7 +38,6 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
         SMSSDK.initSDK(RegisterActivity.this, APPKEY, APPSECRET);
         SMSSDK.registerEventHandler(eh); //注册短信回调
         handler=new Handler(){
-
             @Override
             public void handleMessage(Message message) {
                 switch (message.what) {
@@ -88,14 +87,14 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                     //getVerificationCode用于向服务器请求发送验证码的服务，需要传递国家代号和接收验证码的手机号码，
                     //请求getVerificationCode的时间间隔不应该小于60秒，否则服务端会返回“操作过于频繁”的错误
                     SMSSDK.getVerificationCode("86",phString);
-                    Toast.makeText(this, "验证码已发送", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "验证码已发送"+phString, Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(this, "电话不能为空", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.btn_next://校验验证码
                 if(!TextUtils.isEmpty(verEditText.getText().toString())) {
-
+                       Log.e(";;;;;",phString+verEditText.getText().toString());
                     SMSSDK.submitVerificationCode("86", phString, verEditText.getText().toString());
                     //需要判断验证码是否正确，若正确携带验证码跳转到设置密码界面，否者不进行跳转，重新获取
                 }else {

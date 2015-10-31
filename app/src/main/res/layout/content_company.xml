@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_shousuo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E7E5E8"
+        >
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/shape_liangfang_bg"
+            android:hint="请输入装修公司"
+            android:paddingLeft="10dp"
+            android:textSize="15dp"
+            />
+
+        <ImageButton
+            android:id="@+id/btn_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/et_search"
+            android:layout_alignRight="@+id/et_search"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="3dp"
+            android:background="@null"
+            android:src="@drawable/flight_search_input_bar" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:background="#fff"
+        android:id="@+id/ll_paixu"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/rl_shousuo"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_loc"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/ibtn_loc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:src="@drawable/location" />
+
+            <Spinner
+                android:id="@+id/sp_loc"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/shape_spanner_bg"
+                android:entries="@array/city">
+
+            </Spinner>
+
+            <ImageView
+                android:id="@+id/im_loc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="1dp"
+                android:layout_toRightOf="@+id/sp_loc"
+                android:background="@drawable/ic_down_gray" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="#ccc" />
+
+        <RelativeLayout
+            android:id="@+id/rl_style"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1">
+
+            <Spinner
+                android:id="@+id/sp_style"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/shape_spanner_bg"
+                android:entries="@array/style">
+
+            </Spinner>
+
+            <ImageView
+                android:id="@+id/im_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/sp_style"
+                android:background="@drawable/ic_down_gray" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="#ccc" />
+        <RelativeLayout
+            android:id="@+id/rl_hot"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1">
+
+            <Spinner
+                android:id="@+id/sp_hot"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/shape_spanner_bg"
+                android:entries="@array/hot">
+
+            </Spinner>
+            <ImageView
+                android:id="@+id/im_hot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/sp_hot"
+                android:background="@drawable/ic_down_gray" />
+        </RelativeLayout>
+
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ccc"
+        />
+
+</LinearLayout>

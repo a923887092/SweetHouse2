@@ -7,13 +7,9 @@
 
    <RelativeLayout
        android:id="@+id/top_my"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content">
-       <ImageView
-           android:layout_width="match_parent"
-           android:layout_height="50dp"
-           android:background="#ff0000"/>
-
+       android:layout_width="match_parent"
+       android:layout_height="50dp"
+       android:background="#ff0000">
        <TextView
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
@@ -21,7 +17,25 @@
            android:textSize="20sp"
            android:textColor="#ffffff"
            android:layout_centerVertical="true"
-           android:layout_centerHorizontal="true" />
+           android:layout_centerHorizontal="true"
+           android:id="@+id/textView8" />
+       <ImageButton
+           android:id="@+id/ibtn_setting"
+           android:layout_width="25dp"
+           android:layout_height="25dp"
+           android:scaleType="fitXY"
+           android:background="@drawable/seting"
+           android:layout_centerVertical="true"
+           android:layout_marginLeft="15dp"/>
+       <ImageButton
+           android:id="@+id/ibtn_message"
+           android:layout_width="25dp"
+           android:layout_height="25dp"
+           android:scaleType="fitXY"
+           android:background="@drawable/ic_my__message"
+           android:layout_centerVertical="true"
+           android:layout_marginRight="15dp"
+           android:layout_alignParentRight="true" />
    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/welcome"
@@ -32,7 +46,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/login_top_bg"
+            android:background="@drawable/ic_my_bg"
             android:scaleType="fitXY"
             android:id="@+id/imageView3"
             android:layout_alignParentTop="true"
@@ -46,25 +60,37 @@
             android:background="@drawable/me_normal"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"/>-->
-        <Button
-            android:id="@+id/btn_login"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:background="#00000000"
-            android:text="登录/注册"
-            android:textColor="#ff0000"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+        <ImageView
+            android:id="@+id/iv_photo"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:src="@drawable/ic_user"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            />
         <TextView
-            android:id="@+id/tv_welcome"
+            android:id="@+id/tv_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="欢迎来到SweetHouse"
+            android:text="登录/注册"
             android:textColor="#ffffff"
             android:textSize="17sp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="110dp"
+            android:layout_below="@id/iv_photo"
+            android:layout_marginTop="10dp"
              />
+
+        <!--钱包余额，登陆后显示-->
+        <TextView
+            android:id="@+id/tv_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="17sp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/tv_login"
+            android:layout_marginTop="6dp"
+            />
 
     </RelativeLayout>
 
@@ -78,7 +104,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_state1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
@@ -96,7 +123,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_state2"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1"
@@ -115,7 +143,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_state3"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1"
@@ -133,7 +162,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_state4"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1"
@@ -152,7 +182,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_state5"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1"
@@ -166,19 +197,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="退款/售后"/>
+                android:text="退换货"/>
         </LinearLayout>
     </LinearLayout>
     <ListView
         android:id="@+id/lv_myItem"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:divider="#DBDBDB"
         android:dividerHeight="1dp"
         android:headerDividersEnabled="false"
         android:layout_below="@+id/ll_orders"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp" />
-
+        android:layout_marginTop="2dp" />
 </RelativeLayout>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textSize="20sp"
+
+                android:text="满2000减200"
+                android:gravity="center"
+                android:background="@color/google_red"/>
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="已满2000,已优惠200"
+
+            android:layout_weight="1" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+        <RelativeLayout
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+            <!--<ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ico_checkbox_more_nor"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/check_selected"
+                android:visibility="gone"
+                android:src="@drawable/ico_checkbox_more_selected"
+                />-->
+            <CheckBox
+
+                android:id="@+id/cart_item_checked"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:button="@null"
+                android:gravity="center"
+                android:background="@drawable/selector_selecteview"
+                android:checked="false"
+                />
+        </RelativeLayout>
+        <ImageView
+            android:id="@+id/imageSrc"
+
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/alipay_icon"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="top"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="sdddddddddddddd"
+                android:textSize="15dp"
+                android:id="@+id/goodsDes" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="sdddddddddddddd"
+                android:textSize="15dp"
+                android:id="@+id/goodsCategory" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="¥:1000"
+                    android:textColor="@color/google_red"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|center|center_horizontal"
+                    android:autoText="false"
+                    android:textSize="20dp"
+                    android:id="@+id/price" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="4dp">
+                    <ImageButton
+                        android:id="@+id/amount_sub"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:layout_gravity="center"
+                        android:src="@drawable/abc"
+                        android:background="@drawable/boder"
+                        />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:textSize="25sp"
+                        android:gravity="center_vertical|center"
+
+                        android:background="@drawable/boder"
+                        android:inputType="number"
+                        android:textStyle="normal|bold"
+                        android:id="@+id/good_amount"
+                        android:layout_gravity="center" />
+                    <ImageButton
+                        android:clickable="true"
+                        android:id="@+id/amount_add"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:src="@drawable/ab_"
+                        android:layout_gravity="center"
+                        android:background="@drawable/boder"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

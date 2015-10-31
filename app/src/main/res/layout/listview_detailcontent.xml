@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+  <RelativeLayout
+      android:layout_marginTop="10dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/im_pic"
+       android:layout_width="match_parent"
+        android:src="@drawable/a"
+       android:layout_height="200dp"
+        android:scaleType="fitXY"
+    />
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="100dp"
+          android:layout_alignBottom="@+id/im_pic"
+          android:layout_alignParentLeft="true"
+          android:background="#80000000"
+          android:layout_alignParentStart="true">
+        <com.gwm.sweethouse.tools.CircularImageView
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/iv_touxiang"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/a3"
+            />
+          <TextView
+              android:layout_width="70dp"
+              android:layout_height="50dp"
+              android:text="小米"
+              android:textColor="#fff"
+              android:gravity="center_horizontal"
+              android:textSize="15dp"
+              android:layout_alignRight="@+id/iv_touxiang"
+              android:layout_alignEnd="@+id/iv_touxiang"
+              android:layout_below="@+id/iv_touxiang"
+              android:layout_alignLeft="@+id/iv_touxiang"
+              android:layout_alignStart="@+id/iv_touxiang"
+              android:id="@+id/tv_desname" />
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="18dp"
+              android:layout_marginTop="30dp"
+              android:text="现代欧式风格"
+              android:textColor="#fff"
+              android:layout_centerHorizontal="true"
+              android:id="@+id/tv_style" />
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="四室居/欧式"
+              android:textColor="#fff"
+              android:layout_marginTop="3dp"
+              android:textSize="16dp"
+              android:layout_below="@+id/tv_style"
+              android:layout_centerHorizontal="true"
+              android:id="@+id/tv_roonnum" />
+          <Button
+              android:id="@+id/btn_desOrder"
+              android:layout_width="90dp"
+              android:layout_height="35dp"
+              android:text="预约她设计"
+              android:textColor="#fff"
+              android:textSize="15dp"
+              android:background="@drawable/selector_btn_yuyue"
+              android:layout_above="@+id/tv_desname"
+              android:layout_alignParentRight="true"
+              android:layout_marginRight="3dp"
+              android:layout_alignParentEnd="true" />
+      </RelativeLayout>
+  </RelativeLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_company_bg3"
+        />
+</LinearLayout>

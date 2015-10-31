@@ -8,13 +8,14 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#ff0000">
-
-        <ImageView
+        <ImageButton
+            android:id="@+id/ibtn_orderToMy"
             android:layout_width="12dp"
             android:layout_height="20dp"
-            android:src="@drawable/arrow_return"
+            android:background="@drawable/arrow_return"
             android:layout_marginLeft="14dp"
             android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -24,20 +25,57 @@
             android:textColor="#ffffff"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="首页"
-            android:textSize="18sp"
-            android:textColor="#ffffff"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:background="#00000000"
-           />
     </RelativeLayout>
-    <ListView
+
+    <RadioGroup
+        android:id="@+id/rg_order"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:background="#ffffff">
+        <RadioButton
+            android:id="@+id/rb_order1"
+            android:text="全部"
+            android:layout_weight="1"
+            style="@style/rb_orders"
+           android:background="@drawable/selector_rb_orders"/>
+        <RadioButton
+            android:id="@+id/rb_order2"
+            android:text="待支付"
+            android:layout_weight="1"
+            style="@style/rb_orders"
+            android:background="@drawable/selector_rb_orders" />
+        <RadioButton
+            android:id="@+id/rb_order3"
+            android:text="待发货"
+            android:layout_weight="1"
+            style="@style/rb_orders"
+            android:background="@drawable/selector_rb_orders"/>
+        <RadioButton
+            android:id="@+id/rb_order4"
+            android:text="待收货"
+            android:layout_weight="1"
+            style="@style/rb_orders"
+            android:background="@drawable/selector_rb_orders"/>
+        <RadioButton
+            android:id="@+id/rb_order5"
+            android:text="待评论"
+            android:layout_weight="1"
+            style="@style/rb_orders"
+            android:background="@drawable/selector_rb_orders" />
+    </RadioGroup>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="3px"
+        android:background="#FB7070"/>
+
+    <FrameLayout
+        android:id="@+id/layout_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+   <!-- <ListView
         android:id="@+id/listorders"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
+-->
 </LinearLayout><!-- From: file:/F:/AndroidStudioWorkspace/SweetHouse2/app/src/main/res/layout/order.xml -->

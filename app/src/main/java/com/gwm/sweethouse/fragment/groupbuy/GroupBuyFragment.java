@@ -204,7 +204,7 @@ public class GroupBuyFragment extends BaseFragment {
                                         mProgressBar.setVisibility(View.GONE);
                                     }
                                 }
-                                Toast.makeText(getActivity(), "加载完成!", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getActivity(), "加载完成!", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

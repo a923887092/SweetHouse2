@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gwm.sweethouse" >
-
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -108,6 +108,100 @@
         <activity
             android:name=".ResultActivity"
             android:label="@string/title_activity_result" >
+        </activity>
+
+
+
+        <activity
+            android:name=".GetRoomActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".GetCompanyActivity" />
+        <activity
+            android:name=".DetailCompanyActivity"
+            android:label="@string/title_activity_detail_company" >
+        </activity>
+
+        <activity
+            android:name=".OrderZxActivity"
+            android:label="@string/title_activity_order_zx"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+        <activity
+            android:name=".CalenderActivity"
+            android:label="@string/title_activity_calender" >
+        </activity>
+
+
+        <activity
+            android:name=".OrderConfirmationActivity"
+            android:label="@string/title_activity_order_confirmation">
+        </activity>
+
+
+
+        <activity
+            android:name=".UserInfoActivity"
+            android:label="@string/title_activity_user_info" >
+        </activity>
+        <activity
+            android:name=".AlterUserNameActivity"
+            android:label="@string/title_activity_alter_user_name" >
+        </activity>
+        <activity
+            android:name=".AlterPassActivity"
+            android:label="AlterPassActivity" >
+        </activity>
+        <activity
+            android:name=".ForgetPassACtivity"
+            android:label="@string/title_activity_forget_pass_activity" >
+        </activity>
+        <activity
+            android:name=".AlterSexActivity"
+            android:label="@string/title_activity_alter_sex" >
+        </activity>
+        <activity
+            android:name=".ReturnSalesActivity"
+            android:label="@string/title_activity_return_sales" >
+        </activity>
+        <activity
+            android:name=".AddAddressActivity"
+            android:label="@string/title_activity_add_address" >
+        </activity>
+        <activity
+            android:name=".AboutWalletActivity"
+            android:label="@string/title_activity_about_wallet" >
+        </activity>
+        <activity
+            android:name=".WalletRecorderActivity"
+            android:label="@string/title_activity_wallet_recorder" >
+        </activity>
+        <activity
+            android:name=".OrderDetailActivity"
+            android:label="@string/title_activity_order_detail" >
+        </activity>
+        <activity
+            android:name=".PayOrderActivity"
+            android:label="@string/title_activity_pay_order" >
+        </activity>
+        <activity
+            android:name=".ReleaseOrderActivity"
+            android:label="@string/title_activity_release_order" >
+        </activity>
+        <activity
+            android:name=".ApplyReturnActivity"
+            android:label="@string/title_activity_apply_return" >
+        </activity>
+        <activity
+            android:name=".OrderLogisticActivity"
+            android:label="@string/title_activity_order_logistic" >
+        </activity>
+        <activity
+            android:name=".EvaluateOrderActivity"
+            android:label="@string/title_activity_evaluate" >
+        </activity>
+        <activity
+            android:name=".EditAddressActivity"
+            android:label="@string/title_activity_edit_address" >
         </activity>
     </application>
 

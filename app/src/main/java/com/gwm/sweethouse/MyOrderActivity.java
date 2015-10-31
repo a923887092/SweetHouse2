@@ -1,85 +1,150 @@
 package com.gwm.sweethouse;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
-import com.gwm.sweethouse.adapter.OrderListAdapter;
-import com.gwm.sweethouse.bean.OrderListBean;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.gwm.sweethouse.fragment.order.Order1Fragment;
+import com.gwm.sweethouse.fragment.order.Order2Fragment;
+import com.gwm.sweethouse.fragment.order.Order3Fragment;
+import com.gwm.sweethouse.fragment.order.Order4Fragment;
+import com.gwm.sweethouse.fragment.order.Order5Fragment;
 
 public class MyOrderActivity extends Activity {
-    private ListView listView;
-    private OrderListBean orderListBean;
-    List<OrderListBean> list=new ArrayList<OrderListBean>();
-    private Adapter adapter;
+    RadioGroup rg_order;
+    RadioButton rb_oder1,rb_oder2,rb_oder3,rb_oder4,rb_oder5;
+    ImageButton ibtn_return;
+    FragmentTransaction transaction;
+    Intent intent;
 
-    @Override
+    private Order1Fragment order1Fragment;
+    private Order2Fragment order2Fragment;
+    private Order3Fragment order3Fragment;
+    private Order4Fragment order4Fragment;
+    private Order5Fragment order5Fragment;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_myorder);
-        Log.e("111111111111", "oncreat");
-        listView = (ListView) findViewById(R.id.listorders);
-        getData();
-        adapter=new OrderListAdapter(MyOrderActivity.this,list);
-        listView.setAdapter((ListAdapter) adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        initViews();
+        initData();
+
+    }
+
+    private void initData() {
+        transaction = getFragmentManager().beginTransaction();
+        intent = getIntent();
+        int orderState = intent.getIntExtra("orderState",0);
+        int user_id = intent.getIntExtra("user_id",0);
+        Log.e("orderState",orderState+"0000000000");
+        if(orderState==0){
+            if (order1Fragment == null){
+                order1Fragment = new Order1Fragment();
+            }
+            //默认选中第一个fragment
+            transaction.add(R.id.layout_container,order1Fragment);
+            transaction.commit();
+        }else{
+            switch (orderState){
+                case 2:
+                    order2Fragment = new Order2Fragment();
+                    transaction.add(R.id.layout_container,order2Fragment);
+                    transaction.commit();
+                    rb_oder2.setChecked(true);
+                    break;
+                case 3:
+                    order3Fragment = new Order3Fragment();
+                    transaction.add(R.id.layout_container, order3Fragment);
+                    transaction.commit();
+                    rb_oder3.setChecked(true);
+                    break;
+                case 4:
+                    order4Fragment = new Order4Fragment();
+                    transaction.add(R.id.layout_container,order4Fragment);
+                    transaction.commit();
+                    rb_oder4.setChecked(true);
+                    break;
+                case 5:
+                    order5Fragment = new Order5Fragment();
+                    transaction.add(R.id.layout_container,order5Fragment);
+                    transaction.commit();
+                    rb_oder5.setChecked(true);
+                    break;
+
+            }
+        }
+    }
+
+    private void initViews() {
+        rg_order = (RadioGroup) findViewById(R.id.rg_order);
+        rb_oder1 = (RadioButton) findViewById(R.id.rb_order1);
+        rb_oder2 = (RadioButton) findViewById(R.id.rb_order2);
+        rb_oder3 = (RadioButton) findViewById(R.id.rb_order3);
+        rb_oder4 = (RadioButton) findViewById(R.id.rb_order4);
+        rb_oder5 = (RadioButton) findViewById(R.id.rb_order5);
+        ibtn_return = (ImageButton) findViewById(R.id.ibtn_orderToMy);
+        ibtn_return.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("2222222222222222","onItem");
-                String text = list.get(position).getGoodsname();
-                Toast.makeText(MyOrderActivity.this, text, Toast.LENGTH_SHORT)
-                        .show();
+            public void onClick(View view) {
+                 finish();
+            }
+        });
+        //默认选中第一个RadioButton
+        rb_oder1.setChecked(true);
+
+        rg_order.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radiogroup, int checkedId) {
+                transaction = getFragmentManager().beginTransaction();
+                switch (checkedId){
+                    case R.id.rb_order1:
+                        if (order1Fragment == null){
+                            order1Fragment = new Order1Fragment();
+                        }
+                        transaction.replace(R.id.layout_container, order1Fragment);
+                        transaction.commit();
+                        break;
+                    case R.id.rb_order2:
+                        if (order2Fragment == null){
+                            order2Fragment = new Order2Fragment();
+                        }
+                        transaction.replace(R.id.layout_container, order2Fragment);
+                        transaction.commit();
+                        break;
+                    case R.id.rb_order3:
+                        if (order3Fragment == null){
+                            order3Fragment = new Order3Fragment();
+                        }
+                        transaction.replace(R.id.layout_container, order3Fragment);
+                        transaction.commit();
+                        break;
+
+                    case R.id.rb_order4:
+                        if (order4Fragment == null){
+                            order4Fragment = new Order4Fragment();
+                        }
+                        transaction.replace(R.id.layout_container,order4Fragment);
+                        transaction.commit();
+                        break;
+                    case R.id.rb_order5:
+                        if (order5Fragment == null){
+                            order5Fragment = new Order5Fragment();
+                        }
+                        transaction.replace(R.id.layout_container,order5Fragment);
+                        transaction.commit();
+                        break;
+                    default:
+                        break;
+                }
             }
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_my_order, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void getData() {
-
-        for (int i=0;i<6;i++) {
-            Log.e("33333333333","chongfu");
-            OrderListBean orderListBean1=new OrderListBean();
-            orderListBean1 = new OrderListBean();
-            orderListBean1.setGoodsDescribe("这是商品1");
-            orderListBean1.setGoodsname("商品1");
-            orderListBean1.setPrice(120);
-            orderListBean1.setImagesrc(R.drawable.alipay_icon);
-            list.add(orderListBean1);
-
-        }
-    }
 }

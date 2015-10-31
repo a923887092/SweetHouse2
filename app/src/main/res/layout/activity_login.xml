@@ -9,7 +9,7 @@
         android:layout_height="50dp"
         android:layout_width="match_parent"
         android:background="#ff0000"
-       >
+        >
         <ImageButton
             android:id="@+id/btn_return"
             android:layout_width="12dp"
@@ -55,7 +55,10 @@
                 android:id="@+id/et_username"
                 android:layout_height="50dp"
                 android:layout_width="match_parent"
-                android:hint="用户名/密码/邮箱/手机号"
+                android:hint="手机号"
+                android:text="18051480933"
+                android:maxLength="11"
+                android:inputType="phone"
                 android:background="@drawable/selector_bg_edittext"
                 />
         </LinearLayout>
@@ -81,6 +84,8 @@
                 android:layout_height="50dp"
                 android:layout_width="match_parent"
                 android:hint="请输入密码"
+                android:text="123456"
+                android:inputType="textPassword"
                 android:background="@drawable/selector_bg_edittext"
                 />
         </LinearLayout>
@@ -89,13 +94,15 @@
 
 
     <TextView
+        android:id="@+id/tv_forgetPass"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:textSize="15sp"
         android:text="忘记密码"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:textColor="#ff0000"/>
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:textColor="#ff0000"
+        android:layout_gravity="right" />
 
     <RelativeLayout
         android:layout_width="wrap_content"

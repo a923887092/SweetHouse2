@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="hot">
+        <item>热门排序</item>
+        <item>口碑由高到低</item>
+        <item>价格由高到低</item>
+        <item>价格由低到高</item>
+    </string-array>
+</resources>

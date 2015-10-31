@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/rl_suzhou"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_bar"
+            android:text="苏州装修公司"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:textSize="20dp"
+            />
+        <RelativeLayout
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/rl_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp">
+            <ImageButton
+                android:layout_marginLeft="10dp"
+                android:layout_width="12dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_left_back_nol"
+                android:background="@null"
+                android:layout_centerVertical="true"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
+</LinearLayout>

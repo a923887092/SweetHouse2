@@ -3,21 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     tools:context="com.gwm.sweethouse.MyAddressActivity">
 
     <RelativeLayout
-        android:id="@+id/top_my"
+        android:id="@+id/top_myAddress"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#ff0000">
-
-        <ImageView
+        <ImageButton
+            android:id="@+id/ibtn_addressToMy"
             android:layout_width="12dp"
             android:layout_height="20dp"
-            android:src="@drawable/arrow_return"
+            android:background="@drawable/arrow_return"
             android:layout_marginLeft="14dp"
             android:layout_centerVertical="true"
-            />
+            android:layout_alignParentLeft="true"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,16 +27,37 @@
             android:textColor="#ffffff"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="首页"
-            android:textSize="18sp"
-            android:textColor="#ffffff"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:background="#00000000"
-            />
     </RelativeLayout>
 
+    <ListView
+        android:id="@+id/lv_address"
+        android:layout_below="@id/top_myAddress"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:divider="#DBDBDB"
+        android:dividerHeight="1dp"
+        android:headerDividersEnabled="false"
+     />
+    <ProgressBar
+        android:id="@+id/pb_loadAddr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        />
+    <Button
+        android:layout_below="@id/lv_address"
+        android:id="@+id/btn_newAddr"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:text="+新建地址"
+        android:textColor="#fff"
+        android:background="@drawable/selector_btn_newaddr"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true" />
+    <TextView
+        android:id="@+id/tv_noOrders"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="您还没有订单"/>
 </RelativeLayout>

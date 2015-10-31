@@ -1,0 +1,57 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gwm.sweethouse.AlterUserNameActivity">
+
+    <RelativeLayout
+        android:id="@+id/top_alterUserName"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:background="#ff0000">
+        <ImageButton
+            android:id="@+id/ibtn_returnUserinfo"
+            android:layout_width="12dp"
+            android:layout_height="20dp"
+            android:background="@drawable/arrow_return"
+            android:layout_marginLeft="14dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="修改昵称"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
+            android:layout_centerInParent="true"
+            android:id="@+id/textView2" />
+        <TextView
+            android:id="@+id/tv_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="确定"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:layout_alignTop="@+id/textView2"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="25dp"
+            android:layout_marginEnd="25dp" />
+    </RelativeLayout>
+    <EditText
+        android:id="@+id/et_newName"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/top_alterUserName"
+        android:background="@drawable/selector_bg_edittext"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_newName"
+        android:layout_marginTop="20dp"
+        android:text="4-20个字符，可由中文、英文、数字组成"
+        android:textColor="#D4D4D4"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

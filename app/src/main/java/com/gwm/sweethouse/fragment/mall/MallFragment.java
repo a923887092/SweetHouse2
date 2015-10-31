@@ -35,6 +35,8 @@ public class MallFragment extends BaseFragment {
 
     String[] mUrls = new String[]{GlobalContacts.MALL_ZM_URL, GlobalContacts.MALL_WY_URL};
     String[] mCacheDirs = new String[] {"mall_zm", "mall_wy"};
+    private View view;
+
     public MallFragment() {
         super(R.layout.pager_mall);
     }
@@ -73,7 +75,7 @@ public class MallFragment extends BaseFragment {
 
     @Override
     protected View createSuccessView() {
-        View view = View.inflate(getActivity(), R.layout.fragment_mall, null);
+        view = View.inflate(getActivity(), R.layout.fragment_mall, null);
         vpSubClass = (NoFullScreenViewPager) view.findViewById(R.id.vp_subclass);
         rgClass = (RadioGroup) view.findViewById(R.id.rg_class);
         rlSearch = (RelativeLayout) view.findViewById(R.id.rl_mall_search);

@@ -1,0 +1,11 @@
+<com.gwm.sweethouse.view.RefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_container"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <com.gwm.sweethouse.view.GridViewWithHeaderAndFooter
+        android:id="@+id/lv_company"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="1" />
+</com.gwm.sweethouse.view.RefreshLayout>

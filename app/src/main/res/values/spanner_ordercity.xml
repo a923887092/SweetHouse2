@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="orderDesCity">
+        <item>上海</item>
+        <item>苏州</item>
+        <item>南京</item>
+        <item>无锡</item>
+        <item>常熟</item>
+    </string-array>
+</resources>

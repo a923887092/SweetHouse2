@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--选中状态的样式-->
+    <item android:state_checked="true"
+        android:drawable="@drawable/ico_checkbox_more_selected"/>
+    <!--未选中下的样式-->
+    <item android:state_checked="false"
+        android:drawable="@drawable/ico_checkbox_more_nor"/>
+</selector>

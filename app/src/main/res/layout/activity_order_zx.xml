@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_bar" />
+            <RelativeLayout
+                android:id="@+id/rl_back"
+                android:layout_width="50dp"
+                android:layout_height="50dp">
+            <ImageButton
+                android:id="@+id/ibtn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/ic_left_back_nol"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                />
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_liangfang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="装修设计预约"
+                android:textColor="#ffffff"
+                android:textSize="25sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:text="最周到的服务，只为你最美的家 "
+                    android:textSize="18dp"
+                    android:id="@+id/textView2" />
+                <ImageButton
+                    android:id="@+id/ibtn_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:src="@drawable/abc_ic_clear_mtrl_alpha"
+                    android:layout_alignBottom="@+id/textView2"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="21dp"
+                    android:layout_marginEnd="21dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                >
+                <EditText
+                    android:id="@+id/ed_chenghu"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="15dp"
+                    android:textSize="15dp"
+                    android:background="@drawable/shape_liangfang_bg"
+                    android:hint="您的称呼"
+                    android:paddingLeft="10dp"
+                    android:layout_gravity="center" />
+
+                <Spinner
+                    android:id="@+id/sp_adrr"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/shape_liangfang_bg"
+                    android:layout_below="@+id/ed_chenghu"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="15dp"
+                    android:paddingLeft="10dp"
+                    />
+
+                <TextView
+                    android:focusableInTouchMode="true"
+                    android:layout_below="@+id/sp_adrr"
+                    android:id="@+id/ed_ordTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="15dp"
+                    android:textSize="15dp"
+                    android:background="@drawable/shape_liangfang_bg"
+                    android:hint="选择日期"
+                    android:paddingLeft="10dp"
+                    android:gravity="center_vertical"
+                    />
+
+                <EditText
+                    android:id="@+id/ed_shouji"
+                    android:layout_width="200dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/shape_liangfang_bg"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_below="@+id/ed_ordTime"
+                    android:layout_marginTop="10dp"
+                    android:hint="请输入手机号"
+                    android:paddingLeft="10dp"
+                    android:textSize="15dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+                <Button
+                    android:id="@+id/btn_getyzm"
+                    android:layout_width="90dp"
+                    android:layout_height="38dp"
+                    android:text="获取验证码"
+                    android:textColor="#d00"
+                    android:textStyle="bold"
+                    android:background="@android:color/transparent"
+                    android:textSize="16dp"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_above="@+id/ed_yanzheng"
+                    android:layout_alignRight="@+id/ed_yanzheng"
+                    android:layout_alignEnd="@+id/ed_yanzheng"
+                    android:onClick="getyzm"
+                    />
+                <EditText
+                    android:id="@+id/ed_yanzheng"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/shape_liangfang_bg"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_below="@+id/ed_shouji"
+                    android:textSize="15dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="请输入验证码"
+                    android:paddingLeft="10dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"  />
+                <TextView
+                    android:id="@+id/tv_liaojie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ed_yanzheng"
+                    android:text="只有你想不到，没有我们做不到"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    android:textSize="15dp"
+                    android:textColor="#60000000"
+                    />
+                <TextView
+                    android:id="@+id/tv_liaojie2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_liaojie"
+                    android:text="还等什么，赶快预约吧"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="3dp"
+                    android:textSize="15dp"
+                    android:textColor="#60000000"
+                    />
+                <Button
+                    android:id="@+id/btn_yuyue"
+                    android:layout_width="220dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/tv_liaojie2"
+                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"
+                    android:text="提交"
+                    android:background="@drawable/selector_btn_yuyue"
+                    android:textSize="16dp"
+                    android:textColor="#fff"
+                    android:onClick="yuyue"
+                    />
+
+
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

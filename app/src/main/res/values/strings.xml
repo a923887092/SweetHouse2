@@ -15,9 +15,51 @@
     <string name="title_activity_my_address">MyAddressActivity</string>
     <string name="title_activity_advice">AdviceActivity</string>
     <string name="title_activity_my_wallet">MyWalletActivity</string>
+
     <string name="title_activity_detail">DetailActivity</string>
     <string name="title_activity_sale">SaleActivity</string>
     <string name="title_activity_group_buy">GroupBuyActivity</string>
     <string name="title_activity_act_details">ActDetailsActivity</string>
     <string name="title_activity_result">ResultActivity</string>
+
+    <string name="title_activity_detail_company">DetailCompanyActivity</string>
+    <string name="title_activity_order_zx">OrderZxActivity</string>
+    <string name="title_activity_calender">CalenderActivity</string>
+    <string name="title_activity_java_script">JavaScriptActivity</string>
+    <string name="phone_number">18856421058</string>
+    <string name="city_prompt">同城区域</string>
+    <string name="style_prompt">类型不限</string>
+    <string name="hot_prompt">热门排序</string>
+
+
+    <string name="title_activity_shopping_cart">ShoppingCartActivity</string>
+    <string name="title_activity_order_confirmation">OrderConfirmationActivity</string>
+
+
+
+    <string name="title_activity_user_info">UserInfoActivity</string>
+    <string name="title_activity_select_photo">SelectPhotoActivity</string>
+    <string name="title_activity_alter_user_name">AlterUserNameActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_forget_pass_activity">ForgetPassACtivity</string>
+    <string name="forgetPaas">忘记密码</string>
+    <string name="title_activity_alter_sex">AlterSexActivity</string>
+    <string name="title_activity_return_sales">ReturnSalesActivity</string>
+    <string name="title_activity_add_address">AddAddressActivity</string>
+    <string name="title_activity_about_wallet">AboutWalletActivity</string>
+    <string name="title_activity_wallet_recorder">WalletRecorderActivity</string>
+    <string name="aboutWallet">SH钱包是Sweethouse推出的免费支付平台+金融服务平台，集合了充值、支付、转账等功能，同时为您的购物提供多方面的保障、安全和优惠服务。
+                               全额担保，提货验收安装才付款 全网首创全额担保功能，只要使用我们的钱包付款，钱包就会为用户提供第三方资金担保，用户验货确认
+                               满意后才打款给商家，让您买的安心，用的放心。 0手续费，随时充随时取 齐家钱包支持随时存随时取功能，不收取任何手续费用，让您无
+                               任何后顾之忧。 无须现金，预先往钱包充值即可在现场下订单 预先在线下进行钱包充值，不论是需要测量的地板，还是让您发挥无尽想像的橱柜，
+                               都可以随时在我们这里下订单，无需任何排队，随时买随时付。</string>
+    <string name="title_activity_order_detail">OrderDetailActivity</string>
+    <string name="title_activity_pay_order">PayOrderActivity</string>
+    <string name="title_activity_release_order">ReleaseOrderActivity</string>
+    <string name="title_activity_apply_return">ApplyReturnActivity</string>
+    <string name="title_activity_order_logistic">OrderLogisticActivity</string>
+    <string name="title_activity_evaluate">EvaluateActivity</string>
+    <string name="title_activity_edit_address">EditAddressActivity</string>
 </resources>
