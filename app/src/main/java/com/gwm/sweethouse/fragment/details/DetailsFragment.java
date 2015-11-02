@@ -21,6 +21,8 @@ import com.bigkoo.convenientbanner.CBPageAdapter;
 import com.bigkoo.convenientbanner.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.dk.view.drop.WaterDrop;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.gwm.sweethouse.DetailsActivity;
 import com.gwm.sweethouse.R;
 import com.gwm.sweethouse.bean.MenuItem;
@@ -37,6 +39,11 @@ import com.gwm.sweethouse.utils.PrefUtils;
 import com.gwm.sweethouse.view.CascadingMenuPopWindow;
 import com.gwm.sweethouse.view.SelectNumPopupWindow;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -66,6 +73,11 @@ public class DetailsFragment extends BaseFragment implements View.OnClickListene
     private Button btnAdd, btnBuy;
     private RelativeLayout rlNoBuy;
     private LinearLayout llShop;
+    private HttpUtils httputils;
+    //将当前商品加入到购物车的url
+    private String addCartUrl = "";
+    //用于的到购物车中的所有商品 的json数据
+    private String findCartUrl= "";
 
     public DetailsFragment() {
         super(R.layout.pager_details);
@@ -77,6 +89,7 @@ public class DetailsFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        httputils = new HttpUtils();
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -110,13 +123,27 @@ public class DetailsFragment extends BaseFragment implements View.OnClickListene
             }
         });
         drop = (WaterDrop) view.findViewById(R.id.drop);
-        int cart_num = PrefUtils.getInt(getActivity(), "cart_num", 0);
-        if (cart_num != 0){
-            drop.setVisibility(View.VISIBLE);
-            drop.setText(String.valueOf(cart_num));
-        } else {
-            drop.setVisibility(View.INVISIBLE);
-        }
+        httputils.send(HttpRequest.HttpMethod.GET, findCartUrl, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                String result = responseInfo.result;
+                Gson gson = new Gson();
+                ArrayList<Product> goods = gson.fromJson(result, new TypeToken<ArrayList<Product>>() {
+                }.getType());
+                int size = goods.size();
+                if (size != 0){
+                    drop.setVisibility(View.VISIBLE);
+                    drop.setText(String.valueOf(size));
+                } else {
+                    drop.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+
+            }
+        });
     }
 
     @Override
@@ -149,6 +176,7 @@ public class DetailsFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     protected View createSuccessView() {
+
         view = View.inflate(getActivity(), R.layout.fragment_details, null);
         //初始化menuItems
         ArrayList<MenuItem> tempMenuItems = null;
@@ -269,6 +297,17 @@ public class DetailsFragment extends BaseFragment implements View.OnClickListene
                 Toast.makeText(getActivity(), "进入所有评价", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_add:
+                httputils.send(HttpRequest.HttpMethod.GET, addCartUrl, new RequestCallBack<String>() {
+                    @Override
+                    public void onSuccess(ResponseInfo<String> responseInfo) {
+
+                    }
+
+                    @Override
+                    public void onFailure(HttpException e, String s) {
+
+                    }
+                });
                 Toast.makeText(getActivity(), "成功加入购物车", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_buy:

@@ -10,6 +10,4 @@ public class AboutWalletActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_wallet);
     }
-
-
 }
