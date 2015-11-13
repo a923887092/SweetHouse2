@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,13 +17,14 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.umeng.message.PushAgent;
 
 public class OrderDetailActivity extends Activity {
     TextView tv_detailOrderId, tv_detailUserName, tv_detailMoboil,
             tv_orderAddress, tv_detailProductName, tv_productDesc,
             tv_productPrice, tv_buyCount, tv_payType, tv_payNumb;
     ImageView iv_productImage;
-    Button btn_detail1, btn_detail2, btn_detail3, btn_detail4;
+   // Button btn_detail1, btn_detail2, btn_detail3, btn_detail4;
     int order_state, buy_count, order_id, pay_id,add_id;
     String Product_name, product_photo, product_desc;
     float order_price;
@@ -37,6 +37,9 @@ public class OrderDetailActivity extends Activity {
         getIntentData();
         iniiviews();
         getOrderAddress(add_id);
+
+        //友盟统计应用启动数据，所有Activty都要添加
+        PushAgent.getInstance(OrderDetailActivity.this).onAppStart();
     }
 
 
@@ -69,10 +72,10 @@ public class OrderDetailActivity extends Activity {
         tv_payType = (TextView) findViewById(R.id.tv_payType);
         tv_payNumb = (TextView) findViewById(R.id.tv_payNumb);
         iv_productImage = (ImageView) findViewById(R.id.iv_detailProductImage);
-        btn_detail1 = (Button) findViewById(R.id.btn_detail1);
+      /*  btn_detail1 = (Button) findViewById(R.id.btn_detail1);
         btn_detail2 = (Button) findViewById(R.id.btn_detail2);
         btn_detail3 = (Button) findViewById(R.id.btn_detail3);
-        btn_detail4 = (Button) findViewById(R.id.btn_detail4);
+        btn_detail4 = (Button) findViewById(R.id.btn_detail4);*/
 
         tv_detailOrderId.setText("SH"+order_id);
         tv_detailProductName.setText(Product_name);

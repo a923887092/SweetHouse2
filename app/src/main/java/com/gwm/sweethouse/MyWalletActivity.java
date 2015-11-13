@@ -19,10 +19,11 @@ import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.umeng.message.PushAgent;
 
 public class MyWalletActivity extends Activity implements View.OnClickListener{
     ImageButton ibtn_return;
-    RelativeLayout rl_walletBg,rl_aboutWallet;
+    RelativeLayout rl_walletBg,rl_aboutWallet,rl_WalletRecorder;
     TextView tv_money;
     Wallet wallet = new Wallet();
     Handler handler;
@@ -33,6 +34,10 @@ public class MyWalletActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_wallet);
         initViews();
+
+        //友盟统计应用启动数据，所有Activty都要添加
+        PushAgent.getInstance(MyWalletActivity.this).onAppStart();
+
         intent = getIntent();
         user_id = intent.getIntExtra("user_id",0);
         getMoney();
@@ -56,10 +61,12 @@ public class MyWalletActivity extends Activity implements View.OnClickListener{
         rl_walletBg = (RelativeLayout) findViewById(R.id.rl_walletBg);
         rl_walletBg.getBackground().setAlpha(75);
         rl_aboutWallet = (RelativeLayout) findViewById(R.id.rl_aboutWallet);
+        rl_WalletRecorder = (RelativeLayout) findViewById(R.id.rl_WalletRecorder);
         tv_money = (TextView) findViewById(R.id.tv_money);
 
         rl_walletBg.setOnClickListener(this);
         rl_aboutWallet.setOnClickListener(this);
+        rl_WalletRecorder.setOnClickListener(this);
         ibtn_return.setOnClickListener(this);
     }
 
@@ -100,6 +107,8 @@ public class MyWalletActivity extends Activity implements View.OnClickListener{
             case R.id.rl_aboutWallet:
                 startActivity(new Intent(MyWalletActivity.this,AboutWalletActivity.class));
                 break;
+            case R.id.rl_WalletRecorder:
+                startActivity(new Intent(MyWalletActivity.this,WalletRecorderActivity.class));
         }
     }
 }

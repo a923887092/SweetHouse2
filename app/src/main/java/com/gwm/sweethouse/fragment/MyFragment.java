@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -54,7 +53,7 @@ public class MyFragment extends Fragment implements AdapterView.OnItemClickListe
     private TextView textView1;
     private TextView textView2;
     LinearLayout layout1,layout2,layout3,layout4,layout5;
-    ImageButton ibtn_setting,ibtn_message;
+   // ImageButton ibtn_setting,ibtn_message;
     private ListView listview;
     SharedPreferences preferences;
     int user_id;
@@ -82,7 +81,6 @@ public class MyFragment extends Fragment implements AdapterView.OnItemClickListe
             setUserPhoto(userPhoto);
             getMoney();
             textView1.setText(phoneNumber);
-
         }
         //初始化listview
         getData();
@@ -97,20 +95,20 @@ public class MyFragment extends Fragment implements AdapterView.OnItemClickListe
         BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
         String dir = Environment.getExternalStorageDirectory() + "/com.sweethouse.photo";
         File file = new File(dir+"/"+phoneNumber+".png");
-             //用户已登录
-            //点击头像仍可跳转到userinfo界面，在userinfo判断是否登录，若未登录退出登录按钮Gone
-             if(file.exists()){
-                 //存在本地缓存，直接从本地加载
-                 // 加载本地图片(路径以/开头， 绝对路径)
-                 //图片名称要改，应该改成   手机号码.png
-                 bitmapUtils.display(imageView,dir+"/"+user_id+".png");
-             }else{
-                 //不存在本地缓存，直接从服务器加载
-                 // 加载网络图片
-                 //取出缓存中的user_id,查找url，使用bitmapUtils进行加载
-                 user_id = preferences.getInt("user_id", 0);
-                 getPhotoFromWeb(user_id);
-             }
+        //用户已登录
+        //点击头像仍可跳转到userinfo界面，在userinfo判断是否登录，若未登录退出登录按钮Gone
+        if(file.exists()){
+            //存在本地缓存，直接从本地加载
+            // 加载本地图片(路径以/开头， 绝对路径)
+            //图片名称要改，应该改成   手机号码.png
+            bitmapUtils.display(imageView,dir+"/"+user_id+".png");
+        }else{
+            //不存在本地缓存，直接从服务器加载
+            // 加载网络图片
+            //取出缓存中的user_id,查找url，使用bitmapUtils进行加载
+            user_id = preferences.getInt("user_id", 0);
+            getPhotoFromWeb(user_id);
+        }
     }
 
     //从服务器加载用户头像
@@ -130,7 +128,7 @@ public class MyFragment extends Fragment implements AdapterView.OnItemClickListe
                     //图片路径加载失败
                     @Override
                     public void onFailure(HttpException e, String s) {
-                      Log.e("加载图片失败","气死了。。。。。。。");
+                        Log.e("加载图片失败","气死了。。。。。。。");
                     }
                 });
     }
@@ -141,8 +139,8 @@ public class MyFragment extends Fragment implements AdapterView.OnItemClickListe
         textView1 = (TextView) view.findViewById(R.id.tv_login);
         textView2 = (TextView) view.findViewById(R.id.tv_balance);
         listview = (ListView) view.findViewById(R.id.lv_myItem);
-        ibtn_setting = (ImageButton) view.findViewById(R.id.ibtn_setting);
-        ibtn_message = (ImageButton) view.findViewById(R.id.ibtn_message);
+        /*ibtn_setting = (ImageButton) view.findViewById(R.id.ibtn_setting);
+        ibtn_message = (ImageButton) view.findViewById(R.id.ibtn_message);*/
         layout1 = (LinearLayout) view.findViewById(R.id.ll_state1);
         layout2 = (LinearLayout) view.findViewById(R.id.ll_state2);
         layout3 = (LinearLayout) view.findViewById(R.id.ll_state3);
@@ -158,8 +156,8 @@ public class MyFragment extends Fragment implements AdapterView.OnItemClickListe
         layout3.setOnClickListener(this);
         layout4.setOnClickListener(this);
         layout5.setOnClickListener(this);
-        ibtn_setting.setOnClickListener(this);
-        ibtn_message.setOnClickListener(this);
+      /*  ibtn_setting.setOnClickListener(this);
+        ibtn_message.setOnClickListener(this);*/
     }
 
     private void getData() {
@@ -226,78 +224,78 @@ public class MyFragment extends Fragment implements AdapterView.OnItemClickListe
     @Override
     public void onClick(View view) {
         Intent orderIntent = new Intent(getActivity(),MyOrderActivity.class);
-         switch (view.getId()){
-             case R.id.iv_photo:
-                 if(loginState){
-                     Intent intent = new Intent(getActivity(), UserInfoActivity.class);
-                     intent.putExtra("user_id",user_id);
-                     intent.putExtra("phoneNumber", phoneNumber);
-                     intent.putExtra("loginState",loginState);
-                     intent.putExtra("photoUrl",PhotoUrl);
-                     startActivity(intent);
-                 }else{
-                     startActivity(new Intent(getActivity(), LoginActivity.class));
+        switch (view.getId()){
+            case R.id.iv_photo:
+                if(loginState){
+                    Intent intent = new Intent(getActivity(), UserInfoActivity.class);
+                    intent.putExtra("user_id",user_id);
+                    intent.putExtra("phoneNumber", phoneNumber);
+                    intent.putExtra("loginState",loginState);
+                    intent.putExtra("photoUrl",PhotoUrl);
+                    startActivity(intent);
+                }else{
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
 
-                 }
-                 break;
-             case R.id.tv_login:
-                 //登录以后登录/注册换成手机号
-                 if(loginState == false){
-                     startActivity(new Intent(getActivity(), LoginActivity.class));
-                 }
-                 break;
-             case R.id.tv_balance:
-                 if(loginState) {
-                     startActivity(new Intent(getActivity(), MyWalletActivity.class));
-                 }
-                 break;
-             case R.id.ll_state1:
-                 if(loginState) {
-                     orderIntent.putExtra("orderState", 2);
-                     startActivity(orderIntent);
-                 }else{
-                     Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
-                 }
-                 break;
-             case R.id.ll_state2:
-                 if(loginState) {
-                     orderIntent.putExtra("orderState",3);
-                     startActivity(orderIntent);
-                 }else{
-                     Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
-                 }
-                 break;
-             case R.id.ll_state3:
-                 if(loginState) {
-                     orderIntent.putExtra("orderState",4);
-                     startActivity(orderIntent);
-                 }else{
-                     Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
-                 }
-                 break;
-             case R.id.ll_state4:
-                 if(loginState) {
-                     orderIntent.putExtra("orderState",5);
-                     startActivity(orderIntent);
-                 }else{
-                     Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
-                 }
-                 break;
-             case R.id.ll_state5:
-                 //跳转到退换货页面
-                 if(loginState) {
-                     startActivity(new Intent(getActivity(), ReturnSalesActivity.class));
-                 }else{
-                     Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
-                 }
-                 break;
-             case R.id.ibtn_setting:
+                }
+                break;
+            case R.id.tv_login:
+                //登录以后登录/注册换成手机号
+                if(loginState == false){
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+                break;
+            case R.id.tv_balance:
+                if(loginState) {
+                    startActivity(new Intent(getActivity(), MyWalletActivity.class));
+                }
+                break;
+            case R.id.ll_state1:
+                if(loginState) {
+                    orderIntent.putExtra("orderState", 2);
+                    startActivity(orderIntent);
+                }else{
+                    Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.ll_state2:
+                if(loginState) {
+                    orderIntent.putExtra("orderState",3);
+                    startActivity(orderIntent);
+                }else{
+                    Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.ll_state3:
+                if(loginState) {
+                    orderIntent.putExtra("orderState",4);
+                    startActivity(orderIntent);
+                }else{
+                    Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.ll_state4:
+                if(loginState) {
+                    orderIntent.putExtra("orderState",5);
+                    startActivity(orderIntent);
+                }else{
+                    Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.ll_state5:
+                //跳转到退换货页面
+                if(loginState) {
+                    startActivity(new Intent(getActivity(), ReturnSalesActivity.class));
+                }else{
+                    Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
+                }
+                break;
+           /* case R.id.ibtn_setting:
 
-                 break;
-             case R.id.ibtn_message:
+                break;
+            case R.id.ibtn_message:
 
-                 break;
-         }
+                break;*/
+        }
     }
 
 

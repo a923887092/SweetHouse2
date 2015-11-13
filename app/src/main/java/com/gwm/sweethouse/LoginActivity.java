@@ -20,6 +20,7 @@ import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.umeng.message.PushAgent;
 
 public class LoginActivity extends Activity implements View.OnClickListener{
     private Button loginButton,registerButton;
@@ -35,6 +36,8 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initViews();
+        //友盟统计应用启动数据，所有Activty都要添加
+        PushAgent.getInstance(LoginActivity.this).onAppStart();
     }
 
 

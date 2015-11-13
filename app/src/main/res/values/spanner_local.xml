@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="local">
+        <item>局部</item>
+        <item>窗帘</item>
+        <item>楼梯</item>
+    </string-array>
+</resources>

@@ -29,5 +29,67 @@
             android:textColor="#ffffff"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/ll_oldPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/top_alterPass"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+        <EditText
+            android:id="@+id/et_oldPass"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:background="@drawable/selector_bg_edittext"
+            android:padding="5dp"
+            android:layout_weight="4"
+            android:hint="请输入原有密码"
+            android:inputType="textPassword"/>
+        <Button
+            android:id="@+id/btn_newPass"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="确认"
+            android:textColor="#fff"
+            android:background="@drawable/selector_btn_reload"/>
+    </LinearLayout>
 
+    <EditText
+        android:id="@+id/et_newPass1"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:hint="请输入新的密码"
+        android:inputType="textPassword"
+        android:padding="5dp"
+        android:background="@drawable/selector_bg_edittext"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/ll_oldPass"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"/>
+
+    <EditText
+        android:id="@+id/et_newPass2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:hint="请再次输入新的密码"
+        android:inputType="textPassword"
+        android:padding="5dp"
+        android:background="@drawable/selector_bg_edittext"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/et_newPass1"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"/>
+    <Button
+        android:id="@+id/btn_alterPass"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@drawable/selector_btn_reload"
+        android:text="确认修改"
+        android:textColor="#fff"
+        android:layout_below="@id/et_newPass2"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

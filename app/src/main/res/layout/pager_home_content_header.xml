@@ -35,7 +35,7 @@
     </RelativeLayout>
 
     <RadioGroup
-        android:layout_gravity="center"
+        android:gravity="center_horizontal"
         android:id="@+id/rg_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -147,12 +147,13 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_margin="8dp"
+                    android:layout_margin="1dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <LinearLayout
+                        android:id="@+id/ll_eight"
                         android:orientation="vertical"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -167,7 +168,7 @@
                         <TextView
                             android:textSize="12dp"
                             android:layout_gravity="center_horizontal"
-                            android:text="每周二 四 晚8点"
+                            android:text="每晚8点开抢"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <ImageView
@@ -177,22 +178,28 @@
                             android:layout_height="wrap_content" />
                     </LinearLayout>
 
+                    <View
+                        android:background="#ccc"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"/>
                     <LinearLayout
+                        android:id="@+id/ll_saled"
+                        android:clickable="true"
                         android:orientation="vertical"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
                         <TextView
                             android:textSize="16dp"
-                            android:textColor="#f90"
+                            android:textColor="#d91e02"
                             android:layout_gravity="center_horizontal"
-                            android:text="黄金8点挡"
+                            android:text="超值折扣"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <TextView
                             android:textSize="12dp"
                             android:layout_gravity="center_horizontal"
-                            android:text="每周二 四 晚8点"
+                            android:text="天天有特价"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <ImageView
@@ -228,6 +235,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <TextView
+                            android:layout_marginTop="3dp"
                             android:text="好货直邮 保证低价"
                             android:layout_below="@id/tv_title_gcht"
                             android:layout_width="wrap_content"

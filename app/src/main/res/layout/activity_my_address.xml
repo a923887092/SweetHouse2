@@ -29,7 +29,7 @@
             android:layout_centerHorizontal="true" />
     </RelativeLayout>
 
-    <ListView
+    <com.gwm.sweethouse.ZList.ZListView
         android:id="@+id/lv_address"
         android:layout_below="@id/top_myAddress"
         android:layout_width="match_parent"
@@ -45,19 +45,19 @@
         android:layout_centerInParent="true"
         />
     <Button
-        android:layout_below="@id/lv_address"
         android:id="@+id/btn_newAddr"
         android:layout_width="150dp"
         android:layout_height="40dp"
         android:text="+新建地址"
         android:textColor="#fff"
         android:background="@drawable/selector_btn_newaddr"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+       android:layout_centerHorizontal="true" />
     <TextView
         android:id="@+id/tv_noOrders"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="您还没有订单"/>
+        android:text="您还没有收货地址"/>
 </RelativeLayout>

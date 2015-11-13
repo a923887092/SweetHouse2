@@ -3,11 +3,13 @@ package com.gwm.sweethouse.fragment.saled;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +21,12 @@ import com.gwm.sweethouse.adapter.MyBaseAdapter;
 import com.gwm.sweethouse.bean.Product;
 import com.gwm.sweethouse.bean.Saled;
 import com.gwm.sweethouse.global.GlobalContacts;
+import com.gwm.sweethouse.manager.ThreadManager;
+import com.gwm.sweethouse.protocol.GoodsProtocol;
+import com.gwm.sweethouse.protocol.SaledProtocol;
+import com.gwm.sweethouse.utils.FilesUtils;
 import com.gwm.sweethouse.utils.LogUtils;
+import com.gwm.sweethouse.utils.UiUtils;
 import com.gwm.sweethouse.view.GridViewWithHeaderAndFooter;
 import com.gwm.sweethouse.view.RefreshLayout;
 import com.lidroid.xutils.BitmapUtils;
@@ -29,6 +36,8 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
+import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -45,6 +54,7 @@ public class DiscountFragment extends Fragment {
     private HttpUtils httpUtils;
     private BitmapUtils bitmapUtils;
     private String url = GlobalContacts.GOODS_DISCOUNT_URL;
+    private String dirTime;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,7 +90,12 @@ public class DiscountFragment extends Fragment {
         gvGoods = (GridViewWithHeaderAndFooter) view.findViewById(R.id.gv_goods);
         gvGoods.addHeaderView(headerView);
         mRefreshLayout.setChildView(gvGoods);
+        gvGoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+            }
+        });
         mRefreshLayout.setColorSchemeResources(R.color.google_blue,
                 R.color.google_green,
                 R.color.google_red,
@@ -89,20 +104,43 @@ public class DiscountFragment extends Fragment {
         mRefreshLayout.setOnRefreshListener(new RefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.e("gwm", "onFresh");
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mRefreshLayout.setRefreshing(false);
-//                        mAdapter.notifyDataSetChanged();
-//                        textMore.setVisibility(View.VISIBLE);
-//                        mProgressBar.setVisibility(View.GONE);
-                        Toast.makeText(getActivity(), "Refresh Finished!", Toast.LENGTH_SHORT).show();
-                    }
-                }, 2000);
+                refreshData();
             }
         });
 
+    }
+
+    private void refreshData() {
+        ThreadManager.getInstance().createLongPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                SystemClock.sleep(2000);
+                final String dirTime1 = System.currentTimeMillis() + "";
+                GoodsProtocol protocol = new GoodsProtocol(url, dirTime1);
+                final ArrayList<Product> goods_refresh = protocol.loadData();
+                UiUtils.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (goods_refresh != null) {
+                            File dir = FilesUtils.getCacheDri();
+                            if (dirTime != null) {
+                                File file = new File(dir, dirTime);
+                                if (file.isFile() && file.exists()) {
+                                    file.delete();
+                                }
+                                dirTime = dirTime1;
+                            }
+                            goods.clear();
+                            goods.addAll(goods_refresh);
+                            LogUtils.d("aaaaa" + goods);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                        mRefreshLayout.setRefreshing(false);
+                        Toast.makeText(getActivity(), "刷新成功!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 
     class DiscountGridAdapter extends MyBaseAdapter<Product>{
@@ -129,7 +167,8 @@ public class DiscountFragment extends Fragment {
             Product good = datas.get(position);
             bitmapUtils.display(holder.ivImg, GlobalContacts.SERVER_URL + good.getProduct_photo());
             holder.tvTitle.setText(good.getProduct_name() + " " + good.getProduct_desc());
-            holder.tvPrice.setText("￥" + (good.getProduct_discount() * good.getProduct_price()));
+            String format = new DecimalFormat(".0").format(good.getProduct_discount() * good.getProduct_price());
+            holder.tvPrice.setText("￥" + format);
             holder.tvDiscount.setText((new Float(good.getProduct_discount() * 10)).intValue() + "折");
             return convertView;
         }

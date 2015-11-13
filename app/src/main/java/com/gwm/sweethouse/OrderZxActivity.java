@@ -3,9 +3,9 @@ package com.gwm.sweethouse;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -25,8 +25,7 @@ import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
-
-import org.w3c.dom.Text;
+import com.umeng.message.PushAgent;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -63,6 +62,9 @@ public class OrderZxActivity extends Activity implements View.OnClickListener{
         setContentView(R.layout.activity_order_zx);
         Intent intent = getIntent();
         comOrderId = intent.getIntExtra("comOrderId", 0);
+
+         //友盟统计应用启动数据，所有Activty都要添加
+        PushAgent.getInstance(OrderZxActivity.this).onAppStart();
 
         initView();
         spinner= (Spinner) findViewById(R.id.sp_adrr);

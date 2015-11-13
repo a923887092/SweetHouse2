@@ -7,33 +7,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:textSize="20sp"
-
-                android:text="满2000减200"
-                android:gravity="center"
-                android:background="@color/google_red"/>
-
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="已满2000,已优惠200"
-
-            android:layout_weight="1" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#e5e2e2">
         <RelativeLayout
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -74,40 +54,53 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_gravity="top"
-            >
+            android:padding="3dp">
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="sdddddddddddddd"
-                android:textSize="15dp"
-                android:id="@+id/goodsDes" />
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:text="专业提供高速稳定和便捷的VPN服务.国线路,百兆带宽,不限流量速度,注册即可免费试用.了解更多"
+                android:textSize="11sp"
+                android:id="@+id/goodsDes"
+                android:singleLine="false"
+                android:textStyle="normal|bold" />
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_weight="3"
                 android:text="sdddddddddddddd"
                 android:textSize="15dp"
                 android:id="@+id/goodsCategory" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="5"
+                android:layout_weight="4"
                 android:orientation="horizontal">
-                <TextView
+                <RelativeLayout
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    >
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="#5B5B5B"
+                android:gravity="center_vertical|center|center_horizontal"
+                android:textSize="12sp"
+                android:id="@+id/before_price" />
+                <TextView
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="¥:1000"
                     android:textColor="@color/google_red"
-                    android:layout_weight="1"
                     android:gravity="center_vertical|center|center_horizontal"
-                    android:autoText="false"
                     android:textSize="20dp"
                     android:id="@+id/price" />
+                    </RelativeLayout>
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="4"
                     android:paddingLeft="4dp">
                     <ImageButton
                         android:id="@+id/amount_sub"
@@ -117,12 +110,12 @@
                         android:layout_gravity="center"
                         android:src="@drawable/abc"
                         android:background="@drawable/boder"
-                        />
+                        android:clickable="true" />
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
-                        android:textSize="25sp"
+                        android:textSize="20sp"
                         android:gravity="center_vertical|center"
 
                         android:background="@drawable/boder"

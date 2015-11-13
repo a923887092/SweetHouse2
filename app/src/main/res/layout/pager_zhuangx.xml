@@ -28,6 +28,7 @@
       android:layout_width="match_parent"
       android:layout_height="100dp" />
    <LinearLayout
+       android:background="#fff"
        android:layout_width="match_parent"
        android:layout_height="80dp"
        android:orientation="horizontal">
@@ -59,18 +60,22 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
            <TextView
+               android:textColor="#000"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:text="申请量房设计"
-               android:textSize="18dp"
+               android:textSize="16dp"
                android:layout_marginTop="20dp"
                android:layout_marginLeft="7dp"
                />
            <TextView
+               android:layout_marginTop="10dp"
+               android:textSize="12dp"
+               android:layout_marginLeft="7dp"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:text="3套方案 精挑细选"
-               android:layout_marginLeft="5dp"
+
                />
             </LinearLayout>
        </LinearLayout>
@@ -99,18 +104,21 @@
                android:layout_height="wrap_content"
                android:orientation="vertical">
                <TextView
+                   android:textColor="#000"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="同城装修公司"
-                   android:textSize="18dp"
+                   android:textSize="16dp"
                    android:layout_marginTop="20dp"
                    android:layout_marginLeft="7dp"
                    />
                <TextView
+                   android:layout_marginTop="10dp"
+                   android:textSize="12dp"
+                   android:layout_marginLeft="5dp"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="真实评价 安心托付"
-                   android:layout_marginLeft="5dp"
                    />
            </LinearLayout>
        </LinearLayout>
@@ -129,8 +137,9 @@
         android:background="#fff"
         >
         <RelativeLayout
+            android:id="@+id/rl_getpic"
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="45dp">
             <ImageButton
                 android:id="@+id/ibtn_kantu"
                 android:layout_width="wrap_content"
@@ -142,6 +151,8 @@
                 android:layout_marginTop="10dp"
                 />
             <TextView
+                android:textColor="#000"
+                android:textSize="16dp"
                 android:id="@+id/tv_kantu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -181,8 +192,9 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_calculator"
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="45dp">
             <ImageButton
                 android:id="@+id/ibtn_yusuan"
                 android:layout_width="wrap_content"
@@ -193,6 +205,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_alignBottom="@+id/imageView4" />
             <TextView
+                android:textColor="#000"
+                android:textSize="16dp"
                 android:id="@+id/tv_yusuan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -224,8 +238,9 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_buy"
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="45dp">
             <ImageButton
                 android:id="@+id/ibtn_caigou"
                 android:layout_width="wrap_content"
@@ -237,6 +252,8 @@
                 android:layout_marginTop="10dp"
                 />
             <TextView
+                android:textColor="#000"
+                android:textSize="16dp"
                 android:id="@+id/tv_caigou"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -268,7 +285,7 @@
         <RelativeLayout
             android:id="@+id/rl_huangli"
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="45dp">
             <ImageButton
                 android:id="@+id/ibtn_rili"
                 android:layout_width="wrap_content"
@@ -280,6 +297,8 @@
                 android:layout_marginTop="10dp"
                 />
             <TextView
+                android:textColor="#000"
+                android:textSize="16dp"
                 android:id="@+id/tv_rili"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -309,9 +328,10 @@
         android:background="#70cccccc"
         />
     <RelativeLayout
+        android:id="@+id/rl_kefu"
         android:layout_width="match_parent"
         android:background="#fff"
-        android:layout_height="40dp">
+        android:layout_height="45dp">
         <ImageButton
             android:id="@+id/ibtn_kefu"
             android:layout_width="wrap_content"
@@ -323,6 +343,8 @@
             android:layout_marginTop="10dp"
             />
         <TextView
+            android:textColor="#000"
+            android:textSize="16dp"
             android:id="@+id/tv_kefu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

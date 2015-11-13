@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp">
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text ="修改昵称"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp" />
+        <LinearLayout
+            android:id="@+id/ll_alertLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ccc"
+            android:layout_below="@id/textView9"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+        </LinearLayout>
+        <EditText
+            android:id="@+id/et_dialogName"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@null"
+            android:layout_below="@id/ll_alertLine"
+
+            android:hint="4到10个中英文字符和下划线"
+            android:paddingLeft="5dp"
+            android:textColorHint="#ccc"/>
+        <LinearLayout
+            android:id="@+id/ll_alertLine2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ccc"
+            android:layout_below="@id/et_dialogName"
+            android:orientation="horizontal">
+        </LinearLayout>
+        <Button
+            android:id="@+id/btn_dialogName"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:background="@drawable/selector_btn_reload"
+            android:layout_below="@id/ll_alertLine2"
+            android:layout_centerHorizontal="true"
+            android:text="确定"
+            android:textColor="#fff"
+            android:layout_marginTop="15dp"/>
+    </RelativeLayout>
+
+</LinearLayout>

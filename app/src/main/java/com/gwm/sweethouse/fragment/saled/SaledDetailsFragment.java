@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -29,12 +30,22 @@ import com.gwm.sweethouse.fragment.BaseFragment;
 import com.gwm.sweethouse.fragment.details.GoodImgFragment;
 import com.gwm.sweethouse.global.GlobalContacts;
 import com.gwm.sweethouse.interfaces.CascadingMenuViewOnSelectListener;
+import com.gwm.sweethouse.interfaces.DetailsFragmentCallBack;
 import com.gwm.sweethouse.interfaces.FragmentCallBack;
 import com.gwm.sweethouse.protocol.DetailsProtocol;
 import com.gwm.sweethouse.protocol.GoodsImgProtocol;
+import com.gwm.sweethouse.utils.CustomDigitalClock;
 import com.gwm.sweethouse.utils.LogUtils;
 import com.gwm.sweethouse.view.CascadingMenuPopWindow;
 import com.gwm.sweethouse.view.SelectNumPopupWindow;
+import com.gwm.sweethouse.view.snapscrollview.McoyProductContentPage;
+import com.gwm.sweethouse.view.snapscrollview.McoyProductDetailInfoPage;
+import com.gwm.sweethouse.view.snapscrollview.McoySnapPageLayout;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -59,24 +70,51 @@ public class SaledDetailsFragment extends BaseFragment implements View.OnClickLi
     private int mContent = 1;
     private static ArrayList<Product> goods;
     private ArrayList<ProductImg> productImgs;
-    private FragmentCallBack mFragmentCallBack;
+    private DetailsFragmentCallBack mFragmentCallBack;
     private List<String> networkImages = new ArrayList<>();
     private TextView tvGoodDesc, tvGoodPrice, tvCount, tvAddress, tvAddressPrice;
     private RelativeLayout rlCount, rlAddress;
-    private LinearLayout llComment;
+    private LinearLayout llComment, llGoBuy;
     private ViewPager vpGood;
     private View view;
+    private Button btnBuyOrNo, btnGo;
+    private int state;
+    private CustomDigitalClock remainTime;
+    private TextView tvTitle;
+    private View rootView, bottomView, topView;
+    private McoySnapPageLayout mcoySnapPageLayout;
+    private McoyProductDetailInfoPage topPage;
+    private McoyProductContentPage bottomPage;
 
     public SaledDetailsFragment() {
-        super(R.layout.pager_details);
+        super();
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.pager_details;
     }
 
     @Override
     protected void initFragment(View view) {
+        state = mFragmentCallBack.callbackState(null);
+        btnBuyOrNo = (Button) view.findViewById(R.id.btn_buy_or_no);
+        llGoBuy = (LinearLayout) view.findViewById(R.id.ll_Buy);
+
         rlNoBuy = (RelativeLayout) view.findViewById(R.id.rl_no_buy);
         llShop = (LinearLayout) view.findViewById(R.id.ll_shop);
         llShop.setVisibility(View.GONE);
         rlNoBuy.setVisibility(View.VISIBLE);
+        LogUtils.e(state + "77777");
+        if (state == 0) {
+            btnBuyOrNo.setVisibility(View.GONE);
+            llGoBuy.setVisibility(View.VISIBLE);
+            remainTime = (CustomDigitalClock) view.findViewById(R.id.remainTime);
+            tvTitle = (TextView) view.findViewById(R.id.tv_title);
+            btnGo = (Button) view.findViewById(R.id.btn_go);
+            btnGo.setOnClickListener(this);
+            startTime();
+        }
         ivBack = (ImageView) view.findViewById(R.id.iv_goods_back);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,9 +124,43 @@ public class SaledDetailsFragment extends BaseFragment implements View.OnClickLi
         });
     }
 
+    private void startTime() {
+        new HttpUtils().send(HttpRequest.HttpMethod.GET, GlobalContacts.SERVER_URL +
+                "/saledServlet?method=getTime", new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                String result = responseInfo.result;
+
+//                    state = STATE_END;
+                remainTime.setEndTime(Long.parseLong(result) + 3600000);
+                remainTime.setClockListener(new CustomDigitalClock.ClockListener() { // register the clock's listener
+
+                    @Override
+                    public void timeEnd() {
+                        // The clock time is ended.
+//                            Toast.makeText(getActivity(), "8888888888888", Toast.LENGTH_SHORT).show();
+//                            remainTime.setVisibility(View.INVISIBLE);
+                        btnBuyOrNo.setVisibility(View.VISIBLE);
+                        llGoBuy.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void remainFiveMinutes() {
+                        // The clock time is remain five minutes.
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+
+            }
+        });
+    }
+
     @Override
     protected LoadResult load() {
-        int goodsId = mFragmentCallBack.callbackFun(null);
+        int goodsId = mFragmentCallBack.callbackGoodsId(null);
 //        System.out.println("++++++++++++++_______-" + a);
         DetailsProtocol protocol = new DetailsProtocol(GlobalContacts.GOOD_URL + goodsId, "good_details" + goodsId);
         goods = protocol.loadData();
@@ -118,11 +190,15 @@ public class SaledDetailsFragment extends BaseFragment implements View.OnClickLi
     }
 
 
-
-
     @Override
     protected View createSuccessView() {
-        view = View.inflate(getActivity(), R.layout.fragment_details, null);
+        topView = View.inflate(context, R.layout.fragment_details, null);
+        bottomView = View.inflate(context, R.layout.mcoy_product_content_page, null);
+        rootView = View.inflate(context, R.layout.fragment_details_new, null);
+        mcoySnapPageLayout = (McoySnapPageLayout) rootView.findViewById(R.id.flipLayout);
+        topPage = new McoyProductDetailInfoPage(context,topView);
+        bottomPage = new McoyProductContentPage(context, bottomView);
+        mcoySnapPageLayout.setSnapPages(topPage, bottomPage);
         //初始化menuItems
         ArrayList<MenuItem> tempMenuItems = null;
         for (int j = 0; j < GroupNameArray.length; j++) {
@@ -135,44 +211,57 @@ public class SaledDetailsFragment extends BaseFragment implements View.OnClickLi
 
         Product good = goods.get(0);
         /*使用ViewPagerIndicator 的ViewPager*/
-        vpGood = (ViewPager) view.findViewById(R.id.vp_good);
+        vpGood = (ViewPager) bottomView.findViewById(R.id.vp_good);
         Bundle bundle = new Bundle();
         bundle.putSerializable("productImgs", productImgs);
+//        bundle.putSerializable("vpGood", (Serializable) vpGood);
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getActivity().getSupportFragmentManager(), FragmentPagerItems.with(getActivity())
                 .add("商品介绍", GoodImgFragment.class, bundle)
                 .add("规格参数", GoodImgFragment.class, bundle)
                 .create());
         vpGood.setAdapter(adapter);
-        SmartTabLayout viewPagerTab = (SmartTabLayout) view.findViewById(R.id.viewpagertab);
+        SmartTabLayout viewPagerTab = (SmartTabLayout) bottomView.findViewById(R.id.viewpagertab);
         viewPagerTab.setViewPager(vpGood);
 
-        tvGoodDesc = (TextView) view.findViewById(R.id.good_desc);
-        tvGoodPrice = (TextView) view.findViewById(R.id.good_price);
-        tvCount = (TextView) view.findViewById(R.id.tv_count);
-        rlCount = (RelativeLayout) view.findViewById(R.id.rl_count);
-        rlAddress = (RelativeLayout) view.findViewById(R.id.rl_address);
-        llComment = (LinearLayout) view.findViewById(R.id.ll_comment);
-        tvAddress = (TextView) view.findViewById(R.id.tv_address);
-        tvAddressPrice = (TextView) view.findViewById(R.id.tv_address_price);
+        tvGoodDesc = (TextView) topView.findViewById(R.id.good_desc);
+        tvGoodPrice = (TextView) topView.findViewById(R.id.good_price);
+        tvCount = (TextView) topView.findViewById(R.id.tv_count);
+        rlCount = (RelativeLayout) topView.findViewById(R.id.rl_count);
+        rlAddress = (RelativeLayout) topView.findViewById(R.id.rl_address);
+        llComment = (LinearLayout) topView.findViewById(R.id.ll_comment);
+        tvAddress = (TextView) topView.findViewById(R.id.tv_address);
+        tvAddressPrice = (TextView) topView.findViewById(R.id.tv_address_price);
         llComment.setOnClickListener(this);
         rlCount.setOnClickListener(this);
         rlAddress.setOnClickListener(this);
         tvGoodDesc.setText("【" + good.getProduct_name() + "】 " + good.getProduct_desc());
         tvGoodPrice.setText("￥" + good.getProduct_price());
         tvCount.setText(mContent + "件" + "（库存" + good.getProduct_sum() + "件）");
+
         initImageLoader();
-        ConvenientBanner convenientBanner = (ConvenientBanner) view.findViewById(R.id.convenientBanner);
+        ConvenientBanner convenientBanner = (ConvenientBanner) topView.findViewById(R.id.convenientBanner);
         //网络加载例子
-        for (ProductImg productImg : productImgs) {
-            networkImages.add(GlobalContacts.SERVER_URL + productImg.getImg_url());
+        if (productImgs.size() == 0){
+            networkImages.add(GlobalContacts.IMAGE_NULL_URL);
+        } else {
+            for (ProductImg productImg : productImgs) {
+                networkImages.add(GlobalContacts.SERVER_URL + productImg.getImg_url());
+            }
         }
         convenientBanner.setPages(new CBViewHolderCreator<NetworkImageHolderView>() {
             @Override
             public NetworkImageHolderView createHolder() {
                 return new NetworkImageHolderView();
             }
-        }, networkImages);
+        }, networkImages)
+                //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
+                .setPageIndicator(new int[]{R.drawable.ic_page_indicator,
+                        R.drawable.ic_page_indicator_focused})
+                        //设置指示器的方向
+                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
+                        //设置翻页的效果，不需要翻页效果可用不设
+                .setPageTransformer(ConvenientBanner.Transformer.CubeInTransformer);
 
         /*SlidingMenu menu = new SlidingMenu(getActivity());
         menu.setMode(SlidingMenu.RIGHT);
@@ -183,7 +272,7 @@ public class SaledDetailsFragment extends BaseFragment implements View.OnClickLi
         menu.setFadeDegree(0.35f);
         menu.attachToActivity(getActivity(), SlidingMenu.SLIDING_CONTENT);
         menu.setMenu(R.layout.fragment_right_menu);*/
-        return view;
+        return rootView;
     }
 
 
@@ -236,10 +325,14 @@ public class SaledDetailsFragment extends BaseFragment implements View.OnClickLi
                     cascadingMenuPopWindow = new CascadingMenuPopWindow(getActivity(), menuItems);
                     cascadingMenuPopWindow.setMenuViewOnSelectListener(new NMCascadingMenuViewOnSelectListener());
                 }
-                cascadingMenuPopWindow.showAtLocation(view, Gravity.NO_GRAVITY, location[0] + v.getWidth()/10, 0);
+                cascadingMenuPopWindow.showAtLocation(view, Gravity.NO_GRAVITY, location[0] + v.getWidth() / 10, 0);
                 break;
             case R.id.ll_comment:
                 Toast.makeText(getActivity(), "进入所有评价", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.btn_go:
+                Toast.makeText(getActivity(), "立即购买", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

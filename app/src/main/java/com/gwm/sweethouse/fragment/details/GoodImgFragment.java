@@ -3,6 +3,7 @@ package com.gwm.sweethouse.fragment.details;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.gwm.sweethouse.utils.ViewUtil;
 import com.lidroid.xutils.BitmapUtils;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -36,7 +38,6 @@ public class GoodImgFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.pager_good_img, container, false);
-
         return view;
     }
 
@@ -48,11 +49,12 @@ public class GoodImgFragment extends Fragment{
         productImgs = (ArrayList<ProductImg>) bundle.getSerializable("productImgs");
         LogUtils.i("GoodImgFragment" + productImgs);
         lvContent = (ListView) view.findViewById(R.id.lv_content);
-        /*int listViewHeight = ViewUtil.setListViewHeightBasedOnChildren1(lvContent);
-        ViewGroup.LayoutParams params = view.getParent().getLayoutParams();
-        params.height = listViewHeight;
-        vpZifuduo.setLayoutParams(params);*/
         lvContent.setAdapter(new ImageAdapter(productImgs, view.getContext()));
+//        int listViewHeight = ViewUtil.setListViewHeightBasedOnChildren1(lvContent);
+//        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+//                ViewGroup.LayoutParams.MATCH_PARENT);
+//        params.height = listViewHeight;
+//      ViewUtil.setListViewHeightBasedOnChildren1(lvContent);
     }
 
     class ImageAdapter extends MyBaseAdapter<ProductImg>{

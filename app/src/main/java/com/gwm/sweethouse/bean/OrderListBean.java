@@ -19,6 +19,7 @@ public class OrderListBean implements Serializable {
     String product_Photo;
     String product_name;
     String product_desc;
+    int product_id;
     public int getUser_id() {
         return user_id;
     }
@@ -79,9 +80,20 @@ public class OrderListBean implements Serializable {
     public void setProduct_desc(String product_desc) {
         this.product_desc = product_desc;
     }
+    public int getProduct_id() {
+        return product_id;
+    }
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
+    }
+    public OrderListBean() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
     public OrderListBean(int user_id, int order_id, int buy_count, int pay_id,
                  float order_price, int order_state, int add_id,
-                 String product_Photo, String product_name, String product_desc) {
+                 String product_Photo, String product_name, String product_desc,
+                 int product_id) {
         super();
         this.user_id = user_id;
         this.order_id = order_id;
@@ -93,10 +105,7 @@ public class OrderListBean implements Serializable {
         this.product_Photo = product_Photo;
         this.product_name = product_name;
         this.product_desc = product_desc;
-    }
-    public OrderListBean() {
-        super();
-        // TODO Auto-generated constructor stub
+        this.product_id = product_id;
     }
     @Override
     public String toString() {
@@ -105,7 +114,8 @@ public class OrderListBean implements Serializable {
                 + ", order_price=" + order_price + ", order_state="
                 + order_state + ", add_id=" + add_id + ", product_Photo="
                 + product_Photo + ", product_name=" + product_name
-                + ", product_desc=" + product_desc + "]";
+                + ", product_desc=" + product_desc + ", product_id="
+                + product_id + "]";
     }
 
 }

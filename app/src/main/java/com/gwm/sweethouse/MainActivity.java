@@ -43,8 +43,14 @@ public class MainActivity extends FragmentActivity {
         rbMy = (RadioButton) findViewById(R.id.rb_my);
 //        initTabDrawable();
 //        initViewPager();
-        rbHome.setChecked(true);
         vpContent.setAdapter(new ViewPagerAdapter1(fm));
+        int page = getIntent().getIntExtra("page", -1);
+        if (page == 2){
+            vpContent.setCurrentItem(2, false);
+            rbCart.setChecked(true);
+        } else {
+            rbHome.setChecked(true);
+        }
 
         //viewpager的滑动监听
         vpContent.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

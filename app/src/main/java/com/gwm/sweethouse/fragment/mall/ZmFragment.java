@@ -23,10 +23,6 @@ public class ZmFragment extends BaseMallFragment {
 
     private TextView tvSortTitle;
 
-    public ZmFragment(ArrayList<SubClass> subClasses) {
-        super(subClasses);
-    }
-
     @Override
     protected void initView(View view) {
         tvSortTitle = (TextView) view.findViewById(R.id.tv_sort_title);

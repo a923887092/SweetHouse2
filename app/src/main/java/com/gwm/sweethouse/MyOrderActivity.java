@@ -15,6 +15,7 @@ import com.gwm.sweethouse.fragment.order.Order2Fragment;
 import com.gwm.sweethouse.fragment.order.Order3Fragment;
 import com.gwm.sweethouse.fragment.order.Order4Fragment;
 import com.gwm.sweethouse.fragment.order.Order5Fragment;
+import com.umeng.message.PushAgent;
 
 public class MyOrderActivity extends Activity {
     RadioGroup rg_order;
@@ -35,7 +36,8 @@ public class MyOrderActivity extends Activity {
         setContentView(R.layout.activity_myorder);
         initViews();
         initData();
-
+        //友盟统计应用启动数据，所有Activty都要添加
+        PushAgent.getInstance(MyOrderActivity.this).onAppStart();
     }
 
     private void initData() {

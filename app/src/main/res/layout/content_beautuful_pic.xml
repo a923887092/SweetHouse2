@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:background="#fff"
+        android:id="@+id/ll_paixu"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/rl_shousuo"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_space"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1">
+
+            <Spinner
+                android:id="@+id/sp_space"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/shape_spanner_bg"
+                android:entries="@array/space">
+
+            </Spinner>
+
+            <ImageView
+                android:layout_marginRight="5dp"
+                android:id="@+id/im_space"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/sp_space"
+                android:background="@drawable/ic_down_gray" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="#ccc" />
+
+        <RelativeLayout
+            android:id="@+id/rl_local"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1">
+
+            <Spinner
+                android:id="@+id/sp_local"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/shape_spanner_bg"
+                android:entries="@array/local">
+
+            </Spinner>
+
+            <ImageView
+                android:layout_marginRight="5dp"
+                android:id="@+id/im_local"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/sp_local"
+                android:background="@drawable/ic_down_gray" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="#ccc" />
+        <RelativeLayout
+            android:id="@+id/rl_style"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1">
+
+            <Spinner
+                android:id="@+id/sp_style"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/shape_spanner_bg"
+                android:entries="@array/stylePic">
+
+            </Spinner>
+            <ImageView
+                android:layout_marginRight="5dp"
+                android:id="@+id/im_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/sp_style"
+                android:background="@drawable/ic_down_gray" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="#ccc" />
+        <RelativeLayout
+            android:id="@+id/rl_color"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1">
+
+            <Spinner
+                android:id="@+id/sp_color"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/shape_spanner_bg"
+                android:entries="@array/color">
+
+            </Spinner>
+            <ImageView
+                android:layout_marginRight="5dp"
+                android:id="@+id/im_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/sp_color"
+                android:background="@drawable/ic_down_gray" />
+        </RelativeLayout>
+
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ccc"
+        />
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
+</LinearLayout>

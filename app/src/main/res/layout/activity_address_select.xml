@@ -1,0 +1,75 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gwm.sweethouse.AddressSelectActivity">
+
+    <RelativeLayout
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/clickselector"
+        android:layout_alignParentTop="true"
+        android:id="@+id/confirmtop">
+        <RelativeLayout
+
+            android:clickable="true"
+            android:id="@+id/backtoorder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:paddingLeft="3dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/arrow_return"
+                android:id="@+id/backtocart"
+                android:layout_gravity="center_vertical" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/backtocart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="订单确认"
+                android:textSize="20sp" />
+
+        </RelativeLayout
+            >
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/line1"
+
+        android:layout_below="@+id/confirmtop"
+        android:paddingBottom="10dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#91505050"/>
+    </RelativeLayout>
+    <ListView
+        android:layout_below="@+id/line1"
+        android:layout_above="@+id/address_manage"
+        android:id="@+id/address_list"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:dividerHeight="5dp">
+
+    </ListView>
+    <Button
+        android:id="@+id/address_manage"
+        android:background="@color/google_red"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="管理收货地址"
+        android:textColor="@color/white"
+        />
+
+</RelativeLayout>

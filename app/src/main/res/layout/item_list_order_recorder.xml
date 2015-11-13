@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:background="#ffffff"
+    android:orientation="horizontal">
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_weight="1">
+        <ImageView
+            android:id="@+id/iv_billpic"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_my_bill"
+            android:scaleType="fitXY"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_weight="3"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/tv_billContent"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="hahahhah"
+                android:layout_centerVertical="true"/>
+            <TextView
+                android:id="@+id/tv_billMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-123456￥"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/tv_billTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2015年11月6日"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+       <!-- <TextView
+            android:id="@+id/tv_billContent"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="hahahhah"
+            />
+        <TextView
+            android:id="@+id/tv_billTime"
+            android:layout_width="ma"
+            android:layout_height="wrap_content"
+            android:text="2015年11月6日"
+             />-->
+    </LinearLayout>
+
+<!--
+  -->
+</LinearLayout>

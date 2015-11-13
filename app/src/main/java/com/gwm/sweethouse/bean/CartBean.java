@@ -13,7 +13,36 @@ public class CartBean implements Serializable{
     private String goodsname;
     private String goodsDescribe;
     private String imagesrc;
-    private int price;
+    private float price;
+    private float product_discount;
+    int product_id;
+
+    public int getProduct_id() {
+
+        return product_id;
+    }
+
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
+    }
+
+
+
+    public float getProduct_discount() {
+        return product_discount;
+    }
+
+    public void setProduct_discount(float product_discount) {
+        this.product_discount = product_discount;
+    }
+
+    public int getCart_id() {
+        return cart_id;
+    }
+
+    public void setCart_id(int cart_id) {
+        this.cart_id = cart_id;
+    }
 
     public int getGoods_amount() {
         return goods_amount;
@@ -25,44 +54,6 @@ public class CartBean implements Serializable{
 
     public String getGoodsname() {
         return goodsname;
-    }
-
-    public int getCart_id() {
-        return cart_id;
-    }
-
-    public void setCart_id(int cart_id) {
-        this.cart_id = cart_id;
-    }
-
-    @Override
-    public String toString() {
-        return "CartBean{" +
-                "cart_id=" + cart_id +
-                ", goods_amount=" + goods_amount +
-                ", goodsname='" + goodsname + '\'' +
-                ", goodsDescribe='" + goodsDescribe + '\'' +
-                ", imagesrc='" + imagesrc + '\'' +
-                ", price=" + price +
-                '}';
-    }
-
-    public CartBean(int goods_amount, String goodsname, String goodsDescribe, String imagesrc, int price,int cart_id) {
-        this.goods_amount = goods_amount;
-        this.goodsname = goodsname;
-        this.goodsDescribe = goodsDescribe;
-        this.imagesrc = imagesrc;
-        this.price = price;
-        this.cart_id=cart_id;
-    }
-
-    public CartBean(int cart_id, int goods_amount, String goodsname, String goodsDescribe, String imagesrc, int price) {
-        this.cart_id = cart_id;
-        this.goods_amount = goods_amount;
-        this.goodsname = goodsname;
-        this.goodsDescribe = goodsDescribe;
-        this.imagesrc = imagesrc;
-        this.price = price;
     }
 
     public void setGoodsname(String goodsname) {
@@ -85,13 +76,27 @@ public class CartBean implements Serializable{
         this.imagesrc = imagesrc;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(float price) {
         this.price = price;
     }
+
+
+    public CartBean(int goods_amount, String goodsname, String goodsDescribe, String imagesrc, float price,int cart_id,float product_discount,int product_id) {
+        this.goods_amount = goods_amount;
+        this.goodsname = goodsname;
+        this.goodsDescribe = goodsDescribe;
+        this.imagesrc = imagesrc;
+        this.price = price;
+        this.cart_id=cart_id;
+        this.product_discount=product_discount;
+        this.product_id=product_id;
+    }
+
+
 
     public CartBean() {
 

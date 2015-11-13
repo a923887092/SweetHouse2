@@ -1,6 +1,8 @@
 package com.gwm.sweethouse.bean;
 
-public class ProductImg {
+import java.io.Serializable;
+
+public class ProductImg implements Serializable{
 	private int img_id;
 	private int product_id;
 	private String img_url;

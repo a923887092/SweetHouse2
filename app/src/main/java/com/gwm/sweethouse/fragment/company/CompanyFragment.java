@@ -58,13 +58,19 @@ public class CompanyFragment extends BaseFragment {
     String strLoc,strStyle,strHot;
 
     public CompanyFragment() {
-        super(R.layout.fragment_companytitle);
+        super();
     }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_companytitle;
+    }
+
 
     @Override
     protected View createSuccessView() {
         adapter = new CompanyAdapter();
-        View view = View.inflate(getActivity(), R.layout.company_refresh, null);
+        View view = View.inflate(getActivity(), R.layout.company_refresh1, null);
         View footView=View.inflate(getActivity(),R.layout.fragment_com_more,null);
         View headerView=View.inflate(getActivity(),R.layout.content_company,null);
         //    View viewMore=View.inflate(getActivity(),R.layout.fragment_com_more,null);
@@ -72,6 +78,7 @@ public class CompanyFragment extends BaseFragment {
         lvCompany = (GridViewWithHeaderAndFooter) view.findViewById(R.id.lv_company);
         spinnerLoc = (Spinner) headerView.findViewById(R.id.sp_loc);
         spinnerStyle= (Spinner) headerView.findViewById(R.id.sp_style);
+        spinnerHot= (Spinner) headerView.findViewById(R.id.sp_hot);
         mProgressBar = (ProgressBar) footView.findViewById(R.id.load_progress_bar);
         textMore= (TextView) footView.findViewById(R.id.text_more);
         mRefreshLayout = (RefreshLayout) view.findViewById(R.id.swipe_container);
@@ -143,10 +150,11 @@ public class CompanyFragment extends BaseFragment {
                 }
                 HttpUtils utils = new HttpUtils();
                 utils.send(HttpRequest.HttpMethod.GET,
-                        GlobalContacts.CITY_SEARCH_URL + strLoc,
+                        GlobalContacts.COMPANY_SELECT_URL + "&city=" + strLoc + "&style=" + strStyle + "&hot=" + strHot,
                         new RequestCallBack<String>() {
                             @Override
                             public void onSuccess(ResponseInfo<String> responseInfo) {
+                                Log.e("btt", GlobalContacts.COMPANY_SELECT_URL + "&city=" + strLoc + "&style=" + strStyle + "&hot=" + strHot);
                                 String result = responseInfo.result;
                                 Gson gson = new Gson();
                                 ArrayList<Company> newCompanies = gson.fromJson(result, new TypeToken<ArrayList<Company>>() {
@@ -169,64 +177,44 @@ public class CompanyFragment extends BaseFragment {
             }
         });
         //类型搜索
-      /*  style_Adapter = ArrayAdapter.createFromResource(getActivity(), R.array.style, android.R.layout.simple_spinner_item);
+        style_Adapter = ArrayAdapter.createFromResource(getActivity(), R.array.style, android.R.layout.simple_spinner_item);
         style_Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerStyle.setAdapter(style_Adapter);
         spinnerStyle.setPromptId(R.string.style_prompt);
         spinnerStyle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String str;
                 Log.e("loc", position + "");
                 if (position == 0) {
-                    str = "";
+                    strStyle = "";
                 } else {
-                    str = spinnerLoc.getSelectedItem().toString();
+                    strStyle = spinnerStyle.getSelectedItem().toString();
                 }
                 HttpUtils utils = new HttpUtils();
-               utils.send(HttpRequest.HttpMethod.GET, GlobalContacts.STYLE_SEARCH_URL+strLoc+"&searchStyle&style="+strStyle, new RequestCallBack<String>() {
-                   @Override
-                   public void onSuccess(ResponseInfo<String> responseInfo) {
+                utils.send(HttpRequest.HttpMethod.GET,
+                        GlobalContacts.COMPANY_SELECT_URL + "&city=" + strLoc + "&style=" + strStyle + "&hot=" + strHot,
+                        new RequestCallBack<String>() {
+                            @Override
+                            public void onSuccess(ResponseInfo<String> responseInfo) {
+                                Log.e("btt", GlobalContacts.COMPANY_SELECT_URL + "&city=" + strLoc + "&style=" + strStyle + "&hot=" + strHot);
+                                String result = responseInfo.result;
+                                Gson gson = new Gson();
+                                ArrayList<Company> newCompanies = gson.fromJson(result, new TypeToken<ArrayList<Company>>() {
+                                }.getType());
+                                companies.clear();
+                                companies.addAll(newCompanies);
+                                adapter.notifyDataSetChanged();
+                                Log.e("btt", "success");
 
-                       String result = responseInfo.result;
-                       Gson gson = new Gson();
-                       ArrayList<Company> newCompanies = gson.fromJson(result, new TypeToken<ArrayList<Company>>() {
-                       }.getType());
-                       companies.clear();
-                       companies.addAll(newCompanies);
-                       adapter.notifyDataSetChanged();
+                            }
 
-                   }
+                            @Override
+                            public void onFailure(HttpException e, String s) {
 
-                   @Override
-                   public void onFailure(HttpException e, String s) {
-
-                   }
-               });
+                            }
+                        });
 
 
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
-//价格排序
-/*        hot_Adapter = ArrayAdapter.createFromResource(getActivity(), R.array.style, android.R.layout.simple_spinner_item);
-        hot_Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerHot.setAdapter(hot_Adapter);
-        spinnerHot.setPromptId(R.string.hot_prompt);
-        spinnerHot.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-              String url;
-                HttpUtils utils = new HttpUtils();
-                if(url==GlobalContacts.HOT_SEARCH_ASC){
-                utils.send(HttpRequest.HttpMethod.GET,GlobalContacts.HOT_SEARCH_ASC)
-
-                }
             }
 
             @Override
@@ -234,7 +222,54 @@ public class CompanyFragment extends BaseFragment {
 
             }
         });
-        */
+        //价格排序
+        hot_Adapter = ArrayAdapter.createFromResource(getActivity(), R.array.hot, android.R.layout.simple_spinner_item);
+        hot_Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerHot.setAdapter(hot_Adapter);
+        spinnerHot.setPromptId(R.string.hot_prompt);
+        spinnerHot.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.e("loc", position + "");
+                if (position == 0) {
+                    strHot = "";
+                } else {
+                    strHot = spinnerHot.getSelectedItem().toString();
+                }
+                Log.e("btt",  GlobalContacts.COMPANY_SELECT_URL + "&city="+strLoc+"&style="+strStyle+"&hot="+strHot);
+                HttpUtils utils = new HttpUtils();
+                utils.send(HttpRequest.HttpMethod.GET,
+                        GlobalContacts.COMPANY_SELECT_URL + "&city=" + strLoc + "&style=" + strStyle + "&hot=" + strHot,
+                        new RequestCallBack<String>() {
+                            @Override
+                            public void onSuccess(ResponseInfo<String> responseInfo) {
+                                Log.e("btt",  GlobalContacts.COMPANY_SELECT_URL + "&city="+strLoc+"&style="+strStyle+"&hot="+strHot);
+                                String result = responseInfo.result;
+                                Gson gson = new Gson();
+                                ArrayList<Company> newCompanies = gson.fromJson(result, new TypeToken<ArrayList<Company>>() {
+                                }.getType());
+                                companies.clear();
+                                companies.addAll(newCompanies);
+                                adapter.notifyDataSetChanged();
+
+                            }
+
+                            @Override
+                            public void onFailure(HttpException e, String s) {
+
+                                Log.e("ccc","fail");
+                            }
+                        });
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         //下拉刷新
         //   lvCompany = (GridViewWithHeaderAndFooter) viewRefresh.findViewById(R.id.lv_company);

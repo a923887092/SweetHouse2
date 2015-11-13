@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_bar" />
+            <RelativeLayout
+                android:id="@+id/rl_back"
+                android:layout_width="50dp"
+                android:layout_height="50dp">
+                <ImageButton
+                    android:id="@+id/ibtn_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:src="@drawable/ic_left_back_nol"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    />
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_liangfang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="地板计算器"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                >
+
+                <TextView
+                    android:textColor="#000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="输入房间信息 "
+                    android:textSize="18dp"
+                    android:id="@+id/tv_detail" />
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/tv_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#ccc"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                >
+                <RelativeLayout
+                    android:id="@+id/rl_length"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    >
+                    <TextView
+                        android:textColor="#000"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="20dp"
+                        android:id="@+id/tv_length"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:gravity="center"
+                        android:text="长"
+                        android:textSize="15dp"
+                        android:layout_alignTop="@+id/ed_length"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
+                    <EditText
+                        android:id="@+id/ed_length"
+                        android:layout_width="150dp"
+                        android:layout_height="32dp"
+                        android:layout_toRightOf="@+id/tv_length"
+                        android:textSize="15dp"
+                        android:background="@drawable/shape_liangfang_bg"
+                        android:paddingLeft="10dp"
+                        android:layout_gravity="center"
+                        />
+                    <TextView
+                        android:textColor="#000"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/ed_length"
+                        android:textSize="15dp"
+                        android:gravity="center"
+                        android:text="米"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rl_width"
+                    android:layout_below="@+id/rl_length"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    >
+                    <TextView
+                        android:textColor="#000"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="20dp"
+                        android:id="@+id/tv_width"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:gravity="center"
+                        android:text="宽"
+                        android:textSize="15dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
+                    <EditText
+                        android:id="@+id/ed_width"
+                        android:layout_width="150dp"
+                        android:layout_height="32dp"
+                        android:layout_toRightOf="@+id/tv_width"
+                        android:textSize="15dp"
+                        android:background="@drawable/shape_liangfang_bg"
+                        android:paddingLeft="10dp"
+                        android:layout_gravity="center"
+                        />
+                    <TextView
+                        android:textColor="#000"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/ed_width"
+                        android:textSize="15dp"
+                        android:gravity="center"
+                        android:text="米"/>
+                </RelativeLayout>
+
+                <TextView
+                    android:textColor="#000"
+                    android:id="@+id/tv_guige"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="输入地板信息"
+                    android:textSize="18dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@+id/rl_width"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <ImageView
+                    android:id="@+id/iv_fenge"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/tv_guige"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#ccc"
+                    />
+
+
+                <RelativeLayout
+                    android:layout_below="@+id/iv_fenge"
+                    android:id="@+id/rl_dzlength"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    >
+                    <TextView
+                        android:textColor="#000"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="20dp"
+                        android:id="@+id/tv_dzlength"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:gravity="center"
+                        android:text="长"
+                        android:textSize="15dp"
+                        android:layout_alignTop="@+id/ed_dzlength"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
+                    <EditText
+                        android:id="@+id/ed_dzlength"
+                        android:layout_width="150dp"
+                        android:layout_height="32dp"
+                        android:layout_toRightOf="@+id/tv_dzlength"
+                        android:textSize="15dp"
+                        android:background="@drawable/shape_liangfang_bg"
+                        android:paddingLeft="10dp"
+                        android:layout_gravity="center"
+                        />
+                    <TextView
+                        android:textColor="#000"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/ed_dzlength"
+                        android:textSize="15dp"
+                        android:gravity="center"
+                        android:text="米"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+
+                    android:id="@+id/rl_dzwidth"
+                    android:layout_below="@+id/rl_dzlength"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    >
+                    <TextView
+                        android:textColor="#000"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="20dp"
+                        android:id="@+id/tv_dzwidth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:gravity="center"
+                        android:text="宽"
+                        android:textSize="15dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
+                    <EditText
+                        android:id="@+id/ed_dzwidth"
+                        android:layout_width="150dp"
+                        android:layout_height="32dp"
+                        android:layout_toRightOf="@+id/tv_dzwidth"
+                        android:textSize="15dp"
+                        android:background="@drawable/shape_liangfang_bg"
+                        android:paddingLeft="10dp"
+                        android:layout_gravity="center"
+                        />
+                    <TextView
+                        android:textColor="#000"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/ed_dzwidth"
+                        android:textSize="15dp"
+                        android:gravity="center"
+                        android:text="米"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl_dzwidth"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true">
+                    <TextView
+                       android:gravity="center_vertical"
+                        android:textColor="#000"
+                        android:textSize="14dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="选择地板类型："
+                        android:id="@+id/textView9" />
+                    <Spinner
+                        android:id="@+id/sp_floor"
+                        android:background="#fff"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_alignBottom="@+id/textView9"
+                        android:layout_toRightOf="@+id/textView9"
+                        android:layout_toEndOf="@+id/textView9"
+                        android:entries="@array/floor"
+                        >
+                    </Spinner>
+                </RelativeLayout>
+
+
+                <Button
+                    android:id="@+id/btn_jisuan"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:text="开始计算"
+                    android:background="@drawable/selector_btn_yuyue"
+                    android:textSize="16dp"
+                    android:textColor="#fff"
+                    android:layout_above="@+id/relativeLayout3"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="32dp" />
+
+                <RelativeLayout
+                    android:background="@drawable/shape_tishi"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:id="@+id/relativeLayout3"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="25dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:src="@drawable/tishi"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
+                    <TextView
+                        android:textColor="#000"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="实木地板：8%消耗；符合地板：5%消耗，已计入结果。该计算器提供的结果仅供参考。"
+                        android:gravity="center_vertical"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginLeft="60dp"
+                        android:layout_marginStart="45dp" />
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

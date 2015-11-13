@@ -26,6 +26,25 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
     </RelativeLayout>
-
+    <com.gwm.sweethouse.ZList.ZListView
+        android:id="@+id/lv_bills"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top_walletRecords"
+        android:divider="#DBDBDB"
+        android:dividerHeight="1dp"
+        android:headerDividersEnabled="true"/>
+    <!--<ProgressBar
+        android:id="@+id/pb_loadBills"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        />
+    <TextView
+        android:id="@+id/tv_noBills"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="您还没有账单"/>-->
 
 </RelativeLayout>

@@ -44,17 +44,23 @@ public abstract class NewBaseFragment<T> extends Fragment{
     private int state = STATE_UNKNOW;
     private int mLayoutId;
 
-    public NewBaseFragment(int mLayoutId) {
-        this.mLayoutId = mLayoutId;
+    public NewBaseFragment() {
+
     }
 
     private Button btnFailed;
 
+    protected abstract int getLayoutId();
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mLayoutId = getLayoutId();
+    }
 
     /*
-    Fragment创建时调用此方法
-     */
+        Fragment创建时调用此方法
+         */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = View.inflate(getActivity(), mLayoutId, null);

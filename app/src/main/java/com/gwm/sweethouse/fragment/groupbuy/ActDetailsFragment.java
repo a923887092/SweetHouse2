@@ -40,7 +40,12 @@ public class ActDetailsFragment extends BaseFragment {
     private AlertDialog.Builder alertDialog;
 
     public ActDetailsFragment() {
-        super(R.layout.pager_act_details);
+        super();
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.pager_act_details;
     }
 
     @Override

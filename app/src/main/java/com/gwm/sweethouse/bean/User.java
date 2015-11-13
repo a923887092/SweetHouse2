@@ -10,109 +10,82 @@ public class User {
     private String user_mobile;
     private String user_image;
     private String user_state;
-    /**
-     * @return the user_id
-     */
+    private String user_sex;
+    private String user_birth;
+
     public int getUser_id() {
         return user_id;
     }
-    /**
-     * @param user_id the user_id to set
-     */
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUser_id(int userId) {
+        user_id = userId;
     }
-    /**
-     * @return the user_name
-     */
     public String getUser_name() {
         return user_name;
     }
-    /**
-     * @param user_name the user_name to set
-     */
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUser_name(String userName) {
+        user_name = userName;
     }
-    /**
-     * @return the user_password
-     */
     public String getUser_password() {
         return user_password;
     }
-    /**
-     * @param user_password the user_password to set
-     */
-    public void setUser_password(String user_password) {
-        this.user_password = user_password;
+    public void setUser_password(String userPassword) {
+        user_password = userPassword;
     }
-    /**
-     * @return the user_mobile
-     */
     public String getUser_mobile() {
         return user_mobile;
     }
-    /**
-     * @param user_mobile the user_mobile to set
-     */
-    public void setUser_mobile(String user_mobile) {
-        this.user_mobile = user_mobile;
+    public void setUser_mobile(String userMobile) {
+        user_mobile = userMobile;
     }
-    /**
-     * @return the user_image
-     */
     public String getUser_image() {
         return user_image;
     }
-    /**
-     * @param user_image the user_image to set
-     */
-    public void setUser_image(String user_image) {
-        this.user_image = user_image;
+    public void setUser_image(String userImage) {
+        user_image = userImage;
     }
-    /**
-     * @return the user_state
-     */
     public String getUser_state() {
         return user_state;
     }
-    /**
-     * @param user_state the user_state to set
-     */
-    public void setUser_state(String user_state) {
-        this.user_state = user_state;
+    public void setUser_state(String userState) {
+        user_state = userState;
     }
-    /**
-     * @param user_id
-     * @param user_name
-     * @param user_password
-     * @param user_mobile
-     * @param user_image
-     * @param user_state
-     */
-    public User(int user_id, String user_name, String user_password,
-                String user_mobile, String user_image, String user_state) {
-        this.user_id = user_id;
-        this.user_name = user_name;
-        this.user_password = user_password;
-        this.user_mobile = user_mobile;
-        this.user_image = user_image;
-        this.user_state = user_state;
+    public String getUser_sex() {
+        return user_sex;
     }
-    /**
-     *
-     */
+    public void setUser_sex(String userSex) {
+        user_sex = userSex;
+    }
+    public String getUser_birth() {
+        return user_birth;
+    }
+    public void setUser_birth(String userBirth) {
+        user_birth = userBirth;
+    }
     public User() {
+        super();
+        // TODO Auto-generated constructor stub
     }
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
+    public User(int userId, String userName, String userPassword,
+                String userMobile, String userImage, String userState,
+                String userSex, String userBirth) {
+        super();
+        user_id = userId;
+        user_name = userName;
+        user_password = userPassword;
+        user_mobile = userMobile;
+        user_image = userImage;
+        user_state = userState;
+        user_sex = userSex;
+        user_birth = userBirth;
+    }
     @Override
     public String toString() {
-        return "User [user_id=" + user_id + ", user_name=" + user_name
-                + ", user_password=" + user_password + ", user_mobile="
-                + user_mobile + ", user_image=" + user_image + ", user_state="
+        return "User [user_birth=" + user_birth + ", user_id=" + user_id
+                + ", user_image=" + user_image + ", user_mobile=" + user_mobile
+                + ", user_name=" + user_name + ", user_password="
+                + user_password + ", user_sex=" + user_sex + ", user_state="
                 + user_state + "]";
     }
+
 
 }

@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!-- 设置按钮为隐形的visiable-->
+    <!-- 设置按钮为隐形的invisiable-->
     <Button
         android:id="@+id/button"
         android:layout_width="100dp"
@@ -31,5 +31,4 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         />
-
 </RelativeLayout>

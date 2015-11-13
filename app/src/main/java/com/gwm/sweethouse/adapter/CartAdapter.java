@@ -1,6 +1,7 @@
 package com.gwm.sweethouse.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
@@ -17,8 +18,10 @@ import android.widget.Toast;
 import com.gwm.sweethouse.R;
 import com.gwm.sweethouse.bean.CartBean;
 import com.gwm.sweethouse.fragment.CartFragment;
+import com.gwm.sweethouse.global.GlobalContacts;
 import com.lidroid.xutils.BitmapUtils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +35,7 @@ public class CartAdapter extends BaseAdapter{
     ViewHolder viewHolder;
     private  ImageButton amount_addBtn;
     ImageButton amount_subBtn;
+    DecimalFormat df= new DecimalFormat("######0.0");
 
 
 
@@ -105,7 +109,7 @@ public class CartAdapter extends BaseAdapter{
             viewHolder.goodsPriceView= (TextView) convertView.findViewById(R.id.price);
             viewHolder.goodsImageView= (ImageView) convertView.findViewById(R.id.imageSrc);
             viewHolder.goodsCategoryView= (TextView) convertView.findViewById(R.id.goodsCategory);
-
+            viewHolder.before_priceview= (TextView) convertView.findViewById(R.id.before_price);
             convertView.setTag(viewHolder);
         }
         else{
@@ -121,11 +125,16 @@ public class CartAdapter extends BaseAdapter{
         goodsamountView.setText(list.get(position).getGoods_amount() + "");
         BitmapUtils bitmapUtils=new BitmapUtils(context);
         bitmapUtils.configDefaultLoadingImage(R.drawable.onloading);
-        bitmapUtils.display(viewHolder.goodsImageView,list.get(position).getImagesrc());
-        viewHolder.goodsPriceView.setText("¥" + list.get(position).getPrice() + "");
+        bitmapUtils.display(viewHolder.goodsImageView, GlobalContacts.VISON_URL + list.get(position).getImagesrc());
+        if (list.get(position).getProduct_discount()!=0&&list.get(position).getProduct_discount()<1) {
+            viewHolder.before_priceview.setText("¥" + df.format(list.get(position).getPrice()) + "");
+            viewHolder.before_priceview.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            viewHolder.goodsPriceView.setText("¥" + df.format(list.get(position).getPrice() * list.get(position).getProduct_discount()));
+        }else {
+            viewHolder.goodsPriceView.setText("¥" + df.format(list.get(position).getPrice()) + "");
+        }
         viewHolder.goodsCategoryView.setText(list.get(position).getGoodsname());
         viewHolder.goodsDesView.setText(list.get(position).getGoodsDescribe());
-
         //初始化所有checked为false
         itemBtn_checked.setChecked(getselectedList().get(position));
 
@@ -161,7 +170,7 @@ public class CartAdapter extends BaseAdapter{
                 int currentAmount=list.get(position).getGoods_amount();
                 list.get(position).setGoods_amount(currentAmount + 1);
                 goodsamountView.setText(currentAmount + 1 + "");
-                //判断该item是否处于选中状态 如果是就发送消息 更新sum 如果不是则不发送消息
+                //判断该item是否处于选中状态 如就发送消息 果是更新sum 如果不是则不发送消息
 
                 Message msg=new Message();
                 Bundle data=new Bundle();
@@ -186,9 +195,6 @@ public class CartAdapter extends BaseAdapter{
                 }else{
                     list.get(position).setGoods_amount(currentAmount - 1);
                     goodsamountView.setText(currentAmount - 1 + "");
-                }
-                //判断该item是否处于选中状态 如果是就发送消息 更新sum 如果不是则不发送消息
-
                     Message msg=new Message();
                     Bundle data=new Bundle();
                     data.putInt("change",0);
@@ -197,6 +203,10 @@ public class CartAdapter extends BaseAdapter{
                     msg.setData(data);
                     msg.what=3;
                     CartFragment.handler.sendMessage(msg);
+                }
+                //判断该item是否处于选中状态 如果是就发送消息 更新sum 如果不是则不发送消息
+
+
 
             }
         });
@@ -207,7 +217,7 @@ public class CartAdapter extends BaseAdapter{
 
 
     private class ViewHolder{
-        private TextView goodsPriceView,goodsDesView,goodsCategoryView;
+        private TextView goodsPriceView,goodsDesView,goodsCategoryView,before_priceview;
         private ImageView goodsImageView;
 
 

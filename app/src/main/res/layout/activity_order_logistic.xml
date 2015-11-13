@@ -3,7 +3,34 @@
     android:layout_height="match_parent"
     tools:context="com.gwm.sweethouse.OrderLogisticActivity">
 
-    <TextView android:text="OrderLogisticActivity" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+    <RelativeLayout
+        android:id="@+id/top_logisticToOrder"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ff0000">
+        <ImageButton
+            android:id="@+id/ibtn_logisticToOrder"
+            android:layout_width="12dp"
+            android:layout_height="20dp"
+            android:background="@drawable/arrow_return"
+            android:layout_marginLeft="14dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="物流详情"
+            android:textSize="18sp"
+            android:textColor="#ffffff"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+    <com.gwm.sweethouse.ZList.ZListView
+        android:id="@+id/lv_logistic"
+        android:layout_below="@id/top_logisticToOrder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#DBDBDB"
+        android:dividerHeight="1dp"
+        android:headerDividersEnabled="false"/>
 </RelativeLayout>

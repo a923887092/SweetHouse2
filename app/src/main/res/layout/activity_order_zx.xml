@@ -38,7 +38,7 @@
                 android:layout_centerVertical="true"
                 android:text="装修设计预约"
                 android:textColor="#ffffff"
-                android:textSize="25sp" />
+                android:textSize="20sp" />
         </RelativeLayout>
 
         <LinearLayout
@@ -188,8 +188,8 @@
                     />
                 <Button
                     android:id="@+id/btn_yuyue"
-                    android:layout_width="220dp"
-                    android:layout_height="50dp"
+                    android:layout_width="250dp"
+                    android:layout_height="40dp"
                     android:layout_below="@+id/tv_liaojie2"
                     android:layout_marginTop="10dp"
                     android:layout_centerHorizontal="true"

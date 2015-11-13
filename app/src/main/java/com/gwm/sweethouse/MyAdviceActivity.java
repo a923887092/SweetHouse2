@@ -23,6 +23,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.umeng.message.PushAgent;
 
 public class MyAdviceActivity extends Activity implements View.OnClickListener {
     ImageButton ibtn_return;
@@ -41,6 +42,9 @@ public class MyAdviceActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advice);
         initViews();
+        //友盟统计应用启动数据，所有Activty都要添加
+        PushAgent.getInstance(MyAdviceActivity.this).onAppStart();
+
         intent = getIntent();
         user_id = intent.getIntExtra("user_id",0);
         handler = new Handler(){

@@ -9,6 +9,8 @@ import android.widget.AbsListView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.gwm.sweethouse.utils.LogUtils;
+
 /**
  * Created by Administrator on 2015/10/28.
  */
@@ -37,19 +39,24 @@ public class ListViewForScrollView extends ListView implements View.OnTouchListe
             isFirstRow = true;
         }
     }
-
+    int y;
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        int x = 0;
+        LogUtils.e("onTouchEvent");
+
         switch (ev.getAction()){
             case MotionEvent.ACTION_DOWN:
-                x = (int) ev.getX();
+                y = (int) ev.getY();
+                LogUtils.d("onTouchEvent ACTION_DOWN" + "::" + y);
                 break;
             case MotionEvent.ACTION_MOVE:
-                int nX = (int) ev.getX();
-                if (nX - x > 0 && isFirstRow){
+                int nY = (int) ev.getY();
+                int offY = nY - y;
+                if (offY > 200 && getFirstVisiblePosition()==0){
+                    LogUtils.e("onTouchEvent false" + nY + "::" + y);
                     getParent().requestDisallowInterceptTouchEvent(false);
                 } else {
+                    LogUtils.e("onTouchEvent true" + nY + "::" + y);
                     getParent().requestDisallowInterceptTouchEvent(true);
                 }
                 break;

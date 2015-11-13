@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.umeng.message.PushAgent;
+
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
@@ -34,6 +36,8 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initViews();
+        //友盟统计应用启动数据，所有Activty都要添加
+        PushAgent.getInstance(RegisterActivity.this).onAppStart();
         //启动SDK
         SMSSDK.initSDK(RegisterActivity.this, APPKEY, APPSECRET);
         SMSSDK.registerEventHandler(eh); //注册短信回调
@@ -83,7 +87,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.btn_getCode://获取验证码
                 phString=phonEditText.getText().toString();
-                if(!TextUtils.isEmpty(phString)){
+                if(!TextUtils.isEmpty(phString) ){
                     //getVerificationCode用于向服务器请求发送验证码的服务，需要传递国家代号和接收验证码的手机号码，
                     //请求getVerificationCode的时间间隔不应该小于60秒，否则服务端会返回“操作过于频繁”的错误
                     SMSSDK.getVerificationCode("86",phString);
@@ -93,7 +97,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                 }
                 break;
             case R.id.btn_next://校验验证码
-                if(!TextUtils.isEmpty(verEditText.getText().toString())) {
+                if(!TextUtils.isEmpty(verEditText.getText().toString())&& checkBox.isChecked()) {
                        Log.e(";;;;;",phString+verEditText.getText().toString());
                     SMSSDK.submitVerificationCode("86", phString, verEditText.getText().toString());
                     //需要判断验证码是否正确，若正确携带验证码跳转到设置密码界面，否者不进行跳转，重新获取

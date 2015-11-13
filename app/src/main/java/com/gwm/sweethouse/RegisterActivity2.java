@@ -15,6 +15,7 @@ import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.umeng.message.PushAgent;
 
 
 public class RegisterActivity2 extends Activity {
@@ -32,6 +33,10 @@ public class RegisterActivity2 extends Activity {
         editText1 = (EditText) findViewById(R.id.et_remind1);
         editText2 = (EditText) findViewById(R.id.et_remind2);
         intent1 = getIntent();
+
+        //友盟统计应用启动数据，所有Activty都要添加
+        PushAgent.getInstance(RegisterActivity2.this).onAppStart();
+
     }
 
     public void toRegister(View view) {

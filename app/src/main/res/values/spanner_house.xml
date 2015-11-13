@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="house">
+        <item>户型</item>
+        <item>别墅</item>
+        <item>三居室</item>
+    </string-array>
+</resources>

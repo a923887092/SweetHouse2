@@ -3,8 +3,10 @@ package com.gwm.sweethouse.fragment.goods;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.SystemClock;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -63,29 +65,41 @@ public abstract class GoodsBaseFragment extends BaseFragment {
     private GridViewWithHeaderAndFooter lvGoods;
     private RefreshLayout mRefreshLayout;
     private ImageButton btnSearch;
+    protected int state = 0;
     protected int pageNo = 1;
     private String dirTime, onloadDir;
     protected String productName = "";
     private EditText etSearch;
+    private RelativeLayout rlSousuo;
     protected int priceOrderId = 0;
     protected int priceScreenId = 8;
     protected int salesId = 51;
+    protected boolean isMore = true;
+    private String url;
 
     public GoodsBaseFragment() {
-        super(R.layout.pager_goods);
+        super();
         /*Bundle arguments = getArguments();
         sortId = arguments.getInt("xl");*/
 //        sortId = (int) getActivity().getIntent().getSerializableExtra("xl");
     }
 
-    protected void checkedGoodsSize(){
-        if (goods.size()< GlobalContacts.PAGE_SIZE){
-            textMore.setVisibility(View.GONE);
+    @Override
+    protected int getLayoutId() {
+        return R.layout.pager_goods;
+    }
+
+    protected boolean isMore(){
+        if (goods.size() < GlobalContacts.PAGE_SIZE){
+            isMore = false;
+        } else {
+            isMore = true;
         }
+        return isMore;
     }
 
     @Override
-    protected void initFragment(View view) {
+     protected void initFragment(View view) {
         ivBack = (ImageView) view.findViewById(R.id.iv_goods_back);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +109,18 @@ public abstract class GoodsBaseFragment extends BaseFragment {
         });
     }
 
+    protected  String  getThisUrl(int priceOrderId, int priceScreenId, int salesId){
+        if (state == 1){
+            url = GlobalContacts.GOODS_ZM_URL + "&pageNo=" + pageNo +
+                    "&productname=" + productName + "&priceOrderId=" + priceOrderId
+                    + "&priceScreenId=" + priceScreenId + "&salesId=" + salesId;
+            rlSousuo.setVisibility(View.GONE);
+        } else if (state == 0){
+            url = getUrl();
+        }
+
+        return url;
+    }
     @Override
     protected abstract LoadResult load();
 
@@ -131,14 +157,16 @@ public abstract class GoodsBaseFragment extends BaseFragment {
 
     @Override
     protected View createSuccessView() {
+
         mAdapter = new GoodsGridViewAdapter(goods, getActivity());
         View view = View.inflate(getActivity(), R.layout.fragment_goods, null);
         View headerView = View.inflate(getActivity(), R.layout.fragment_goods_header, null);
         View footerView = View.inflate(getActivity(), R.layout.listview_footer, null);
         textMore = (TextView) footerView.findViewById(R.id.text_more);
         mProgressBar = (ProgressBar) footerView.findViewById(R.id.load_progress_bar);
+        rlSousuo = (RelativeLayout) headerView.findViewById(R.id.rl_shousuo);
 
-        //给搜索框绑定点击事件  以后要修改
+        //给搜索框绑定点击事件
         btnSearch = (ImageButton) headerView.findViewById(R.id.btn_search);
         etSearch = (EditText) headerView.findViewById(R.id.et_search);
         btnSearch.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +174,7 @@ public abstract class GoodsBaseFragment extends BaseFragment {
             public void onClick(View v) {
                 productName = etSearch.getText().toString().trim();
                 LogUtils.d("btnSearch onClick!!!");
-                refreshData();
+                refreshData(getThisUrl(priceOrderId, priceScreenId, salesId));
             }
         });
         /* 筛选框开始 */
@@ -196,7 +224,9 @@ public abstract class GoodsBaseFragment extends BaseFragment {
         mRefreshLayout = (RefreshLayout) view.findViewById(R.id.swipe_container);
         lvGoods = (GridViewWithHeaderAndFooter) view.findViewById(R.id.lv_recommend);
         lvGoods.addHeaderView(headerView);
-        lvGoods.addFooterView(footerView);
+        if (isMore()) {
+            lvGoods.addFooterView(footerView);
+        }
         mRefreshLayout.setChildView(lvGoods);
         if (goods.size() != 0) {
             lvGoods.setAdapter(mAdapter);
@@ -204,7 +234,7 @@ public abstract class GoodsBaseFragment extends BaseFragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     LogUtils.i("跳转到商品详情页面：" + position);
-                    Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                    Intent intent = new Intent(context, DetailsActivity.class);
                     intent.putExtra("goodsId", goods.get(position).getProduct_id());
                     startActivity(intent);
                 }
@@ -220,8 +250,10 @@ public abstract class GoodsBaseFragment extends BaseFragment {
         mRefreshLayout.setOnRefreshListener(new RefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                textMore.setText("上拉加载更多");
-                mRefreshLayout.setLoading(false);
+                if (isMore()) {
+                    textMore.setText("上拉加载更多");
+                    mRefreshLayout.setLoading(false);
+                }
                 ThreadManager.getInstance().createLongPool().execute(new Runnable() {
                     @Override
                     public void run() {
@@ -246,13 +278,14 @@ public abstract class GoodsBaseFragment extends BaseFragment {
                                     goods.clear();
                                     goods.addAll(recommends_refresh);
                                     LogUtils.d("aaaaa" + goods);
-                                    checkedGoodsSize();
+//                                    changeLoadState();
                                     mAdapter.notifyDataSetChanged();
                                 }
                                 mRefreshLayout.setRefreshing(false);
-
-                                textMore.setVisibility(View.VISIBLE);
-                                mProgressBar.setVisibility(View.GONE);
+                                if (isMore()) {
+                                    textMore.setVisibility(View.VISIBLE);
+                                    mProgressBar.setVisibility(View.GONE);
+                                }
                                 Toast.makeText(getActivity(), "刷新成功!", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -262,71 +295,75 @@ public abstract class GoodsBaseFragment extends BaseFragment {
         });
         //使用自定义的RefreshLayout加载更多监听
         //use customed RefreshLayout OnLoadListener
-        mRefreshLayout.setOnLoadListener(new RefreshLayout.OnLoadListener() {
-            @Override
-            public void onLoad() {
-                LogUtils.d("上拉啦！！！！！");
-                textMore.setVisibility(View.GONE);
-                mProgressBar.setVisibility(View.VISIBLE);
-                ThreadManager.getInstance().createLongPool().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        SystemClock.sleep(2000);
-                        final String dirTime1 = System.currentTimeMillis() + "";
-                        int i = goods.size() / (pageNo * GlobalContacts.PAGE_SIZE);
-                        ArrayList<Product> goods_onload = null;
-                        if (i == 1) {
-                            pageNo++;
-                            GoodsProtocol protocol = new GoodsProtocol(getUrl(), dirTime1);
-                            goods_onload = protocol.loadData();
-                        }
+        if (isMore()) {
+            mRefreshLayout.setOnLoadListener(new RefreshLayout.OnLoadListener() {
+                @Override
+                public void onLoad() {
+                    LogUtils.d("上拉啦！！！！！");
+                    textMore.setVisibility(View.GONE);
+                    mProgressBar.setVisibility(View.VISIBLE);
+                    ThreadManager.getInstance().createLongPool().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            SystemClock.sleep(2000);
+                            final String dirTime1 = System.currentTimeMillis() + "";
+                            int i = goods.size() / (pageNo * GlobalContacts.PAGE_SIZE);
+                            ArrayList<Product> goods_onload = null;
+                            if (i == 1) {
+                                pageNo++;
+                                GoodsProtocol protocol = new GoodsProtocol(getUrl(), dirTime1);
+                                goods_onload = protocol.loadData();
+                            }
 
-                        final ArrayList<Product> finalGoods_onload = goods_onload;
-                        UiUtils.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (finalGoods_onload == null) {
-                                    textMore.setText("已加载全部数据");
-                                    textMore.setVisibility(View.VISIBLE);
-                                    mProgressBar.setVisibility(View.GONE);
-                                } else {
-                                    if (finalGoods_onload.size() != 0) {
-                                        File dir = FilesUtils.getCacheDri();
-                                        if (onloadDir != null) {
-                                            File file = new File(dir, onloadDir);
-                                            if (file.isFile() && file.exists()) {
-                                                file.delete();
-                                            }
-                                            onloadDir = dirTime1;
-                                        }
-                                        goods.addAll(finalGoods_onload);
-                                        LogUtils.d("aaaaa" + goods);
-                                        mRefreshLayout.setLoading(false);
-                                        checkedGoodsSize();
-                                        mAdapter.notifyDataSetChanged();
-
-                                        textMore.setVisibility(View.VISIBLE);
-                                        mProgressBar.setVisibility(View.GONE);
-                                    } else {
+                            final ArrayList<Product> finalGoods_onload = goods_onload;
+                            UiUtils.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (finalGoods_onload == null) {
                                         textMore.setText("已加载全部数据");
                                         textMore.setVisibility(View.VISIBLE);
                                         mProgressBar.setVisibility(View.GONE);
+                                    } else {
+                                        if (finalGoods_onload.size() != 0) {
+                                            File dir = FilesUtils.getCacheDri();
+                                            if (onloadDir != null) {
+                                                File file = new File(dir, onloadDir);
+                                                if (file.isFile() && file.exists()) {
+                                                    file.delete();
+                                                }
+                                                onloadDir = dirTime1;
+                                            }
+                                            goods.addAll(finalGoods_onload);
+                                            LogUtils.d("aaaaa" + goods);
+                                            mRefreshLayout.setLoading(false);
+//                                            changeLoadState();
+                                            mAdapter.notifyDataSetChanged();
+
+                                            textMore.setVisibility(View.VISIBLE);
+                                            mProgressBar.setVisibility(View.GONE);
+                                        } else {
+                                            textMore.setText("已加载全部数据");
+                                            textMore.setVisibility(View.VISIBLE);
+                                            mProgressBar.setVisibility(View.GONE);
+                                        }
                                     }
+                                    Toast.makeText(getActivity(), "加载完成!", Toast.LENGTH_SHORT).show();
                                 }
-                                Toast.makeText(getActivity(), "加载完成!", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                });
-            }
-        });
+                            });
+                        }
+                    });
+                }
+            });
+        }
         return view;
     }
 
-    private void refreshData() {
+    private void refreshData(String url) {
+        LogUtils.e( priceOrderId + "++" + priceScreenId + "++" + salesId + "++" + pageNo);
         HttpUtils httpUtils = new HttpUtils();
-        LogUtils.d("refreshData:" + getUrl());
-        httpUtils.send(HttpRequest.HttpMethod.GET, getUrl(), new RequestCallBack<String>() {
+        httpUtils.configCurrentHttpCacheExpiry(500);
+        LogUtils.d("refreshData:" + url);
+        httpUtils.send(HttpRequest.HttpMethod.GET, url, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 String result = responseInfo.result;
@@ -334,8 +371,11 @@ public abstract class GoodsBaseFragment extends BaseFragment {
                 ArrayList<Product> myGoods = gson.fromJson(result, new TypeToken<ArrayList<Product>>() {
                 }.getType());
                 goods.clear();
-                goods.addAll(myGoods);
-                checkedGoodsSize();
+                LogUtils.d("refreshData:" + myGoods);
+                if (myGoods != null){
+                    goods.addAll(myGoods);
+                }
+                changeLoadState();
                 mAdapter.notifyDataSetChanged();
             }
 
@@ -344,6 +384,18 @@ public abstract class GoodsBaseFragment extends BaseFragment {
 
             }
         });
+    }
+
+    private void changeLoadState() {
+        if (isMore()) {
+            textMore.setText("上拉加载更多");
+            mRefreshLayout.setLoading(false);
+            mProgressBar.setVisibility(View.GONE);
+        } else {
+            textMore.setText("已加载全部数据");
+            mRefreshLayout.setLoading(true);
+            mProgressBar.setVisibility(View.GONE);
+        }
     }
 
 
@@ -429,19 +481,23 @@ public abstract class GoodsBaseFragment extends BaseFragment {
                 priceOrderId = view.current.id;
                 priceScreenId = 8;
                 salesId = 51;
-                refreshData();
+                pageNo = 1;
+                refreshData(getThisUrl(priceOrderId, priceScreenId, salesId));
             } else if (view == dropdownLabel){
                 updateLabels(getCurrentLabels());
                 priceScreenId = view.current.id;
+                LogUtils.d("priceScreenId=" + priceScreenId);
                 priceOrderId = 0;
                 salesId = 51;
-                refreshData();
+                pageNo = 1;
+                refreshData(getThisUrl(priceOrderId, priceScreenId, salesId));
             } else if (view == dropdownOrder){
                 updateLabels(getCurrentLabels());
                 salesId = view.current.id;
                 priceOrderId = 0;
                 priceScreenId = 8;
-                refreshData();
+                pageNo = 1;
+                refreshData(getThisUrl(priceOrderId, priceScreenId, salesId));
             }
 
         }

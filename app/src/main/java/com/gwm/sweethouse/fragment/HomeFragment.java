@@ -7,17 +7,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
@@ -42,6 +46,7 @@ import com.gwm.sweethouse.bean.Recommend;
 import com.gwm.sweethouse.global.GlobalContacts;
 import com.gwm.sweethouse.manager.ThreadManager;
 import com.gwm.sweethouse.protocol.HomeProtocol;
+import com.gwm.sweethouse.test.Test1;
 import com.gwm.sweethouse.utils.FilesUtils;
 import com.gwm.sweethouse.utils.LogUtils;
 import com.gwm.sweethouse.utils.PrefUtils;
@@ -56,6 +61,8 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.viewpagerindicator.CirclePageIndicator;
+
+import junit.framework.Test;
 
 import java.io.File;
 import java.io.InputStream;
@@ -76,6 +83,23 @@ import widget.adapters.ArrayWheelAdapter;
  */
 public class HomeFragment extends BaseFragment implements View.OnClickListener, OnWheelChangedListener {
 
+
+    public HomeFragment() {
+        super();
+
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.pager_home;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        recommends = new ArrayList<>();
+    }
+
     /*选择地址相关参数  开始*/
     private WheelView mViewProvince;
     private WheelView mViewCity;
@@ -85,38 +109,45 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     protected String mCurrentCityName;
     /*选择地址相关参数  结束*/
 
-
-    private static final int[] images = new int[]{R.mipmap.top1, R.mipmap.top2, R.mipmap.top1};
+    //轮播图片资源
+    private static final int[] images = new int[]{R.mipmap.top1, R.mipmap.top2, R.mipmap.top3};
+    private CirclePageIndicator mIndicator;
     private Handler handler;
-
+    //定位相关
     private LocationClient mLocationClient = null;
     private BDLocationListener mBDLocationListener = new MyLocationListener();
-    private CirclePageIndicator mIndicator;
+    //轮播的ViewPager
     private ViewPager vpTop;
+    //可以addHeaderView 和 addFooterView 的GridView
     private GridViewWithHeaderAndFooter lvRecommend;
+    //google自带的下拉刷新布局
     private RefreshLayout mRefreshLayout;
+
     private TextView textMore, tvArea;
     private ProgressBar mProgressBar;
     private RadioButton btnMall, btnTuanGou, btnSale, btnZhX;
+    //从数据库获取的数据
     private static ArrayList<Recommend> recommends;
     private RelativeLayout rlSearch;
+    private LinearLayout llSaled, llEight;
+    //设置当前为第一页
     private int pageNo = 1;
     private String dirTime, onloadDir;
     private GridViewAdapter mAdapter;
-    private Button btnConfirm;
     private View dialogView;
     private AlertDialog.Builder dialog;
 
+
+    //选择地址
     @Override
     public void onChanged(WheelView wheel, int oldValue, int newValue) {
-        // TODO Auto-generated method stub
         if (wheel == mViewProvince) {
             updateCities();
         } else if (wheel == mViewCity) {
             mCurrentCityName = mCitisDatasMap.get(mCurrentProviceName)[newValue];
         }
     }
-
+    //定位地址的监听器
     class MyLocationListener implements BDLocationListener{
 
         @Override
@@ -127,7 +158,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 final String str = addrStr.substring(addrStr.indexOf("省") + 1, addrStr.indexOf("市"));
                 String area = tvArea.getText().toString();
                 if (!area.equals(str)){
-                   new AlertDialog.Builder(getActivity()).setTitle("定位").setMessage("当前定位：" + str).
+                   new AlertDialog.Builder(context).setTitle("定位").setMessage("当前定位：" + str).
                            setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                @Override
                                public void onClick(DialogInterface dialog, int which) {
@@ -144,15 +175,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 mLocationClient.stop();
             }
         }
-    }
-    public HomeFragment() {
-        super(R.layout.pager_home);
-        recommends = new ArrayList<>();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 
     @Override
@@ -282,18 +304,20 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     public View createSuccessView() {
-
-
-        mAdapter = new GridViewAdapter(recommends, getActivity());
-        View headerView = View.inflate(getActivity(), R.layout.pager_home_content_header, null);
-        View view = View.inflate(getActivity(), R.layout.pager_home_content, null);
-        View footerView = View.inflate(getActivity(), R.layout.listview_footer, null);
+        mAdapter = new GridViewAdapter(recommends, context);
+        View headerView = View.inflate(context, R.layout.pager_home_content_header, null);
+        View view = View.inflate(context, R.layout.pager_home_content, null);
+        View footerView = View.inflate(context, R.layout.listview_footer, null);
         textMore = (TextView) footerView.findViewById(R.id.text_more);
         mProgressBar = (ProgressBar) footerView.findViewById(R.id.load_progress_bar);
         btnMall = (RadioButton) headerView.findViewById(R.id.shangcheng);
         btnTuanGou = (RadioButton) headerView.findViewById(R.id.tuangou);
         btnSale = (RadioButton) headerView.findViewById(R.id.sale);
         btnZhX = (RadioButton) headerView.findViewById(R.id.search_zhx);
+        llSaled = (LinearLayout) headerView.findViewById(R.id.ll_saled);
+        llEight = (LinearLayout) headerView.findViewById(R.id.ll_eight);
+        llEight.setOnClickListener(this);
+        llSaled.setOnClickListener(this);
         btnZhX.setOnClickListener(this);
         btnTuanGou.setOnClickListener(this);
         btnSale.setOnClickListener(this);
@@ -365,7 +389,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
                                 textMore.setVisibility(View.VISIBLE);
                                 mProgressBar.setVisibility(View.GONE);
-                                Toast.makeText(getActivity(), "刷新成功!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "刷新成功!", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -387,7 +411,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                         final String dirTime1 = System.currentTimeMillis() + "";
                         int i = recommends.size() / (pageNo * GlobalContacts.PAGE_SIZE);
                         ArrayList<Recommend> recommends_onload = null;
-                        if (i == 1){
+                        if (i == 1) {
                             pageNo++;
                             HomeProtocol protocol = new HomeProtocol(GlobalContacts.RECOMMEND_URL + pageNo, dirTime1);
                             recommends_onload = protocol.loadData();
@@ -400,7 +424,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                                     textMore.setText("已加载全部数据");
                                     textMore.setVisibility(View.VISIBLE);
                                     mProgressBar.setVisibility(View.GONE);
-                                }else {
+                                } else {
                                     if (finalRecommends_onload.size() != 0) {
                                         File dir = FilesUtils.getCacheDri();
                                         if (onloadDir != null) {
@@ -412,7 +436,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                                         }
                                         recommends.addAll(finalRecommends_onload);
                                         LogUtils.d("aaaaa" + recommends);
-                                        mRefreshLayout.setLoading(false);;
+                                        mRefreshLayout.setLoading(false);
+                                        ;
                                         mAdapter.notifyDataSetChanged();
 
                                         textMore.setVisibility(View.VISIBLE);
@@ -440,13 +465,14 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             }
         });
         vpTop = (ViewPager) headerView.findViewById(R.id.vp_top);
-        vpTop.setAdapter(new HomePagerContentAdapter(images, getActivity()));
+        vpTop.setAdapter(new HomePagerContentAdapter(images, context));
+        vpTop.setOnTouchListener(new TopNewsTouchListener());
         mIndicator = (CirclePageIndicator)headerView.findViewById(R.id.indicator);
         mIndicator.setViewPager(vpTop);
         System.out.println("成功界面创建了");
 
 
-        mLocationClient = new LocationClient(getActivity());
+        mLocationClient = new LocationClient(context);
         mLocationClient.registerLocationListener(mBDLocationListener);
 
         LocationClientOption option = new LocationClientOption();
@@ -463,10 +489,39 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         option.setIgnoreKillProcess(false);//可选，默认false，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认杀死
         option.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
         option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤gps仿真结果，默认需要
-        mLocationClient.setLocOption(option);
-        mLocationClient.start();
+        if (mLocationClient != null && option != null){
+            mLocationClient.setLocOption(option);
+            mLocationClient.start();
+        }
 
         return view;
+    }
+
+    class TopNewsTouchListener implements View.OnTouchListener {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    System.out.println("按下");
+                    handler.removeCallbacksAndMessages(null);// 删除Handler中的所有消息
+                    break;
+                case MotionEvent.ACTION_CANCEL:
+                    System.out.println("事件取消");
+                    handler.sendEmptyMessageDelayed(0, 3000);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    System.out.println("抬起");
+                    handler.sendEmptyMessageDelayed(0, 3000);
+                    break;
+
+                default:
+                    break;
+            }
+
+            return true;
+        }
+
     }
 
     private void RefreshData() {
@@ -525,8 +580,18 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 break;
             case R.id.search_zhx:
                 Toast.makeText(getActivity(), "进入装修界面", Toast.LENGTH_SHORT).show();
+//                FragmentManager fm = getActivity().getSupportFragmentManager();
+                ((ViewPager)getActivity().findViewById(R.id.vp_content)).setCurrentItem(1);
+                ((RadioButton)getActivity().findViewById(R.id.rb_zhx)).setChecked(true);
                 break;
-
+            case R.id.ll_saled:
+                Intent intent = new Intent(context, SaleActivity.class);
+                intent.putExtra("state", 1);
+                startActivity(intent);
+                break;
+            case R.id.ll_eight:
+                startActivity(new Intent(getActivity(), SaleActivity.class));
+                break;
         }
     }
 }

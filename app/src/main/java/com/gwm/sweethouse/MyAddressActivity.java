@@ -3,6 +3,7 @@ package com.gwm.sweethouse;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.gwm.sweethouse.ZList.ZListView;
 import com.gwm.sweethouse.adapter.AddressAdapter;
 import com.gwm.sweethouse.bean.Address;
 import com.gwm.sweethouse.global.GlobalContacts;
@@ -29,16 +31,16 @@ import java.util.List;
 
 public class MyAddressActivity extends Activity {
     ImageButton ibtn_return;
-    ListView listview;
+    ZListView listview;
     Button btn_newAddress;
     TextView tv_noOrders;
     AddressAdapter adapter;
-    List<Address> list ;
+    ArrayList<Address> list ;
     ProgressBar progressBar;
     HttpUtils httpUtils;
     private int user_id;
     Intent intent ;
-
+    private Handler handler = new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +59,7 @@ public class MyAddressActivity extends Activity {
 */
     private void initViews() {
         ibtn_return = (ImageButton) findViewById(R.id.ibtn_addressToMy);
-        listview = (ListView) findViewById(R.id.lv_address);
+        listview = (ZListView) findViewById(R.id.lv_address);
         listview.setVerticalScrollBarEnabled(true);
         btn_newAddress = (Button) findViewById(R.id.btn_newAddr);
         tv_noOrders = (TextView) findViewById(R.id.tv_noOrders);
@@ -82,7 +84,23 @@ public class MyAddressActivity extends Activity {
         list = new ArrayList<Address>();
         adapter = new AddressAdapter(MyAddressActivity.this,list);
         listview.setAdapter(adapter);
+        listview.setXListViewListener(new ZListView.IXListViewListener() {
+            @Override
+            public void onRefresh() {
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // adapter.notifyDataSetChanged();
+                        listview.stopRefresh();
+                    }
+                }, 1000);
+            }
 
+            @Override
+            public void onLoadMore() {
+
+            }
+        });
         httpUtils = new HttpUtils();
         String url = GlobalContacts.VISON_URL+"/AddressServlet?method=getAllAddress&user_id="+user_id;
         httpUtils.send(HttpRequest.HttpMethod.GET,

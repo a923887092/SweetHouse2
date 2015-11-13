@@ -19,15 +19,14 @@ public class GoodsActivity extends FragmentActivity implements FragmentCallBack 
         setContentView(R.layout.activity_goods);
         Intent intent = getIntent();
         subClass = (int) intent.getSerializableExtra("xl");
-        Bundle bundle = new Bundle();
-        bundle.putInt("xl", subClass);
+//        Bundle bundle = new Bundle();
+//        bundle.putInt("xl", subClass);
         GoodsFragment fragment = new GoodsFragment();
-        fragment.setArguments(bundle);
+//        fragment.setArguments(bundle);
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.fl_fragment, fragment);
         transaction.commit();
-        System.out.println("+++++++++++++" + subClass);
     }
 
     @Override

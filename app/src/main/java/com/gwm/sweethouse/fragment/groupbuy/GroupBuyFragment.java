@@ -49,9 +49,14 @@ public class GroupBuyFragment extends BaseFragment {
     private int pageNo = 1;
     private String dirTime, onloadDir;
     private String area;
-
+    private boolean isMore = true;
     public GroupBuyFragment() {
-        super(R.layout.pager_group_buy);
+        super();
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.pager_group_buy;
     }
 
     @Override
@@ -74,9 +79,12 @@ public class GroupBuyFragment extends BaseFragment {
     @Override
     protected LoadResult load() {
         area = callBack.callback(null);
-        GroupBuyProtocol protocol = new GroupBuyProtocol(GlobalContacts.ACTIVITY_URL + Uri.encode(area) + "&pageNo=" + pageNo,"activities_info");
+        GroupBuyProtocol protocol = new GroupBuyProtocol(GlobalContacts.ACTIVITY_URL + Uri.encode(area) + "&pageNo=" + pageNo,"activities_info" + area);
         myActivities = new ArrayList<>();
         myActivities = protocol.loadData();
+        if (myActivities.size() < GlobalContacts.PAGE_SIZE) {
+            isMore = false;
+        }
         if (myActivities == null){
             return LoadResult.error;
         } else {
@@ -97,7 +105,9 @@ public class GroupBuyFragment extends BaseFragment {
         mProgressBar = (ProgressBar) footerView.findViewById(R.id.load_progress_bar);
         mRefreshLayout = (RefreshLayout) view.findViewById(R.id.swipe_container);
         gvAct = (GridViewWithHeaderAndFooter) view.findViewById(R.id.gv_act);
-        gvAct.addFooterView(footerView);
+        if (isMore){
+            gvAct.addFooterView(footerView);
+        }
         mRefreshLayout.setChildView(gvAct);
 //        if (recommends.size() != 0){
         gvAct.setAdapter(mAdapter);
@@ -113,8 +123,10 @@ public class GroupBuyFragment extends BaseFragment {
         mRefreshLayout.setOnRefreshListener(new RefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                textMore.setText("上拉加载更多");
-                mRefreshLayout.setLoading(false);
+                if (isMore){
+                    textMore.setText("上拉加载更多");
+                    mRefreshLayout.setLoading(false);
+                }
                 ThreadManager.getInstance().createLongPool().execute(new Runnable() {
                     @Override
                     public void run() {
@@ -142,9 +154,10 @@ public class GroupBuyFragment extends BaseFragment {
                                     mAdapter.notifyDataSetChanged();
                                 }
                                 mRefreshLayout.setRefreshing(false);
-
-                                textMore.setVisibility(View.VISIBLE);
-                                mProgressBar.setVisibility(View.GONE);
+                                if (isMore){
+                                    textMore.setVisibility(View.VISIBLE);
+                                    mProgressBar.setVisibility(View.GONE);
+                                }
                                 Toast.makeText(getActivity(), "刷新成功!", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -154,63 +167,66 @@ public class GroupBuyFragment extends BaseFragment {
         });
         //使用自定义的RefreshLayout加载更多监听
         //use customed RefreshLayout OnLoadListener
-        mRefreshLayout.setOnLoadListener(new RefreshLayout.OnLoadListener() {
-            @Override
-            public void onLoad() {
-                LogUtils.d("上拉啦！！！！！");
-                textMore.setVisibility(View.GONE);
-                mProgressBar.setVisibility(View.VISIBLE);
-                ThreadManager.getInstance().createLongPool().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        SystemClock.sleep(2000);
-                        final String dirTime1 = System.currentTimeMillis() + "";
-                        int i = myActivities.size() / (pageNo * GlobalContacts.PAGE_SIZE);
-                        ArrayList<MyActivity> activities_onload = null;
-                        if (i == 1) {
-                            pageNo++;
-                            GroupBuyProtocol protocol = new GroupBuyProtocol(GlobalContacts.ACTIVITY_URL + Uri.encode(area) + "&pageNo=" + pageNo, dirTime1);
-                            activities_onload = protocol.loadData();
-                        }
-                        final ArrayList<MyActivity> finalActivities_onload = activities_onload;
-                        UiUtils.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (finalActivities_onload == null) {
-                                    textMore.setText("已加载全部数据");
-                                    textMore.setVisibility(View.VISIBLE);
-                                    mProgressBar.setVisibility(View.GONE);
-                                } else {
-                                    if (finalActivities_onload.size() != 0) {
-                                        File dir = FilesUtils.getCacheDri();
-                                        if (onloadDir != null) {
-                                            File file = new File(dir, onloadDir);
-                                            if (file.isFile() && file.exists()) {
-                                                file.delete();
-                                            }
-                                            onloadDir = dirTime1;
-                                        }
-                                        myActivities.addAll(finalActivities_onload);
-                                        LogUtils.d("aaaaa" + myActivities);
-                                        mRefreshLayout.setLoading(false);
-                                        ;
-                                        mAdapter.notifyDataSetChanged();
 
-                                        textMore.setVisibility(View.VISIBLE);
-                                        mProgressBar.setVisibility(View.GONE);
-                                    } else {
+        if (isMore) {
+            mRefreshLayout.setOnLoadListener(new RefreshLayout.OnLoadListener() {
+                @Override
+                public void onLoad() {
+                    LogUtils.d("上拉啦！！！！！");
+                    textMore.setVisibility(View.GONE);
+                    mProgressBar.setVisibility(View.VISIBLE);
+                    ThreadManager.getInstance().createLongPool().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            SystemClock.sleep(2000);
+                            final String dirTime1 = System.currentTimeMillis() + "";
+                            int i = myActivities.size() / (pageNo * GlobalContacts.PAGE_SIZE);
+                            ArrayList<MyActivity> activities_onload = null;
+                            if (i == 1) {
+                                pageNo++;
+                                GroupBuyProtocol protocol = new GroupBuyProtocol(GlobalContacts.ACTIVITY_URL + Uri.encode(area) + "&pageNo=" + pageNo, dirTime1);
+                                activities_onload = protocol.loadData();
+                            }
+                            final ArrayList<MyActivity> finalActivities_onload = activities_onload;
+                            UiUtils.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (finalActivities_onload == null) {
                                         textMore.setText("已加载全部数据");
                                         textMore.setVisibility(View.VISIBLE);
                                         mProgressBar.setVisibility(View.GONE);
+                                    } else {
+                                        if (finalActivities_onload.size() != 0) {
+                                            File dir = FilesUtils.getCacheDri();
+                                            if (onloadDir != null) {
+                                                File file = new File(dir, onloadDir);
+                                                if (file.isFile() && file.exists()) {
+                                                    file.delete();
+                                                }
+                                                onloadDir = dirTime1;
+                                            }
+                                            myActivities.addAll(finalActivities_onload);
+                                            LogUtils.d("aaaaa" + myActivities);
+                                            mRefreshLayout.setLoading(false);
+                                            ;
+                                            mAdapter.notifyDataSetChanged();
+
+                                            textMore.setVisibility(View.VISIBLE);
+                                            mProgressBar.setVisibility(View.GONE);
+                                        } else {
+                                            textMore.setText("已加载全部数据");
+                                            textMore.setVisibility(View.VISIBLE);
+                                            mProgressBar.setVisibility(View.GONE);
+                                        }
                                     }
+    //                                Toast.makeText(getActivity(), "加载完成!", Toast.LENGTH_SHORT).show();
                                 }
-//                                Toast.makeText(getActivity(), "加载完成!", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                });
-            }
-        });
+                            });
+                        }
+                    });
+                }
+            });
+        }
 
         gvAct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

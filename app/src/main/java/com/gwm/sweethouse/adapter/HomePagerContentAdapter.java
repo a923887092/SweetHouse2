@@ -31,7 +31,7 @@ public class HomePagerContentAdapter extends PagerAdapter{
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+      public Object instantiateItem(ViewGroup container, int position) {
         ImageView imageView = new ImageView(context);
         imageView.setImageResource(images[position]);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);

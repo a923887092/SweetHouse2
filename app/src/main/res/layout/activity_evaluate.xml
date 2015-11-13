@@ -4,7 +4,143 @@
     android:layout_height="match_parent"
     tools:context="com.gwm.sweethouse.EvaluateOrderActivity">
 
-    <TextView android:text="评价订单" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:id="@+id/top_evaluateOrder"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ff0000">
+        <ImageButton
+            android:id="@+id/ibtn_evaluateToOrder"
+            android:layout_width="12dp"
+            android:layout_height="20dp"
+            android:background="@drawable/arrow_return"
+            android:layout_marginLeft="14dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="评价订单"
+            android:textSize="18sp"
+            android:textColor="#ffffff"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_rating1"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/shape_layout"
+        android:layout_below="@+id/top_evaluateOrder"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <ImageView
+            android:id="@+id/iv_evaluateImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerVertical="true"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_loading"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="描述相符"
+            android:textSize="18sp"
+            android:layout_toRightOf="@id/iv_evaluateImage"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="35dp"
+            android:id="@+id/textView11" />
+        <RatingBar
+            android:id="@+id/ratingbar1"
+            style="@style/roomRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:layout_below="@+id/textView11"
+            android:layout_toRightOf="@id/iv_evaluateImage"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="35dp"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_rating2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/rl_rating1"
+        android:background="@drawable/shape_layout">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="服务态度"
+            android:textSize="18sp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:id="@+id/textView12" />
+        <RatingBar
+            android:id="@+id/ratingbar2"
+            style="@style/roomRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/textView12"
+            android:layout_toEndOf="@+id/textView12"
+            android:layout_marginLeft="32dp"
+            android:layout_marginStart="32dp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_rating3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/rl_rating2">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="物流态度"
+            android:textSize="18sp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:id="@+id/textView13" />
+        <RatingBar
+            android:id="@+id/ratingbar3"
+            style="@style/roomRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:layout_marginLeft="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/textView13"
+            android:layout_toEndOf="@+id/textView13" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_rating3"
+        android:background="@drawable/shape_layout"
+        android:id="@+id/relativeLayout3">
+        <EditText
+            android:id="@+id/et_commentContent"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@null"
+            android:padding="10dp"
+            android:hint="说说你和这件商品的小故事吧"
+            android:textColorHint="#cccccc"/>
+    </RelativeLayout>
 
+    <Button
+        android:id="@+id/btn_evaluate"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:background="@drawable/selector_btn_reload"
+        android:text="提交评价"
+        android:textColor="#fff"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp" />
 </RelativeLayout>

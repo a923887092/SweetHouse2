@@ -24,13 +24,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.gwm.sweethouse.bean.User;
 import com.gwm.sweethouse.global.GlobalContacts;
+import com.gwm.sweethouse.utils.LoginUtils;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -38,6 +42,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.umeng.message.PushAgent;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -52,10 +57,10 @@ public class UserInfoActivity extends Activity implements View.OnClickListener {
     ImageButton ibtn_userinfoReturn;
     TextView tv_phoneInfo, tv_nameInfo, tv_birthinfo,tv_sexinfo;
     Button btn_exit;
-    String phoneNumber;
+   // String phoneNumber;
     int  user_id;
     boolean loginState;
-    String PhotoUrl;
+    String photoUrl;
     /**
      * ImageView对象
      */
@@ -79,14 +84,19 @@ public class UserInfoActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_user_info);
         initViews();
 
-        Intent intent = getIntent();
+        //友盟统计应用启动数据，所有Activty都要添加
+        PushAgent.getInstance(UserInfoActivity.this).onAppStart();
+
+       /* Intent intent = getIntent();
         phoneNumber = intent.getStringExtra("phoneNumber");
         user_id = intent.getIntExtra("user_id", 0);
         loginState = intent.getBooleanExtra("loginState", false);
         PhotoUrl = intent.getStringExtra("photoUrl");
-        tv_phoneInfo.setText(phoneNumber);
-        getPhotoFromWeb(user_id);
-        Log.e("用户信息页得到的数据",phoneNumber+user_id+loginState+PhotoUrl);
+        tv_phoneInfo.setText(phoneNumber);*/
+        user_id = LoginUtils.getUser_id(UserInfoActivity.this);
+        getAllInfoFromWeb(user_id);
+
+       // Log.e("用户信息页得到的数据", phoneNumber + user_id + loginState + PhotoUrl);
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -102,6 +112,9 @@ public class UserInfoActivity extends Activity implements View.OnClickListener {
                         break;
                     case 3:
                         tv_sexinfo.setText(msg.obj.toString());
+                        break;
+                    case 4:
+                        tv_nameInfo.setText(msg.obj.toString());
                         break;
                     default:
                         break;
@@ -145,13 +158,14 @@ public class UserInfoActivity extends Activity implements View.OnClickListener {
                 showPhotoDialog();
                 break;
             case R.id.rl_userinfo3:
-                String nickName = tv_nameInfo.getText().toString();
+               /* String nickName = tv_nameInfo.getText().toString();
                 Intent intent = new Intent(UserInfoActivity.this, AlterUserNameActivity.class);
                 intent.putExtra("nickName",nickName);
-                startActivity(intent);
+                startActivity(intent);*/
+                showNameDialog();
                 break;
             case R.id.rl_userinfo4:
-               showSexDialog();
+                showSexDialog();
                 //选择性别
                 break;
             case R.id.rl_userinfo5:
@@ -163,12 +177,96 @@ public class UserInfoActivity extends Activity implements View.OnClickListener {
             case R.id.btn_exit:
                 SharedPreferences sp = getSharedPreferences("login",UserInfoActivity.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sp.edit();
-               // editor.putBoolean("loginState", false);
-                editor.clear();
+                editor.putBoolean("loginState", false);
+                //editor.clear();
+                editor.commit();
                 startActivity(new Intent(UserInfoActivity.this,MainActivity.class));
-               //finish();
+                //finish();
                 break;
         }
+
+    }
+
+
+    //从服务器加载用户所有信息
+    private void getAllInfoFromWeb(int user_id) {
+        Log.e("用户ID", user_id + "");
+        HttpUtils utils = new HttpUtils();
+        utils.send(HttpRequest.HttpMethod.GET,
+                GlobalContacts.VISON_URL + "/userServlet?method=getAllInfo&user_id=" + user_id,
+                new RequestCallBack<String>() {
+                    @Override
+                    public void onSuccess(ResponseInfo<String> responseInfo) {
+                        String result = responseInfo.result;
+                        Gson gson = new Gson();
+                        User user = gson.fromJson(result,User.class);
+                        Log.e("user",user.toString());
+                        //设置头像
+                        photoUrl = user.getUser_image();
+                        BitmapUtils bitmapUtils = new BitmapUtils(UserInfoActivity.this);
+                        bitmapUtils.display(imageView, GlobalContacts.VISON_URL + photoUrl);
+                        //设置电话
+                            tv_phoneInfo.setText(user.getUser_mobile());
+                        //设置昵称
+                        if (!user.getUser_name().isEmpty()) {
+                            tv_nameInfo.setText(user.getUser_name());
+                        }
+                        //设置性别
+                        if (!user.getUser_sex().isEmpty()) {
+                            tv_sexinfo.setText(user.getUser_sex());
+                        }
+                        //设置生日
+                        if (!user.getUser_birth().isEmpty()) {
+                            tv_birthinfo.setText(user.getUser_birth());
+                            //
+                        }
+                    }
+
+                    //图片路径加载失败
+                    @Override
+                    public void onFailure(HttpException e, String s) {
+                        Log.e("加载图片失败", "气死了。。。。。。。");
+                    }
+                });
+    }
+
+    private void showNameDialog() {
+        final Message msg = new Message();
+        View view = View.inflate(UserInfoActivity.this,R.layout.layout_username_dialog,null);
+        Button btn_dialogName = (Button) view.findViewById(R.id.btn_dialogName);
+        final EditText et_newName = (EditText) view.findViewById(R.id.et_dialogName);
+        final AlertDialog dialog = new AlertDialog.Builder(UserInfoActivity.this).setView(view).show();
+        btn_dialogName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                String newName = et_newName.getText().toString();
+                setUserName(newName);
+                msg.what = 4;
+                msg.obj = newName;
+                handler.sendMessage(msg);
+            }
+        });
+    }
+
+    private void setUserName(String newName) {
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("method","setUserName");
+        params.addQueryStringParameter("user_name",newName);
+        params.addQueryStringParameter("user_id",user_id+"");
+        String url = GlobalContacts.VISON_URL + "/userServlet";
+        httpUtils.send(HttpRequest.HttpMethod.GET, url, params, new RequestCallBack<Object>() {
+            @Override
+            public void onSuccess(ResponseInfo<Object> responseInfo) {
+                Toast.makeText(UserInfoActivity.this, "昵称修改成功", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+
+            }
+        });
 
     }
 
@@ -183,16 +281,19 @@ public class UserInfoActivity extends Activity implements View.OnClickListener {
                                 msg.what = 1;
                                 msg.obj = "男";
                                 handler.sendMessage(msg);
+                                setUserSex("男");
                                 break;
                             case 1:
                                 msg.what = 2;
                                 msg.obj = "女";
                                 handler.sendMessage(msg);
+                                setUserSex("女");
                                 break;
                             case 2:
                                 msg.what = 3;
                                 msg.obj = "保密";
                                 handler.sendMessage(msg);
+                                setUserSex("保密");
                                 break;
                         }
                     }
@@ -206,6 +307,28 @@ public class UserInfoActivity extends Activity implements View.OnClickListener {
                 }).show();
     }
 
+    private void setUserSex(String sex) {
+        //http://localhost:8080/SweetHouse/userServlet?method=setUserSex&user_sex=woman&user_id=123458
+       // http://localhost:8080/SweetHouse/userServlet?method=setUserBirth&user_birth=1991.8.12&user_id=123458
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("method","setUserSex");
+        params.addQueryStringParameter("user_sex",sex);
+        params.addQueryStringParameter("user_id",user_id+"");
+        String url = GlobalContacts.VISON_URL + "/userServlet";
+        httpUtils.send(HttpRequest.HttpMethod.GET, url, params, new RequestCallBack<Object>() {
+            @Override
+            public void onSuccess(ResponseInfo<Object> responseInfo) {
+                Toast.makeText(UserInfoActivity.this, "性别修改成功", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+
+            }
+        });
+    }
+
 
     private void showDateDialog() {
         Calendar calendar = Calendar.getInstance();
@@ -217,7 +340,8 @@ public class UserInfoActivity extends Activity implements View.OnClickListener {
                         msg.what = 0;
                         msg.obj = year + "年" + (month + 1) + "月" + dayOfMonth + "日";
                         handler.sendMessage(msg);
-                       /* tv_birthinfo.setText(year+"年"+month+"月"+dayOfMonth+"日");*/
+                        String birth =  year + "." + (month + 1) + "." + dayOfMonth + ".";
+                        setUserBirth(birth);
                         Toast.makeText(UserInfoActivity.this, year + "年" +(month + 1) + "月" + dayOfMonth + "日", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -226,9 +350,29 @@ public class UserInfoActivity extends Activity implements View.OnClickListener {
                 , calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
+    private void setUserBirth(String birth) {
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("method","setUserBirth");
+        params.addQueryStringParameter("user_birth",birth);
+        params.addQueryStringParameter("user_id",user_id+"");
+        String url = GlobalContacts.VISON_URL + "/userServlet";
+        httpUtils.send(HttpRequest.HttpMethod.GET, url, params, new RequestCallBack<Object>() {
+            @Override
+            public void onSuccess(ResponseInfo<Object> responseInfo) {
+                Toast.makeText(UserInfoActivity.this, "生日修改成功", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+
+            }
+        });
+    }
+
 
     /**
-     * 显示选择图片对话框
+     * 显示选择头像设置对话框
      */
     private void showPhotoDialog() {
 
@@ -305,52 +449,8 @@ public class UserInfoActivity extends Activity implements View.OnClickListener {
     * 服务器端还未实现
     * */
     private void sendToWeb(Bitmap bitmap) {
-       /* RequestParams params = new RequestParams();
-        params.addHeader("name", "uploadImage");
-        params.addBodyParameter("file", new File("/sdcard/com.sweethouse.photo/userphoto.png"));
-        HttpUtils http = new HttpUtils();
-        String url = GlobalContacts.VISON_URL+"/UploadServlet";
-        http.send(HttpRequest.HttpMethod.POST,
-                url,
-                params,
-                new RequestCallBack<String>() {
-                    @Override
-                    public void onSuccess(ResponseInfo<String> responseInfo) {
 
-                    }
-                    @Override
-                    public void onFailure(HttpException error, String msg) {
-
-                    }
-                });*/
-        //实例化HttpUtils对象， 参数设置链接超时
-        HttpUtils HTTP_UTILS = new HttpUtils(60 * 1000);
-           //实例化RequestParams对象
-        RequestParams requestParams = new RequestParams();
-        //requestParams.setContentType("multipart/form-data");
-        StringBuilder picFileName = new StringBuilder();
-        picFileName.append("/sdcard/com.sweethouse.photo/")
-                .append(user_id).append(".png");
-        requestParams.addBodyParameter("picFileName", picFileName.toString());
-        //imageFile是File格式的对象， 将此File传递给RequestParams
-      /*  requestParams.addBodyParameter("picFile", imageFile, "image/png");
-        requestParams.addBodyParameter("platform", "Android");
-        String photoUrl = Config.getUploadPhotoUrl();
-       //通过HTTP_UTILS来发送post请求， 并书写回调函数
-        HTTP_UTILS.send(HttpRequest.HttpMethod.POST, url, params, new com.lidroid.xutils.http.callback.RequestCallBack<String>() {
-                        @Override
-                        public void onFailure(HttpException httpException, String arg1) {
-                               
-                            }
-
-                        @Override
-                        public void onSuccess(ResponseInfo<String> responseInfo) {
-                              
-                            }
-                    });
     }
-*/
-}
 
     //将截取后的图片缓存到本地
     private void savaphoto(Bitmap bitmap) {
@@ -358,7 +458,7 @@ public class UserInfoActivity extends Activity implements View.OnClickListener {
         if (!photoDir.exists()) {
             photoDir.mkdir();
         }
-        File photo = new File(photoDir.getAbsolutePath() + "/" + "userphoto.png");
+        File photo = new File(photoDir.getAbsolutePath() + "/" + user_id+".png");
 
         try {
             FileOutputStream fos = new FileOutputStream(photo);
@@ -431,28 +531,6 @@ public class UserInfoActivity extends Activity implements View.OnClickListener {
         startActivityForResult(intent, RESIZE_REQUEST_CODE);
     }
 
-    //从服务器加载用户头像
-    private void getPhotoFromWeb(int user_id) {
-        Log.e("用户ID", user_id + "");
-        HttpUtils utils = new HttpUtils();
-        utils.send(HttpRequest.HttpMethod.GET,
-                GlobalContacts.VISON_URL + "/userServlet?method=getUserPhoto&user_id=" + user_id,
-                new RequestCallBack<String>() {
-                    @Override
-                    public void onSuccess(ResponseInfo<String> responseInfo) {
-                        String result = responseInfo.result;
-                        PhotoUrl = result;
-                        BitmapUtils bitmapUtils = new BitmapUtils(UserInfoActivity.this);
-                        bitmapUtils.display(imageView, GlobalContacts.VISON_URL + result);
-                    }
-
-                    //图片路径加载失败
-                    @Override
-                    public void onFailure(HttpException e, String s) {
-                        Log.e("加载图片失败", "气死了。。。。。。。");
-                    }
-                });
-    }
 
     // 转换图片成圆形
 

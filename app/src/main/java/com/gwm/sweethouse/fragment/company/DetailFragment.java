@@ -55,7 +55,12 @@ public class DetailFragment extends BaseFragment {
     private int i;
 
     public DetailFragment() {
-        super(R.layout.fragment_companytitle);
+        super();
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_companytitle;
     }
 
     @Override
@@ -105,10 +110,9 @@ public class DetailFragment extends BaseFragment {
 
     @Override
     protected View createSuccessView() {
-        int j=mCallBack.callbackFun(null);
-        utils=new BitmapUtils(getActivity());
+        utils=new BitmapUtils(context);
         adapter=new DetailAdapter();
-        View view = View.inflate(getActivity(), R.layout.company_refresh, null);
+        View view = View.inflate(getActivity(), R.layout.company_refresh1, null);
         View headerView=View.inflate(getActivity(),R.layout.comdetail_content,null);
         imComTitle= (ImageView) headerView.findViewById(R.id.im_titlepic);
         tvDetail= (TextView) headerView.findViewById(R.id.tv_title);
@@ -116,7 +120,6 @@ public class DetailFragment extends BaseFragment {
 
         tvAddr= (TextView) headerView.findViewById(R.id.tv_addr);
         tvPhone= (TextView) headerView.findViewById(R.id.tv_phone);
-        Log.e("btt", j + "");
         tvDetail.setText(details.get(0).getDt_detail());
         tvPhone.setText(details.get(0).getDt_phone());
         tvAddr.setText(details.get(0).getDt_addr());
@@ -218,7 +221,7 @@ public class DetailFragment extends BaseFragment {
             holder.tvStyle.setText(pics.get(position).getCom_style());
             holder.tvRoom.setText(pics.get(position).getCom_roomnum());
             holder.tvDesName.setText(pics.get(position).getCom_desname());
-           //预约设计师点击事件
+            //预约设计师点击事件
             holder.btnOrderDes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

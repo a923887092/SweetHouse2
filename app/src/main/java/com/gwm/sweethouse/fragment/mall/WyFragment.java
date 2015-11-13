@@ -14,6 +14,7 @@ import com.gwm.sweethouse.adapter.MyBaseAdapter;
 import com.gwm.sweethouse.bean.SubClass;
 import com.gwm.sweethouse.global.GlobalContacts;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -21,10 +22,6 @@ import java.util.ArrayList;
  */
 public class WyFragment extends BaseMallFragment {
     private TextView tvSortTitle;
-
-    public WyFragment(ArrayList<SubClass> subClasses) {
-        super(subClasses);
-    }
 
     @Override
     protected void initView(View view) {

@@ -1,6 +1,7 @@
 package com.gwm.sweethouse.fragment.mall;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
+import com.gwm.sweethouse.MallActivity;
 import com.gwm.sweethouse.R;
 import com.gwm.sweethouse.SearchActivity;
 import com.gwm.sweethouse.bean.SubClass;
@@ -38,7 +40,12 @@ public class MallFragment extends BaseFragment {
     private View view;
 
     public MallFragment() {
-        super(R.layout.pager_mall);
+        super();
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.pager_mall;
     }
 
 
@@ -75,11 +82,11 @@ public class MallFragment extends BaseFragment {
 
     @Override
     protected View createSuccessView() {
-        view = View.inflate(getActivity(), R.layout.fragment_mall, null);
+        view = View.inflate(context, R.layout.fragment_mall, null);
         vpSubClass = (NoFullScreenViewPager) view.findViewById(R.id.vp_subclass);
         rgClass = (RadioGroup) view.findViewById(R.id.rg_class);
         rlSearch = (RelativeLayout) view.findViewById(R.id.rl_mall_search);
-        fm = getActivity().getSupportFragmentManager();
+        fm = ((MallActivity) context).getSupportFragmentManager();
         vpSubClass.setAdapter(new VpSubClassAdapter(fm));
 
         rlSearch.setOnClickListener(new View.OnClickListener() {
@@ -130,9 +137,17 @@ public class MallFragment extends BaseFragment {
         public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                    return new ZmFragment(subClasses.get(0));
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("subClass", subClasses.get(0));
+                    ZmFragment fragment = new ZmFragment();
+                    fragment.setArguments(bundle);
+                    return fragment;
                 default:
-                    return new WyFragment(subClasses.get(1));
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putSerializable("subClass", subClasses.get(1));
+                    WyFragment fragment1 = new WyFragment();
+                    fragment1.setArguments(bundle1);
+                    return fragment1;
             }
         }
 

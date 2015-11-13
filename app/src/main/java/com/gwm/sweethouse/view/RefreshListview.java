@@ -1,6 +1,7 @@
 package com.gwm.sweethouse.view;
 
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -36,13 +38,25 @@ public class RefreshListview extends ListView{
     private int mCurrentState=STATE_PULL_REFRESH;
     private View mFooterView;
     private int mFooterViewHeighr;
+    long currentimedown;
 
+    @Override
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        super.setOnItemClickListener(listener);
+    }
+
+    @Override
+    public void setOnItemSelectedListener(OnItemSelectedListener listener) {
+        super.setOnItemSelectedListener(listener);
+    }
+
+    long currentimeup;
 
 
     public RefreshListview(Context context) {
         super(context);
         initHeaderView();
-        initFooterView();
+       // initFooterView();
     }
 
 
@@ -50,13 +64,13 @@ public class RefreshListview extends ListView{
     public RefreshListview(Context context, AttributeSet attrs) {
         super(context, attrs);
         initHeaderView();
-        initFooterView();
+        //initFooterView();
     }
 
     public RefreshListview(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initHeaderView();
-        initFooterView();
+        //initFooterView();
     }
 
     private void initFooterView() {
@@ -100,9 +114,16 @@ public class RefreshListview extends ListView{
     }
 
     @Override
+    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
+        super.setOnItemLongClickListener(listener);
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent ev) {
         switch (ev.getAction()){
+
             case MotionEvent.ACTION_DOWN:
+                currentimedown= System.currentTimeMillis();
                 startY = (int) ev.getRawY();
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -134,6 +155,7 @@ public class RefreshListview extends ListView{
                 }
                 break;
             case MotionEvent.ACTION_UP:
+
                 startY=-1;
                 if (mCurrentState==STATE_RELEASE_REFRESH){
                     mCurrentState=STATE_REFRESHING;

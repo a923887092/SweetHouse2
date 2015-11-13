@@ -4,20 +4,22 @@
     android:layout_height="match_parent"
     xmlns:RelativeLayoutandroid="http://schemas.android.com/apk/res-auto"
     tools:context="com.gwm.sweethouse.OrderConfirmationActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:descendantFocusability="blocksDescendants">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
-        android:id="@+id/confirmtop">
+        android:id="@+id/confirmtop"
+        >
     <RelativeLayout
 
         android:clickable="true"
         android:id="@+id/confirmbacktocart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:background="@drawable/clickselector"
         android:paddingLeft="3dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp">
@@ -50,15 +52,10 @@
             android:background="#91505050"/>
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/content"
-        android:layout_below="@+id/line1"
-        android:layout_above="@+id/confirmBottom">
 
-        <ListView
+    <ListView
+        android:layout_below="@+id/line1"
+        android:layout_above="@+id/confirmBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/confirmList"
@@ -66,7 +63,7 @@
         >
     </ListView>
 
-    </LinearLayout>
+
 
 
     <RelativeLayout
@@ -111,7 +108,162 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:textSize="20dp"
-            android:singleLine="false" />
+            android:singleLine="false"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:id="@+id/paylayout">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#5f000000"
+            android:visibility="visible"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:background="@color/white"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/xx"
+                        android:layout_margin="10dp"
+                        android:id="@+id/canclepay" />
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="付款详情"
+                        android:textSize="20dp"
+                        android:layout_centerInParent="true" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/pay_cancle"
+                        android:layout_margin="10dp"
+                        android:id="@+id/cancla_pay" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/line2"
+                    android:layout_below="@+id/confirmtop">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#91505050"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="浪漫满屋账号"
+                        android:layout_margin="15dp"
+                        android:layout_centerVertical="true"
+                        />
+                    <TextView
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:id="@+id/select_acount"
+                        android:phoneNumber="false"
+                        android:password="false" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_below="@+id/confirmtop"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#91505050"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="付款方式"
+                        android:layout_margin="15dp"
+                        android:layout_centerVertical="true"
+                        />
+                    <TextView
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="账户余额"
+                        android:layout_margin="15dp"
+                        android:id="@+id/rest_money" />
+                </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@+id/confirmtop"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#91505050"/>
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="需付款"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="15dp" />
+                    <TextView
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:id="@+id/need_pay" />
+                    <Button
+                        android:layout_alignParentBottom="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="确认付款"
+                        android:background="@color/google_red"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/white"
+                        android:id="@+id/ensuretopay" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+
     </RelativeLayout>
 
 </RelativeLayout>

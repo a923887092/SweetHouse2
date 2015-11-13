@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <ImageView
+            android:id="@+id/iv_tuliao"
+            android:src="@drawable/chuanglian"
+            android:layout_width="250dp"
+            android:layout_height="200dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:textColor="#000"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="16dp"
+            android:text="您所需要的布料为:"
+            android:id="@+id/tv_tuliao2"
+            android:layout_below="@+id/iv_tuliao"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+        <Button
+            android:layout_marginBottom="20dp"
+            android:id="@+id/btn_jisuan"
+            android:layout_width="100dp"
+            android:layout_height="35dp"
+            android:text="确 定"
+            android:background="@drawable/selector_btn_yuyue"
+            android:textSize="16dp"
+            android:textColor="#fff"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/tv_tuliao2"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+</RelativeLayout>

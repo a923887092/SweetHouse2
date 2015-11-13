@@ -5,7 +5,7 @@
     <RelativeLayout
         android:id="@+id/rl_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@mipmap/bg_bar">
 
         <ImageView
@@ -44,14 +44,61 @@
             android:id="@+id/rl_no_buy"
             android:layout_width="match_parent"
             android:layout_height="60dp">
-            <Button
-                android:text="8点准时开卖 "
-                android:background="@drawable/shape_no_buy_bg"
-                android:layout_width="300dp"
-                android:gravity="center"
-                android:layout_height="45dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <Button
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:id="@+id/btn_buy_or_no"
+                    android:text="8点准时开卖 "
+                    android:background="@drawable/shape_no_buy_bg"
+                    android:layout_width="300dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center" />
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/ll_Buy"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/tv_title"
+                            android:text="距离结束："
+                            android:layout_centerInParent="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <com.gwm.sweethouse.utils.CustomDigitalClock
+                            android:gravity="left|center_vertical"
+                            android:layout_weight="1"
+                            android:textColor="@android:color/holo_red_light"
+                            android:id="@+id/remainTime"
+                            android:text="00:00:01"
+                            android:textSize="12sp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <Button
+                        android:id="@+id/btn_go"
+                        android:layout_marginLeft="8dp"
+                        android:textSize="20dp"
+                        android:textColor="#fff"
+                        android:text="立即抢购"
+                        android:background="@drawable/shape_shop_area"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </FrameLayout>
         </RelativeLayout>
         <LinearLayout
             android:visibility="gone"
@@ -71,12 +118,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <ImageButton
+                        android:id="@+id/btn_enter_cart"
                         android:layout_gravity="center_vertical"
                         android:background="@drawable/shop_cart"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
 
                     <com.dk.view.drop.WaterDrop
+                        android:clickable="false"
+                        android:visibility="invisible"
                         android:id="@+id/drop"
                         android:layout_width="25dp"
                         android:layout_height="25dp"

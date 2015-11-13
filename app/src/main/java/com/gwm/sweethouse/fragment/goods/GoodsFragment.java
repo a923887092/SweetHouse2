@@ -62,7 +62,6 @@ public class GoodsFragment extends GoodsBaseFragment {
         GoodsProtocol protocol = new GoodsProtocol(getUrl(), "goods_zm" + sortId);
         LogUtils.i("mUrl:" + GlobalContacts.GOODS_ZM_URL);
         goods = protocol.loadData();
-        checkedGoodsSize();
         LogUtils.i("goods:" + goods);
 //        if (this.products == null) {
 //            return LoadResult.error;

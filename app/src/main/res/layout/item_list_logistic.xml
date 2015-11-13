@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff">
+    <TextView
+        android:id="@+id/tv_logContext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="江苏省苏州市独墅湖校区分部公司 已收件"/>
+    <TextView
+        android:id="@+id/tv_logTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_logContext"
+        android:padding="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="2015-11-03 19:46:00"/>
+</RelativeLayout>

@@ -28,6 +28,11 @@
     <string name="title_activity_java_script">JavaScriptActivity</string>
     <string name="phone_number">18856421058</string>
     <string name="city_prompt">同城区域</string>
+    <string name="space_prompt">空间</string>
+    <string name="stylePic_prompt">风格</string>
+    <string name="local_prompt">局部</string>
+    <string name="color_prompt">颜色</string>
+    <string name="house_prompt">房型</string>
     <string name="style_prompt">类型不限</string>
     <string name="hot_prompt">热门排序</string>
 
@@ -62,4 +67,19 @@
     <string name="title_activity_order_logistic">OrderLogisticActivity</string>
     <string name="title_activity_evaluate">EvaluateActivity</string>
     <string name="title_activity_edit_address">EditAddressActivity</string>
+    <string name="title_activity_comment">CommentActivity</string>
+    <string name="title_activity_comments">CommentsActivity</string>
+
+    <string name="title_activity_address_select">AddressSelect</string>
+    <string name="title_activity_pic_detail">PicDetailActivity</string>
+    <string name="title_activity_pic_order">PicOrderActivity</string>
+    <string name="title_activity_code_pic_detail">CodePicDetailActivity</string>
+    <string name="title_activity_pic_code_detail_fragment">PicCodeDetailFragment</string>
+    <string name="title_activity_calculator">CalculatorActivity</string>
+    <string name="title_activity_paint">PaintActivity</string>
+    <string name="title_activity_floor">FloorActivity</string>
+    <string name="title_activity_wall">WallActivity</string>
+    <string name="title_activity_floorb">FloorbActivity</string>
+    <string name="title_activity_wall_paper">WallPaperActivity</string>
+    <string name="title_activity_blind">BlindActivity</string>
 </resources>

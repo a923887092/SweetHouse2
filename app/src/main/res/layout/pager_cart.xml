@@ -52,7 +52,8 @@
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:layout_alignParentBottom="true"
-        android:background="#fcf9f9">
+        android:background="#fcf9f9"
+        android:visibility="invisible">
         <RelativeLayout
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -86,40 +87,22 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_gravity="center">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="结算:"
-                        android:textColor="@color/google_red"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/summation"
                         android:textColor="@color/google_red"
-                        android:text="0"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/google_red"
-                        android:text="已优惠:"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/google_red"
-                        android:text="0"/>
+                        />
 
-                </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/google_red"
+                        android:id="@+id/sumdiscount"
+                        />
+
+
             </LinearLayout>
 
 
@@ -130,10 +113,43 @@
                 android:layout_height="wrap_content"
                 android:text="确认(0)"
                 android:layout_gravity="right"
-                android:background="@color/google_red"/>
+                android:background="#5fd62d20"
+
+                android:textColor="@color/white" />
         </LinearLayout>
 
 
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:id="@+id/empty_cart_bg">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/empty_cart"
+            android:id="@+id/empty_cart"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/empty_cart_text"/>
+        <TextView
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:gravity="center_horizontal"
+            android:layout_centerVertical="true"
+            android:id="@+id/empty_cart_text"
+            android:text="天了噜！购物车还是空的，赶紧去首页看看吧"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/empty_cart_text"
+            android:layout_centerHorizontal="true"
+            android:background="@color/google_red"
+            android:textColor="@color/white"
+            android:text="前往首页"
+            android:id="@+id/goFirst" />
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -27,8 +27,15 @@ public abstract class BaseMallFragment extends Fragment {
 
     private GridView gvSort;
     private ArrayList<SubClass> subClasses;
-    public BaseMallFragment(ArrayList<SubClass> subClasses) {
-        this.subClasses = subClasses;
+    public BaseMallFragment() {
+
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        subClasses = (ArrayList<SubClass>) this.getArguments().getSerializable("subClass");
     }
 
     @Override

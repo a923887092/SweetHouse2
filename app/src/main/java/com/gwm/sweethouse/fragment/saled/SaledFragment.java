@@ -1,5 +1,6 @@
 package com.gwm.sweethouse.fragment.saled;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.view.ViewPager;
@@ -13,10 +14,12 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.gwm.sweethouse.R;
+import com.gwm.sweethouse.SaleActivity;
 import com.gwm.sweethouse.base.NewBaseFragment;
 import com.gwm.sweethouse.bean.Saled;
 import com.gwm.sweethouse.fragment.details.GoodImgFragment;
 import com.gwm.sweethouse.global.GlobalContacts;
+import com.gwm.sweethouse.interfaces.FragmentCallBack;
 import com.gwm.sweethouse.utils.CustomDigitalClock;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -41,9 +44,16 @@ public class SaledFragment extends NewBaseFragment<Saled> {
     private CustomDigitalClock remainTime;
     private TextView tvTitle;
     private View headerView;
+    private FragmentCallBack mCallBack;
+    @Override
+    protected int getLayoutId() {
+        return R.layout.pager_saled;
+    }
 
-    public SaledFragment() {
-        super(R.layout.pager_saled);
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mCallBack = (SaleActivity) activity;
     }
 
     @Override
@@ -73,6 +83,7 @@ public class SaledFragment extends NewBaseFragment<Saled> {
 
     @Override
     protected View createSuccessView() {
+        int state = mCallBack.callbackFun(null);
         view = View.inflate(getActivity(), R.layout.fragment_saleds, null);
         vpSaled = (ViewPager) view.findViewById(R.id.vp_good);
 
@@ -84,6 +95,9 @@ public class SaledFragment extends NewBaseFragment<Saled> {
                 .add("超值折扣", DiscountFragment.class, bundle)
                 .create());
         vpSaled.setAdapter(adapter);
+        if (state == 1){
+            vpSaled.setCurrentItem(1);
+        }
         SmartTabLayout viewPagerTab = (SmartTabLayout) view.findViewById(R.id.viewpagertab);
         viewPagerTab.setViewPager(vpSaled);
         return view;

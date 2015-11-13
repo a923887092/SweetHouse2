@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="floor">
+        <item>实木地板</item>
+        <item>复合地板</item>
+    </string-array>
+</resources>

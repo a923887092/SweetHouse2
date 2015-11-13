@@ -1,6 +1,7 @@
 package com.gwm.sweethouse.fragment.order;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -48,24 +49,35 @@ public class Order2Fragment extends Fragment {
     ProgressBar mProgressBar;
     private RefreshLayout mRefreshLayout;
     private int order_state = 1;
+    private Context context;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        this.context = inflater.getContext();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_order2, container, false);
         initViews(view);
+        //通过gson转化成对象，加入list
+        list = new ArrayList<OrderListBean>();
+        adapter = new OrderListAdapter(context,list);
+        listView.setAdapter(adapter);
         initData();
         return view ;
-        
     }
 
     private void initData() {
         //通过user_id和order_state = 1，查询符合条件的订单
-        //通过gson转化成对象，加入list
-        list = new ArrayList<OrderListBean>();
-        adapter = new OrderListAdapter(getActivity(),list);
-        listView.setAdapter(adapter);
+
         httpUtils = new HttpUtils();
+
+        httpUtils.configCurrentHttpCacheExpiry(5*1000);
+        // 设置超时时间
+        httpUtils.configTimeout(5*1000);
+        httpUtils.configSoTimeout(5*1000);
+        // 设置缓存5秒,5秒内直接返回上次成功请求的结果。
+        httpUtils.configCurrentHttpCacheExpiry(5*1000);
+
         String url = GlobalContacts.VISON_URL+"/OrderServlet?method=getOrdersByState&user_id=123458&order_state="+order_state;
         httpUtils.send(HttpRequest.HttpMethod.GET,
                 url, new RequestCallBack<String>() {
@@ -107,7 +119,7 @@ public class Order2Fragment extends Fragment {
     }
 
     private void initViews(View view) {
-        View footerView = View.inflate(getActivity(), R.layout.listview_footer, null);
+        View footerView = View.inflate(context, R.layout.listview_footer, null);
         textMore = (TextView) footerView.findViewById(R.id.text_more);
         mProgressBar = (ProgressBar) footerView.findViewById(R.id.load_progress_bar);
 
@@ -136,8 +148,8 @@ public class Order2Fragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //携带数据跳转到orderDetailActivity
-                Toast.makeText(getActivity(), "详情页111带数据跳转", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
+                Toast.makeText(context, "详情页111带数据跳转", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, OrderDetailActivity.class);
                 OrderListBean orderItem =list.get(i);
                 Log.e("item", orderItem.toString());
                 Log.e("item",orderItem.getOrder_price()+"");
@@ -164,6 +176,8 @@ public class Order2Fragment extends Fragment {
         mRefreshLayout.setOnRefreshListener(new RefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                list.clear();
+                initData();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -171,9 +185,10 @@ public class Order2Fragment extends Fragment {
 //                        mAdapter.notifyDataSetChanged();
                         textMore.setVisibility(View.VISIBLE);
                         mProgressBar.setVisibility(View.GONE);
-                        Toast.makeText(getActivity(), "Refresh Finished!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Refresh Finished!", Toast.LENGTH_SHORT).show();
                     }
                 }, 2000);
+
             }
         });
         //使用自定义的RefreshLayout加载更多监听
@@ -191,7 +206,7 @@ public class Order2Fragment extends Fragment {
 //                        mAdapter.notifyDataSetChanged();
                         textMore.setVisibility(View.VISIBLE);
                         mProgressBar.setVisibility(View.GONE);
-                        Toast.makeText(getActivity(), "Load Finished!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Load Finished!", Toast.LENGTH_SHORT).show();
                     }
                 }, 2000);
             }

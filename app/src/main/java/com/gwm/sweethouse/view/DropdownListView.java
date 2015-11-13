@@ -123,37 +123,6 @@ public class DropdownListView extends ScrollView {
                     if (oldOne != current) {
                         container.onSelectionChanged(DropdownListView.this);
                     }
-
-                    /*ThreadManager.getInstance().createLongPool().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            SystemClock.sleep(2000);
-                            pageNo = 1;
-                            final String dirTime1 = System.currentTimeMillis() + "";
-                            GoodsProtocol protocol = new GoodsProtocol(getUrl(), dirTime1);
-                            final ArrayList<Product> recommends_refresh = protocol.loadData();
-                            UiUtils.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-
-                                    if (recommends_refresh != null) {
-                                        File dir = FilesUtils.getCacheDri();
-                                        if (dirTime != null) {
-                                            File file = new File(dir, dirTime);
-                                            if (file.isFile() && file.exists()) {
-                                                file.delete();
-                                            }
-                                            dirTime = dirTime1;
-                                        }
-                                        goods.clear();
-                                        goods.addAll(recommends_refresh);
-                                        LogUtils.d("aaaaa" + goods);
-                                        mAdapter.notifyDataSetChanged();
-                                    }
-                                }
-                            });
-                        }
-                    });*/
                 }
             });
             linearLayout.addView(view);
